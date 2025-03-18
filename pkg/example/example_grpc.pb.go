@@ -36,8 +36,8 @@ const (
 type ExampleServiceClient interface {
 	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (grpc.ServerStreamingClient[ExampleResponse], error)
 	Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error)
-	Create(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, ExampleResponses], error)
-	Update(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, ExampleResponses], error)
+	Create(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, output.PersistenceDataResponse], error)
+	Update(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, output.PersistenceDataResponse], error)
 	Inactive(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[input.UUIDRequest, output.StatusDataResponse], error)
 	Active(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[input.UUIDRequest, output.StatusDataResponse], error)
 	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*ExampleResponse, error)
@@ -80,31 +80,31 @@ func (c *exampleServiceClient) Count(ctx context.Context, in *input.FilteredRequ
 	return out, nil
 }
 
-func (c *exampleServiceClient) Create(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, ExampleResponses], error) {
+func (c *exampleServiceClient) Create(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, output.PersistenceDataResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[1], ExampleService_Create_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ExampleRequest, ExampleResponses]{ClientStream: stream}
+	x := &grpc.GenericClientStream[ExampleRequest, output.PersistenceDataResponse]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ExampleService_CreateClient = grpc.ClientStreamingClient[ExampleRequest, ExampleResponses]
+type ExampleService_CreateClient = grpc.ClientStreamingClient[ExampleRequest, output.PersistenceDataResponse]
 
-func (c *exampleServiceClient) Update(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, ExampleResponses], error) {
+func (c *exampleServiceClient) Update(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleRequest, output.PersistenceDataResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[2], ExampleService_Update_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ExampleRequest, ExampleResponses]{ClientStream: stream}
+	x := &grpc.GenericClientStream[ExampleRequest, output.PersistenceDataResponse]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ExampleService_UpdateClient = grpc.ClientStreamingClient[ExampleRequest, ExampleResponses]
+type ExampleService_UpdateClient = grpc.ClientStreamingClient[ExampleRequest, output.PersistenceDataResponse]
 
 func (c *exampleServiceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[input.UUIDRequest, output.StatusDataResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -148,8 +148,8 @@ func (c *exampleServiceClient) FindOne(ctx context.Context, in *input.UUIDReques
 type ExampleServiceServer interface {
 	Paginate(*input.PaginationRequest, grpc.ServerStreamingServer[ExampleResponse]) error
 	Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error)
-	Create(grpc.ClientStreamingServer[ExampleRequest, ExampleResponses]) error
-	Update(grpc.ClientStreamingServer[ExampleRequest, ExampleResponses]) error
+	Create(grpc.ClientStreamingServer[ExampleRequest, output.PersistenceDataResponse]) error
+	Update(grpc.ClientStreamingServer[ExampleRequest, output.PersistenceDataResponse]) error
 	Inactive(grpc.ClientStreamingServer[input.UUIDRequest, output.StatusDataResponse]) error
 	Active(grpc.ClientStreamingServer[input.UUIDRequest, output.StatusDataResponse]) error
 	FindOne(context.Context, *input.UUIDRequest) (*ExampleResponse, error)
@@ -169,10 +169,10 @@ func (UnimplementedExampleServiceServer) Paginate(*input.PaginationRequest, grpc
 func (UnimplementedExampleServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Count not implemented")
 }
-func (UnimplementedExampleServiceServer) Create(grpc.ClientStreamingServer[ExampleRequest, ExampleResponses]) error {
+func (UnimplementedExampleServiceServer) Create(grpc.ClientStreamingServer[ExampleRequest, output.PersistenceDataResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedExampleServiceServer) Update(grpc.ClientStreamingServer[ExampleRequest, ExampleResponses]) error {
+func (UnimplementedExampleServiceServer) Update(grpc.ClientStreamingServer[ExampleRequest, output.PersistenceDataResponse]) error {
 	return status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
 func (UnimplementedExampleServiceServer) Inactive(grpc.ClientStreamingServer[input.UUIDRequest, output.StatusDataResponse]) error {
@@ -235,18 +235,18 @@ func _ExampleService_Count_Handler(srv interface{}, ctx context.Context, dec fun
 }
 
 func _ExampleService_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Create(&grpc.GenericServerStream[ExampleRequest, ExampleResponses]{ServerStream: stream})
+	return srv.(ExampleServiceServer).Create(&grpc.GenericServerStream[ExampleRequest, output.PersistenceDataResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ExampleService_CreateServer = grpc.ClientStreamingServer[ExampleRequest, ExampleResponses]
+type ExampleService_CreateServer = grpc.ClientStreamingServer[ExampleRequest, output.PersistenceDataResponse]
 
 func _ExampleService_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Update(&grpc.GenericServerStream[ExampleRequest, ExampleResponses]{ServerStream: stream})
+	return srv.(ExampleServiceServer).Update(&grpc.GenericServerStream[ExampleRequest, output.PersistenceDataResponse]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ExampleService_UpdateServer = grpc.ClientStreamingServer[ExampleRequest, ExampleResponses]
+type ExampleService_UpdateServer = grpc.ClientStreamingServer[ExampleRequest, output.PersistenceDataResponse]
 
 func _ExampleService_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(ExampleServiceServer).Inactive(&grpc.GenericServerStream[input.UUIDRequest, output.StatusDataResponse]{ServerStream: stream})
