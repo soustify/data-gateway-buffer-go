@@ -10,6 +10,7 @@ import (
 	context "context"
 	input "github.com/soustify/data-gateway-buffer-go/pkg/input"
 	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
+	validator "github.com/soustify/data-gateway-buffer-go/pkg/validator"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -43,7 +44,7 @@ type ExampleServiceClient interface {
 	Inactive(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[input.UUIDRequest, output.StatusDataResponse], error)
 	Active(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[input.UUIDRequest, output.StatusDataResponse], error)
 	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*ExampleResponse, error)
-	Validate(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleBody, output.ValidateDataResponse], error)
+	Validate(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleBody, validator.Response], error)
 	Delete(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[input.UUIDRequest, output.PersistenceDataResponse], error)
 }
 
@@ -146,18 +147,18 @@ func (c *exampleServiceClient) FindOne(ctx context.Context, in *input.UUIDReques
 	return out, nil
 }
 
-func (c *exampleServiceClient) Validate(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleBody, output.ValidateDataResponse], error) {
+func (c *exampleServiceClient) Validate(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[ExampleBody, validator.Response], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
 	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[5], ExampleService_Validate_FullMethodName, cOpts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &grpc.GenericClientStream[ExampleBody, output.ValidateDataResponse]{ClientStream: stream}
+	x := &grpc.GenericClientStream[ExampleBody, validator.Response]{ClientStream: stream}
 	return x, nil
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ExampleService_ValidateClient = grpc.ClientStreamingClient[ExampleBody, output.ValidateDataResponse]
+type ExampleService_ValidateClient = grpc.ClientStreamingClient[ExampleBody, validator.Response]
 
 func (c *exampleServiceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[input.UUIDRequest, output.PersistenceDataResponse], error) {
 	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
@@ -183,7 +184,7 @@ type ExampleServiceServer interface {
 	Inactive(grpc.ClientStreamingServer[input.UUIDRequest, output.StatusDataResponse]) error
 	Active(grpc.ClientStreamingServer[input.UUIDRequest, output.StatusDataResponse]) error
 	FindOne(context.Context, *input.UUIDRequest) (*ExampleResponse, error)
-	Validate(grpc.ClientStreamingServer[ExampleBody, output.ValidateDataResponse]) error
+	Validate(grpc.ClientStreamingServer[ExampleBody, validator.Response]) error
 	Delete(grpc.ClientStreamingServer[input.UUIDRequest, output.PersistenceDataResponse]) error
 	mustEmbedUnimplementedExampleServiceServer()
 }
@@ -216,7 +217,7 @@ func (UnimplementedExampleServiceServer) Active(grpc.ClientStreamingServer[input
 func (UnimplementedExampleServiceServer) FindOne(context.Context, *input.UUIDRequest) (*ExampleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
-func (UnimplementedExampleServiceServer) Validate(grpc.ClientStreamingServer[ExampleBody, output.ValidateDataResponse]) error {
+func (UnimplementedExampleServiceServer) Validate(grpc.ClientStreamingServer[ExampleBody, validator.Response]) error {
 	return status.Errorf(codes.Unimplemented, "method Validate not implemented")
 }
 func (UnimplementedExampleServiceServer) Delete(grpc.ClientStreamingServer[input.UUIDRequest, output.PersistenceDataResponse]) error {
@@ -319,11 +320,11 @@ func _ExampleService_FindOne_Handler(srv interface{}, ctx context.Context, dec f
 }
 
 func _ExampleService_Validate_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Validate(&grpc.GenericServerStream[ExampleBody, output.ValidateDataResponse]{ServerStream: stream})
+	return srv.(ExampleServiceServer).Validate(&grpc.GenericServerStream[ExampleBody, validator.Response]{ServerStream: stream})
 }
 
 // This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
-type ExampleService_ValidateServer = grpc.ClientStreamingServer[ExampleBody, output.ValidateDataResponse]
+type ExampleService_ValidateServer = grpc.ClientStreamingServer[ExampleBody, validator.Response]
 
 func _ExampleService_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(ExampleServiceServer).Delete(&grpc.GenericServerStream[input.UUIDRequest, output.PersistenceDataResponse]{ServerStream: stream})
