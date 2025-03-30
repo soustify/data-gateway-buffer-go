@@ -10,7 +10,6 @@ import (
 	context "context"
 	input "github.com/soustify/data-gateway-buffer-go/pkg/input"
 	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
-	validator "github.com/soustify/data-gateway-buffer-go/pkg/validator"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
 	status "google.golang.org/grpc/status"
@@ -29,7 +28,6 @@ const (
 	ExampleService_Inactive_FullMethodName = "/example.ExampleService/Inactive"
 	ExampleService_Active_FullMethodName   = "/example.ExampleService/Active"
 	ExampleService_FindOne_FullMethodName  = "/example.ExampleService/FindOne"
-	ExampleService_Validate_FullMethodName = "/example.ExampleService/Validate"
 	ExampleService_Delete_FullMethodName   = "/example.ExampleService/Delete"
 )
 
@@ -44,7 +42,6 @@ type ExampleServiceClient interface {
 	Inactive(ctx context.Context, opts ...grpc.CallOption) (ExampleService_InactiveClient, error)
 	Active(ctx context.Context, opts ...grpc.CallOption) (ExampleService_ActiveClient, error)
 	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*ExampleResponse, error)
-	Validate(ctx context.Context, opts ...grpc.CallOption) (ExampleService_ValidateClient, error)
 	Delete(ctx context.Context, opts ...grpc.CallOption) (ExampleService_DeleteClient, error)
 }
 
@@ -242,42 +239,8 @@ func (c *exampleServiceClient) FindOne(ctx context.Context, in *input.UUIDReques
 	return out, nil
 }
 
-func (c *exampleServiceClient) Validate(ctx context.Context, opts ...grpc.CallOption) (ExampleService_ValidateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[5], ExampleService_Validate_FullMethodName, opts...)
-	if err != nil {
-		return nil, err
-	}
-	x := &exampleServiceValidateClient{stream}
-	return x, nil
-}
-
-type ExampleService_ValidateClient interface {
-	Send(*ExampleBody) error
-	CloseAndRecv() (*validator.Response, error)
-	grpc.ClientStream
-}
-
-type exampleServiceValidateClient struct {
-	grpc.ClientStream
-}
-
-func (x *exampleServiceValidateClient) Send(m *ExampleBody) error {
-	return x.ClientStream.SendMsg(m)
-}
-
-func (x *exampleServiceValidateClient) CloseAndRecv() (*validator.Response, error) {
-	if err := x.ClientStream.CloseSend(); err != nil {
-		return nil, err
-	}
-	m := new(validator.Response)
-	if err := x.ClientStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func (c *exampleServiceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (ExampleService_DeleteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[6], ExampleService_Delete_FullMethodName, opts...)
+	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[5], ExampleService_Delete_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -321,7 +284,6 @@ type ExampleServiceServer interface {
 	Inactive(ExampleService_InactiveServer) error
 	Active(ExampleService_ActiveServer) error
 	FindOne(context.Context, *input.UUIDRequest) (*ExampleResponse, error)
-	Validate(ExampleService_ValidateServer) error
 	Delete(ExampleService_DeleteServer) error
 	mustEmbedUnimplementedExampleServiceServer()
 }
@@ -350,9 +312,6 @@ func (UnimplementedExampleServiceServer) Active(ExampleService_ActiveServer) err
 }
 func (UnimplementedExampleServiceServer) FindOne(context.Context, *input.UUIDRequest) (*ExampleResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
-}
-func (UnimplementedExampleServiceServer) Validate(ExampleService_ValidateServer) error {
-	return status.Errorf(codes.Unimplemented, "method Validate not implemented")
 }
 func (UnimplementedExampleServiceServer) Delete(ExampleService_DeleteServer) error {
 	return status.Errorf(codes.Unimplemented, "method Delete not implemented")
@@ -531,32 +490,6 @@ func _ExampleService_FindOne_Handler(srv interface{}, ctx context.Context, dec f
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExampleService_Validate_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Validate(&exampleServiceValidateServer{stream})
-}
-
-type ExampleService_ValidateServer interface {
-	SendAndClose(*validator.Response) error
-	Recv() (*ExampleBody, error)
-	grpc.ServerStream
-}
-
-type exampleServiceValidateServer struct {
-	grpc.ServerStream
-}
-
-func (x *exampleServiceValidateServer) SendAndClose(m *validator.Response) error {
-	return x.ServerStream.SendMsg(m)
-}
-
-func (x *exampleServiceValidateServer) Recv() (*ExampleBody, error) {
-	m := new(ExampleBody)
-	if err := x.ServerStream.RecvMsg(m); err != nil {
-		return nil, err
-	}
-	return m, nil
-}
-
 func _ExampleService_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
 	return srv.(ExampleServiceServer).Delete(&exampleServiceDeleteServer{stream})
 }
@@ -623,11 +556,6 @@ var ExampleService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Active",
 			Handler:       _ExampleService_Active_Handler,
-			ClientStreams: true,
-		},
-		{
-			StreamName:    "Validate",
-			Handler:       _ExampleService_Validate_Handler,
 			ClientStreams: true,
 		},
 		{
