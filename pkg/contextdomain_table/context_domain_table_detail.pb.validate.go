@@ -95,10 +95,10 @@ func (m *ContextDomainTableDetailRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if m.GetOperation() == nil {
+	if _, ok := _ContextDomainTableDetailRequest_Operation_InLookup[m.GetOperation()]; !ok {
 		err := ContextDomainTableDetailRequestValidationError{
 			field:  "Operation",
-			reason: "value is required",
+			reason: "value must be in list [INSERT UPDATE DELETE]",
 		}
 		if !all {
 			return err
@@ -194,3 +194,9 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = ContextDomainTableDetailRequestValidationError{}
+
+var _ContextDomainTableDetailRequest_Operation_InLookup = map[Operation]struct{}{
+	0: {},
+	1: {},
+	2: {},
+}
