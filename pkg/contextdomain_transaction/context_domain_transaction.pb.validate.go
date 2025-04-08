@@ -60,9 +60,9 @@ func (m *ContextDomainTransactionRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetContextId()); err != nil {
+	if err := m._validateUuid(m.GetId()); err != nil {
 		err = ContextDomainTransactionRequestValidationError{
-			field:  "ContextId",
+			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}

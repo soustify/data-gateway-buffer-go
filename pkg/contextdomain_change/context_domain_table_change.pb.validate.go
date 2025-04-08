@@ -60,9 +60,9 @@ func (m *ContextDomainTableChangeRequest) validate(all bool) error {
 
 	var errors []error
 
-	if err := m._validateUuid(m.GetContextTableDetailId()); err != nil {
+	if err := m._validateUuid(m.GetId()); err != nil {
 		err = ContextDomainTableChangeRequestValidationError{
-			field:  "ContextTableDetailId",
+			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
 		}
@@ -86,6 +86,18 @@ func (m *ContextDomainTableChangeRequest) validate(all bool) error {
 	// no validation rules for OldValue
 
 	// no validation rules for NewValue
+
+	if err := m._validateUuid(m.GetContextTableDetailId()); err != nil {
+		err = ContextDomainTableChangeRequestValidationError{
+			field:  "ContextTableDetailId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
 
 	if len(errors) > 0 {
 		return ContextDomainTableChangeRequestMultiError(errors)
