@@ -8,6 +8,7 @@ package contextdomain_transaction
 
 import (
 	context "context"
+	input "github.com/soustify/data-gateway-buffer-go/pkg/input"
 	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
 	grpc "google.golang.org/grpc"
 	codes "google.golang.org/grpc/codes"
@@ -20,7 +21,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ContextDomainTransactionService_Create_FullMethodName = "/contextdomain_transaction.ContextDomainTransactionService/Create"
+	ContextDomainTransactionService_Create_FullMethodName  = "/contextdomain_transaction.ContextDomainTransactionService/Create"
+	ContextDomainTransactionService_FindOne_FullMethodName = "/contextdomain_transaction.ContextDomainTransactionService/FindOne"
 )
 
 // ContextDomainTransactionServiceClient is the client API for ContextDomainTransactionService service.
@@ -28,6 +30,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ContextDomainTransactionServiceClient interface {
 	Create(ctx context.Context, opts ...grpc.CallOption) (ContextDomainTransactionService_CreateClient, error)
+	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*ContextDomainTransactionResponse, error)
 }
 
 type contextDomainTransactionServiceClient struct {
@@ -72,11 +75,21 @@ func (x *contextDomainTransactionServiceCreateClient) CloseAndRecv() (*output.Pe
 	return m, nil
 }
 
+func (c *contextDomainTransactionServiceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*ContextDomainTransactionResponse, error) {
+	out := new(ContextDomainTransactionResponse)
+	err := c.cc.Invoke(ctx, ContextDomainTransactionService_FindOne_FullMethodName, in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // ContextDomainTransactionServiceServer is the server API for ContextDomainTransactionService service.
 // All implementations must embed UnimplementedContextDomainTransactionServiceServer
 // for forward compatibility
 type ContextDomainTransactionServiceServer interface {
 	Create(ContextDomainTransactionService_CreateServer) error
+	FindOne(context.Context, *input.UUIDRequest) (*ContextDomainTransactionResponse, error)
 	mustEmbedUnimplementedContextDomainTransactionServiceServer()
 }
 
@@ -86,6 +99,9 @@ type UnimplementedContextDomainTransactionServiceServer struct {
 
 func (UnimplementedContextDomainTransactionServiceServer) Create(ContextDomainTransactionService_CreateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedContextDomainTransactionServiceServer) FindOne(context.Context, *input.UUIDRequest) (*ContextDomainTransactionResponse, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
 func (UnimplementedContextDomainTransactionServiceServer) mustEmbedUnimplementedContextDomainTransactionServiceServer() {
 }
@@ -127,13 +143,36 @@ func (x *contextDomainTransactionServiceCreateServer) Recv() (*ContextDomainTran
 	return m, nil
 }
 
+func _ContextDomainTransactionService_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(input.UUIDRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(ContextDomainTransactionServiceServer).FindOne(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: ContextDomainTransactionService_FindOne_FullMethodName,
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(ContextDomainTransactionServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // ContextDomainTransactionService_ServiceDesc is the grpc.ServiceDesc for ContextDomainTransactionService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ContextDomainTransactionService_ServiceDesc = grpc.ServiceDesc{
 	ServiceName: "contextdomain_transaction.ContextDomainTransactionService",
 	HandlerType: (*ContextDomainTransactionServiceServer)(nil),
-	Methods:     []grpc.MethodDesc{},
+	Methods: []grpc.MethodDesc{
+		{
+			MethodName: "FindOne",
+			Handler:    _ContextDomainTransactionService_FindOne_Handler,
+		},
+	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Create",
