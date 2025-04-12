@@ -38,6 +38,142 @@ var (
 // define the regex for a UUID once up-front
 var _context_domain_table_detail_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
+// Validate checks the field values on RegistryEntityAuditRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the first error encountered is returned, or nil if there are no violations.
+func (m *RegistryEntityAuditRequest) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on RegistryEntityAuditRequest with the
+// rules defined in the proto definition for this message. If any rules are
+// violated, the result is a list of violation errors wrapped in
+// RegistryEntityAuditRequestMultiError, or nil if none found.
+func (m *RegistryEntityAuditRequest) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *RegistryEntityAuditRequest) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for EntityTable
+
+	if err := m._validateUuid(m.GetEntityId()); err != nil {
+		err = RegistryEntityAuditRequestValidationError{
+			field:  "EntityId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if err := m._validateUuid(m.GetContextDetailId()); err != nil {
+		err = RegistryEntityAuditRequestValidationError{
+			field:  "ContextDetailId",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	if len(errors) > 0 {
+		return RegistryEntityAuditRequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *RegistryEntityAuditRequest) _validateUuid(uuid string) error {
+	if matched := _context_domain_table_detail_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
+	}
+
+	return nil
+}
+
+// RegistryEntityAuditRequestMultiError is an error wrapping multiple
+// validation errors returned by RegistryEntityAuditRequest.ValidateAll() if
+// the designated constraints aren't met.
+type RegistryEntityAuditRequestMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m RegistryEntityAuditRequestMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m RegistryEntityAuditRequestMultiError) AllErrors() []error { return m }
+
+// RegistryEntityAuditRequestValidationError is the validation error returned
+// by RegistryEntityAuditRequest.Validate if the designated constraints aren't met.
+type RegistryEntityAuditRequestValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RegistryEntityAuditRequestValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RegistryEntityAuditRequestValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RegistryEntityAuditRequestValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RegistryEntityAuditRequestValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RegistryEntityAuditRequestValidationError) ErrorName() string {
+	return "RegistryEntityAuditRequestValidationError"
+}
+
+// Error satisfies the builtin error interface
+func (e RegistryEntityAuditRequestValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRegistryEntityAuditRequest.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RegistryEntityAuditRequestValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RegistryEntityAuditRequestValidationError{}
+
 // Validate checks the field values on ContextDomainTableDetailRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.

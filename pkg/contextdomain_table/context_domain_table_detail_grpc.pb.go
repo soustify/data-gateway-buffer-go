@@ -20,7 +20,8 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ContextDomainTableDetailService_Create_FullMethodName = "/contextdomain_table.ContextDomainTableDetailService/Create"
+	ContextDomainTableDetailService_Create_FullMethodName          = "/contextdomain_table.ContextDomainTableDetailService/Create"
+	ContextDomainTableDetailService_RegisterDetails_FullMethodName = "/contextdomain_table.ContextDomainTableDetailService/RegisterDetails"
 )
 
 // ContextDomainTableDetailServiceClient is the client API for ContextDomainTableDetailService service.
@@ -28,6 +29,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type ContextDomainTableDetailServiceClient interface {
 	Create(ctx context.Context, opts ...grpc.CallOption) (ContextDomainTableDetailService_CreateClient, error)
+	RegisterDetails(ctx context.Context, opts ...grpc.CallOption) (ContextDomainTableDetailService_RegisterDetailsClient, error)
 }
 
 type contextDomainTableDetailServiceClient struct {
@@ -72,11 +74,46 @@ func (x *contextDomainTableDetailServiceCreateClient) CloseAndRecv() (*output.Pe
 	return m, nil
 }
 
+func (c *contextDomainTableDetailServiceClient) RegisterDetails(ctx context.Context, opts ...grpc.CallOption) (ContextDomainTableDetailService_RegisterDetailsClient, error) {
+	stream, err := c.cc.NewStream(ctx, &ContextDomainTableDetailService_ServiceDesc.Streams[1], ContextDomainTableDetailService_RegisterDetails_FullMethodName, opts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &contextDomainTableDetailServiceRegisterDetailsClient{stream}
+	return x, nil
+}
+
+type ContextDomainTableDetailService_RegisterDetailsClient interface {
+	Send(*RegistryEntityAuditRequest) error
+	CloseAndRecv() (*output.PersistenceDataResponse, error)
+	grpc.ClientStream
+}
+
+type contextDomainTableDetailServiceRegisterDetailsClient struct {
+	grpc.ClientStream
+}
+
+func (x *contextDomainTableDetailServiceRegisterDetailsClient) Send(m *RegistryEntityAuditRequest) error {
+	return x.ClientStream.SendMsg(m)
+}
+
+func (x *contextDomainTableDetailServiceRegisterDetailsClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+	if err := x.ClientStream.CloseSend(); err != nil {
+		return nil, err
+	}
+	m := new(output.PersistenceDataResponse)
+	if err := x.ClientStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ContextDomainTableDetailServiceServer is the server API for ContextDomainTableDetailService service.
 // All implementations must embed UnimplementedContextDomainTableDetailServiceServer
 // for forward compatibility
 type ContextDomainTableDetailServiceServer interface {
 	Create(ContextDomainTableDetailService_CreateServer) error
+	RegisterDetails(ContextDomainTableDetailService_RegisterDetailsServer) error
 	mustEmbedUnimplementedContextDomainTableDetailServiceServer()
 }
 
@@ -86,6 +123,9 @@ type UnimplementedContextDomainTableDetailServiceServer struct {
 
 func (UnimplementedContextDomainTableDetailServiceServer) Create(ContextDomainTableDetailService_CreateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Create not implemented")
+}
+func (UnimplementedContextDomainTableDetailServiceServer) RegisterDetails(ContextDomainTableDetailService_RegisterDetailsServer) error {
+	return status.Errorf(codes.Unimplemented, "method RegisterDetails not implemented")
 }
 func (UnimplementedContextDomainTableDetailServiceServer) mustEmbedUnimplementedContextDomainTableDetailServiceServer() {
 }
@@ -127,6 +167,32 @@ func (x *contextDomainTableDetailServiceCreateServer) Recv() (*ContextDomainTabl
 	return m, nil
 }
 
+func _ContextDomainTableDetailService_RegisterDetails_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ContextDomainTableDetailServiceServer).RegisterDetails(&contextDomainTableDetailServiceRegisterDetailsServer{stream})
+}
+
+type ContextDomainTableDetailService_RegisterDetailsServer interface {
+	SendAndClose(*output.PersistenceDataResponse) error
+	Recv() (*RegistryEntityAuditRequest, error)
+	grpc.ServerStream
+}
+
+type contextDomainTableDetailServiceRegisterDetailsServer struct {
+	grpc.ServerStream
+}
+
+func (x *contextDomainTableDetailServiceRegisterDetailsServer) SendAndClose(m *output.PersistenceDataResponse) error {
+	return x.ServerStream.SendMsg(m)
+}
+
+func (x *contextDomainTableDetailServiceRegisterDetailsServer) Recv() (*RegistryEntityAuditRequest, error) {
+	m := new(RegistryEntityAuditRequest)
+	if err := x.ServerStream.RecvMsg(m); err != nil {
+		return nil, err
+	}
+	return m, nil
+}
+
 // ContextDomainTableDetailService_ServiceDesc is the grpc.ServiceDesc for ContextDomainTableDetailService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -138,6 +204,11 @@ var ContextDomainTableDetailService_ServiceDesc = grpc.ServiceDesc{
 		{
 			StreamName:    "Create",
 			Handler:       _ContextDomainTableDetailService_Create_Handler,
+			ClientStreams: true,
+		},
+		{
+			StreamName:    "RegisterDetails",
+			Handler:       _ContextDomainTableDetailService_RegisterDetails_Handler,
 			ClientStreams: true,
 		},
 	},
