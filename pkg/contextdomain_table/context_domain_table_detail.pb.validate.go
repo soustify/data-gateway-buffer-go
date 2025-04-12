@@ -118,6 +118,54 @@ func (m *ContextDomainTableDetailRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
+	if len(m.GetMetadata()) < 1 {
+		err := ContextDomainTableDetailRequestValidationError{
+			field:  "Metadata",
+			reason: "value must contain at least 1 pair(s)",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
+	{
+		sorted_keys := make([]string, len(m.GetMetadata()))
+		i := 0
+		for key := range m.GetMetadata() {
+			sorted_keys[i] = key
+			i++
+		}
+		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
+		for _, key := range sorted_keys {
+			val := m.GetMetadata()[key]
+			_ = val
+
+			if utf8.RuneCountInString(key) < 1 {
+				err := ContextDomainTableDetailRequestValidationError{
+					field:  fmt.Sprintf("Metadata[%v]", key),
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+			if utf8.RuneCountInString(val) < 1 {
+				err := ContextDomainTableDetailRequestValidationError{
+					field:  fmt.Sprintf("Metadata[%v]", key),
+					reason: "value length must be at least 1 runes",
+				}
+				if !all {
+					return err
+				}
+				errors = append(errors, err)
+			}
+
+		}
+	}
+
 	if len(errors) > 0 {
 		return ContextDomainTableDetailRequestMultiError(errors)
 	}
