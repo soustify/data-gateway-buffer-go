@@ -174,6 +174,110 @@ var _ interface {
 	ErrorName() string
 } = RegistryEntityAuditRequestValidationError{}
 
+// Validate checks the field values on Changes with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Changes) Validate() error {
+	return m.validate(false)
+}
+
+// ValidateAll checks the field values on Changes with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in ChangesMultiError, or nil if none found.
+func (m *Changes) ValidateAll() error {
+	return m.validate(true)
+}
+
+func (m *Changes) validate(all bool) error {
+	if m == nil {
+		return nil
+	}
+
+	var errors []error
+
+	// no validation rules for Field
+
+	// no validation rules for Old
+
+	// no validation rules for New
+
+	if len(errors) > 0 {
+		return ChangesMultiError(errors)
+	}
+
+	return nil
+}
+
+// ChangesMultiError is an error wrapping multiple validation errors returned
+// by Changes.ValidateAll() if the designated constraints aren't met.
+type ChangesMultiError []error
+
+// Error returns a concatenation of all the error messages it wraps.
+func (m ChangesMultiError) Error() string {
+	msgs := make([]string, 0, len(m))
+	for _, err := range m {
+		msgs = append(msgs, err.Error())
+	}
+	return strings.Join(msgs, "; ")
+}
+
+// AllErrors returns a list of validation violation errors.
+func (m ChangesMultiError) AllErrors() []error { return m }
+
+// ChangesValidationError is the validation error returned by Changes.Validate
+// if the designated constraints aren't met.
+type ChangesValidationError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ChangesValidationError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ChangesValidationError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ChangesValidationError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ChangesValidationError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ChangesValidationError) ErrorName() string { return "ChangesValidationError" }
+
+// Error satisfies the builtin error interface
+func (e ChangesValidationError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sChanges.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ChangesValidationError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ChangesValidationError{}
+
 // Validate checks the field values on ContextDomainTableDetailRequest with the
 // rules defined in the proto definition for this message. If any rules are
 // violated, the first error encountered is returned, or nil if there are no violations.
@@ -254,52 +358,38 @@ func (m *ContextDomainTableDetailRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if len(m.GetMetadata()) < 1 {
-		err := ContextDomainTableDetailRequestValidationError{
-			field:  "Metadata",
-			reason: "value must contain at least 1 pair(s)",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
+	for idx, item := range m.GetMetadata() {
+		_, _ = idx, item
 
-	{
-		sorted_keys := make([]string, len(m.GetMetadata()))
-		i := 0
-		for key := range m.GetMetadata() {
-			sorted_keys[i] = key
-			i++
-		}
-		sort.Slice(sorted_keys, func(i, j int) bool { return sorted_keys[i] < sorted_keys[j] })
-		for _, key := range sorted_keys {
-			val := m.GetMetadata()[key]
-			_ = val
-
-			if utf8.RuneCountInString(key) < 1 {
-				err := ContextDomainTableDetailRequestValidationError{
-					field:  fmt.Sprintf("Metadata[%v]", key),
-					reason: "value length must be at least 1 runes",
+		if all {
+			switch v := interface{}(item).(type) {
+			case interface{ ValidateAll() error }:
+				if err := v.ValidateAll(); err != nil {
+					errors = append(errors, ContextDomainTableDetailRequestValidationError{
+						field:  fmt.Sprintf("Metadata[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
 				}
-				if !all {
-					return err
+			case interface{ Validate() error }:
+				if err := v.Validate(); err != nil {
+					errors = append(errors, ContextDomainTableDetailRequestValidationError{
+						field:  fmt.Sprintf("Metadata[%v]", idx),
+						reason: "embedded message failed validation",
+						cause:  err,
+					})
 				}
-				errors = append(errors, err)
 			}
-
-			if utf8.RuneCountInString(val) < 1 {
-				err := ContextDomainTableDetailRequestValidationError{
-					field:  fmt.Sprintf("Metadata[%v]", key),
-					reason: "value length must be at least 1 runes",
+		} else if v, ok := interface{}(item).(interface{ Validate() error }); ok {
+			if err := v.Validate(); err != nil {
+				return ContextDomainTableDetailRequestValidationError{
+					field:  fmt.Sprintf("Metadata[%v]", idx),
+					reason: "embedded message failed validation",
+					cause:  err,
 				}
-				if !all {
-					return err
-				}
-				errors = append(errors, err)
 			}
-
 		}
+
 	}
 
 	if len(errors) > 0 {
