@@ -336,10 +336,10 @@ func (m *ContextDomainTableDetailRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if utf8.RuneCountInString(m.GetEntityTable()) < 10 {
+	if utf8.RuneCountInString(m.GetEntityTable()) < 1 {
 		err := ContextDomainTableDetailRequestValidationError{
 			field:  "EntityTable",
-			reason: "value length must be at least 10 runes",
+			reason: "value length must be at least 1 runes",
 		}
 		if !all {
 			return err

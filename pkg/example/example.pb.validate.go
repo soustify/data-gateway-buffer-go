@@ -17,6 +17,10 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	input "github.com/soustify/data-gateway-buffer-go/pkg/input"
+
+	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
 )
 
 // ensure the imports are used
@@ -33,6 +37,10 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = input.StatusRequest(0)
+
+	_ = output.StatusResponse(0)
 )
 
 // define the regex for a UUID once up-front
@@ -225,6 +233,17 @@ func (m *ExampleRequest) validate(all bool) error {
 
 	// no validation rules for Public
 
+	if _, ok := _ExampleRequest_EnStatus_InLookup[m.GetEnStatus()]; !ok {
+		err := ExampleRequestValidationError{
+			field:  "EnStatus",
+			reason: "value must be in list [ENABLED DISABLED ]",
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if len(errors) > 0 {
 		return ExampleRequestMultiError(errors)
 	}
@@ -362,6 +381,12 @@ var _ interface {
 } = ExampleRequestValidationError{}
 
 var _ExampleRequest_Phone_Pattern = regexp.MustCompile("^[0-9\\-\\+]{9,20}$")
+
+var _ExampleRequest_EnStatus_InLookup = map[input.StatusRequest]struct{}{
+	0: {},
+	1: {},
+	2: {},
+}
 
 // Validate checks the field values on ExampleResponse with the rules defined
 // in the proto definition for this message. If any rules are violated, the
