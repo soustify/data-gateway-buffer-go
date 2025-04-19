@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PartnersAddressesService_Paginate_FullMethodName = "/soustify.datagateway.partners_addresses.PartnersAddressesService/Paginate"
-	PartnersAddressesService_Count_FullMethodName    = "/soustify.datagateway.partners_addresses.PartnersAddressesService/Count"
-	PartnersAddressesService_Create_FullMethodName   = "/soustify.datagateway.partners_addresses.PartnersAddressesService/Create"
-	PartnersAddressesService_Update_FullMethodName   = "/soustify.datagateway.partners_addresses.PartnersAddressesService/Update"
-	PartnersAddressesService_Inactive_FullMethodName = "/soustify.datagateway.partners_addresses.PartnersAddressesService/Inactive"
-	PartnersAddressesService_Active_FullMethodName   = "/soustify.datagateway.partners_addresses.PartnersAddressesService/Active"
-	PartnersAddressesService_FindOne_FullMethodName  = "/soustify.datagateway.partners_addresses.PartnersAddressesService/FindOne"
-	PartnersAddressesService_Delete_FullMethodName   = "/soustify.datagateway.partners_addresses.PartnersAddressesService/Delete"
+	PartnersAddressesService_Paginate_FullMethodName = "/partners_addresses.PartnersAddressesService/Paginate"
+	PartnersAddressesService_Count_FullMethodName    = "/partners_addresses.PartnersAddressesService/Count"
+	PartnersAddressesService_Create_FullMethodName   = "/partners_addresses.PartnersAddressesService/Create"
+	PartnersAddressesService_Update_FullMethodName   = "/partners_addresses.PartnersAddressesService/Update"
+	PartnersAddressesService_Inactive_FullMethodName = "/partners_addresses.PartnersAddressesService/Inactive"
+	PartnersAddressesService_Active_FullMethodName   = "/partners_addresses.PartnersAddressesService/Active"
+	PartnersAddressesService_FindOne_FullMethodName  = "/partners_addresses.PartnersAddressesService/FindOne"
+	PartnersAddressesService_Delete_FullMethodName   = "/partners_addresses.PartnersAddressesService/Delete"
 )
 
 // PartnersAddressesServiceClient is the client API for PartnersAddressesService service.
@@ -521,7 +521,7 @@ func (x *partnersAddressesServiceDeleteServer) Recv() (*input.UUIDRequest, error
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PartnersAddressesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.partners_addresses.PartnersAddressesService",
+	ServiceName: "partners_addresses.PartnersAddressesService",
 	HandlerType: (*PartnersAddressesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

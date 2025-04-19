@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ApplicationsService_Paginate_FullMethodName = "/soustify.datagateway.applications.ApplicationsService/Paginate"
-	ApplicationsService_Count_FullMethodName    = "/soustify.datagateway.applications.ApplicationsService/Count"
-	ApplicationsService_Create_FullMethodName   = "/soustify.datagateway.applications.ApplicationsService/Create"
-	ApplicationsService_Update_FullMethodName   = "/soustify.datagateway.applications.ApplicationsService/Update"
-	ApplicationsService_Inactive_FullMethodName = "/soustify.datagateway.applications.ApplicationsService/Inactive"
-	ApplicationsService_Active_FullMethodName   = "/soustify.datagateway.applications.ApplicationsService/Active"
-	ApplicationsService_FindOne_FullMethodName  = "/soustify.datagateway.applications.ApplicationsService/FindOne"
-	ApplicationsService_Delete_FullMethodName   = "/soustify.datagateway.applications.ApplicationsService/Delete"
+	ApplicationsService_Paginate_FullMethodName = "/applications.ApplicationsService/Paginate"
+	ApplicationsService_Count_FullMethodName    = "/applications.ApplicationsService/Count"
+	ApplicationsService_Create_FullMethodName   = "/applications.ApplicationsService/Create"
+	ApplicationsService_Update_FullMethodName   = "/applications.ApplicationsService/Update"
+	ApplicationsService_Inactive_FullMethodName = "/applications.ApplicationsService/Inactive"
+	ApplicationsService_Active_FullMethodName   = "/applications.ApplicationsService/Active"
+	ApplicationsService_FindOne_FullMethodName  = "/applications.ApplicationsService/FindOne"
+	ApplicationsService_Delete_FullMethodName   = "/applications.ApplicationsService/Delete"
 )
 
 // ApplicationsServiceClient is the client API for ApplicationsService service.
@@ -520,7 +520,7 @@ func (x *applicationsServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var ApplicationsService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.applications.ApplicationsService",
+	ServiceName: "applications.ApplicationsService",
 	HandlerType: (*ApplicationsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

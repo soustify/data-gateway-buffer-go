@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PartnersService_Paginate_FullMethodName = "/soustify.datagateway.partners.PartnersService/Paginate"
-	PartnersService_Count_FullMethodName    = "/soustify.datagateway.partners.PartnersService/Count"
-	PartnersService_Create_FullMethodName   = "/soustify.datagateway.partners.PartnersService/Create"
-	PartnersService_Update_FullMethodName   = "/soustify.datagateway.partners.PartnersService/Update"
-	PartnersService_Inactive_FullMethodName = "/soustify.datagateway.partners.PartnersService/Inactive"
-	PartnersService_Active_FullMethodName   = "/soustify.datagateway.partners.PartnersService/Active"
-	PartnersService_FindOne_FullMethodName  = "/soustify.datagateway.partners.PartnersService/FindOne"
-	PartnersService_Delete_FullMethodName   = "/soustify.datagateway.partners.PartnersService/Delete"
+	PartnersService_Paginate_FullMethodName = "/partners.PartnersService/Paginate"
+	PartnersService_Count_FullMethodName    = "/partners.PartnersService/Count"
+	PartnersService_Create_FullMethodName   = "/partners.PartnersService/Create"
+	PartnersService_Update_FullMethodName   = "/partners.PartnersService/Update"
+	PartnersService_Inactive_FullMethodName = "/partners.PartnersService/Inactive"
+	PartnersService_Active_FullMethodName   = "/partners.PartnersService/Active"
+	PartnersService_FindOne_FullMethodName  = "/partners.PartnersService/FindOne"
+	PartnersService_Delete_FullMethodName   = "/partners.PartnersService/Delete"
 )
 
 // PartnersServiceClient is the client API for PartnersService service.
@@ -520,7 +520,7 @@ func (x *partnersServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PartnersService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.partners.PartnersService",
+	ServiceName: "partners.PartnersService",
 	HandlerType: (*PartnersServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RolesService_Paginate_FullMethodName = "/soustify.datagateway.roles.RolesService/Paginate"
-	RolesService_Count_FullMethodName    = "/soustify.datagateway.roles.RolesService/Count"
-	RolesService_Create_FullMethodName   = "/soustify.datagateway.roles.RolesService/Create"
-	RolesService_Update_FullMethodName   = "/soustify.datagateway.roles.RolesService/Update"
-	RolesService_Inactive_FullMethodName = "/soustify.datagateway.roles.RolesService/Inactive"
-	RolesService_Active_FullMethodName   = "/soustify.datagateway.roles.RolesService/Active"
-	RolesService_FindOne_FullMethodName  = "/soustify.datagateway.roles.RolesService/FindOne"
-	RolesService_Delete_FullMethodName   = "/soustify.datagateway.roles.RolesService/Delete"
+	RolesService_Paginate_FullMethodName = "/roles.RolesService/Paginate"
+	RolesService_Count_FullMethodName    = "/roles.RolesService/Count"
+	RolesService_Create_FullMethodName   = "/roles.RolesService/Create"
+	RolesService_Update_FullMethodName   = "/roles.RolesService/Update"
+	RolesService_Inactive_FullMethodName = "/roles.RolesService/Inactive"
+	RolesService_Active_FullMethodName   = "/roles.RolesService/Active"
+	RolesService_FindOne_FullMethodName  = "/roles.RolesService/FindOne"
+	RolesService_Delete_FullMethodName   = "/roles.RolesService/Delete"
 )
 
 // RolesServiceClient is the client API for RolesService service.
@@ -520,7 +520,7 @@ func (x *rolesServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var RolesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.roles.RolesService",
+	ServiceName: "roles.RolesService",
 	HandlerType: (*RolesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

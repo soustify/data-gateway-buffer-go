@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CategoriesService_Paginate_FullMethodName = "/soustify.datagateway.categories.CategoriesService/Paginate"
-	CategoriesService_Count_FullMethodName    = "/soustify.datagateway.categories.CategoriesService/Count"
-	CategoriesService_Create_FullMethodName   = "/soustify.datagateway.categories.CategoriesService/Create"
-	CategoriesService_Update_FullMethodName   = "/soustify.datagateway.categories.CategoriesService/Update"
-	CategoriesService_Inactive_FullMethodName = "/soustify.datagateway.categories.CategoriesService/Inactive"
-	CategoriesService_Active_FullMethodName   = "/soustify.datagateway.categories.CategoriesService/Active"
-	CategoriesService_FindOne_FullMethodName  = "/soustify.datagateway.categories.CategoriesService/FindOne"
-	CategoriesService_Delete_FullMethodName   = "/soustify.datagateway.categories.CategoriesService/Delete"
+	CategoriesService_Paginate_FullMethodName = "/categories.CategoriesService/Paginate"
+	CategoriesService_Count_FullMethodName    = "/categories.CategoriesService/Count"
+	CategoriesService_Create_FullMethodName   = "/categories.CategoriesService/Create"
+	CategoriesService_Update_FullMethodName   = "/categories.CategoriesService/Update"
+	CategoriesService_Inactive_FullMethodName = "/categories.CategoriesService/Inactive"
+	CategoriesService_Active_FullMethodName   = "/categories.CategoriesService/Active"
+	CategoriesService_FindOne_FullMethodName  = "/categories.CategoriesService/FindOne"
+	CategoriesService_Delete_FullMethodName   = "/categories.CategoriesService/Delete"
 )
 
 // CategoriesServiceClient is the client API for CategoriesService service.
@@ -520,7 +520,7 @@ func (x *categoriesServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CategoriesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.categories.CategoriesService",
+	ServiceName: "categories.CategoriesService",
 	HandlerType: (*CategoriesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

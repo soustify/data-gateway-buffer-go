@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	CustomersService_Paginate_FullMethodName = "/soustify.datagateway.customers.CustomersService/Paginate"
-	CustomersService_Count_FullMethodName    = "/soustify.datagateway.customers.CustomersService/Count"
-	CustomersService_Create_FullMethodName   = "/soustify.datagateway.customers.CustomersService/Create"
-	CustomersService_Update_FullMethodName   = "/soustify.datagateway.customers.CustomersService/Update"
-	CustomersService_Inactive_FullMethodName = "/soustify.datagateway.customers.CustomersService/Inactive"
-	CustomersService_Active_FullMethodName   = "/soustify.datagateway.customers.CustomersService/Active"
-	CustomersService_FindOne_FullMethodName  = "/soustify.datagateway.customers.CustomersService/FindOne"
-	CustomersService_Delete_FullMethodName   = "/soustify.datagateway.customers.CustomersService/Delete"
+	CustomersService_Paginate_FullMethodName = "/customers.CustomersService/Paginate"
+	CustomersService_Count_FullMethodName    = "/customers.CustomersService/Count"
+	CustomersService_Create_FullMethodName   = "/customers.CustomersService/Create"
+	CustomersService_Update_FullMethodName   = "/customers.CustomersService/Update"
+	CustomersService_Inactive_FullMethodName = "/customers.CustomersService/Inactive"
+	CustomersService_Active_FullMethodName   = "/customers.CustomersService/Active"
+	CustomersService_FindOne_FullMethodName  = "/customers.CustomersService/FindOne"
+	CustomersService_Delete_FullMethodName   = "/customers.CustomersService/Delete"
 )
 
 // CustomersServiceClient is the client API for CustomersService service.
@@ -520,7 +520,7 @@ func (x *customersServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var CustomersService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.customers.CustomersService",
+	ServiceName: "customers.CustomersService",
 	HandlerType: (*CustomersServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PartnersCategoriesService_Paginate_FullMethodName = "/soustify.datagateway.partners_categories.PartnersCategoriesService/Paginate"
-	PartnersCategoriesService_Count_FullMethodName    = "/soustify.datagateway.partners_categories.PartnersCategoriesService/Count"
-	PartnersCategoriesService_Create_FullMethodName   = "/soustify.datagateway.partners_categories.PartnersCategoriesService/Create"
-	PartnersCategoriesService_Update_FullMethodName   = "/soustify.datagateway.partners_categories.PartnersCategoriesService/Update"
-	PartnersCategoriesService_Inactive_FullMethodName = "/soustify.datagateway.partners_categories.PartnersCategoriesService/Inactive"
-	PartnersCategoriesService_Active_FullMethodName   = "/soustify.datagateway.partners_categories.PartnersCategoriesService/Active"
-	PartnersCategoriesService_FindOne_FullMethodName  = "/soustify.datagateway.partners_categories.PartnersCategoriesService/FindOne"
-	PartnersCategoriesService_Delete_FullMethodName   = "/soustify.datagateway.partners_categories.PartnersCategoriesService/Delete"
+	PartnersCategoriesService_Paginate_FullMethodName = "/partners_categories.PartnersCategoriesService/Paginate"
+	PartnersCategoriesService_Count_FullMethodName    = "/partners_categories.PartnersCategoriesService/Count"
+	PartnersCategoriesService_Create_FullMethodName   = "/partners_categories.PartnersCategoriesService/Create"
+	PartnersCategoriesService_Update_FullMethodName   = "/partners_categories.PartnersCategoriesService/Update"
+	PartnersCategoriesService_Inactive_FullMethodName = "/partners_categories.PartnersCategoriesService/Inactive"
+	PartnersCategoriesService_Active_FullMethodName   = "/partners_categories.PartnersCategoriesService/Active"
+	PartnersCategoriesService_FindOne_FullMethodName  = "/partners_categories.PartnersCategoriesService/FindOne"
+	PartnersCategoriesService_Delete_FullMethodName   = "/partners_categories.PartnersCategoriesService/Delete"
 )
 
 // PartnersCategoriesServiceClient is the client API for PartnersCategoriesService service.
@@ -521,7 +521,7 @@ func (x *partnersCategoriesServiceDeleteServer) Recv() (*input.UUIDRequest, erro
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PartnersCategoriesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.partners_categories.PartnersCategoriesService",
+	ServiceName: "partners_categories.PartnersCategoriesService",
 	HandlerType: (*PartnersCategoriesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

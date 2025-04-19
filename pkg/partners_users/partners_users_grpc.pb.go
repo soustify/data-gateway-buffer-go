@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PartnersUsersService_Paginate_FullMethodName = "/soustify.datagateway.partners_users.PartnersUsersService/Paginate"
-	PartnersUsersService_Count_FullMethodName    = "/soustify.datagateway.partners_users.PartnersUsersService/Count"
-	PartnersUsersService_Create_FullMethodName   = "/soustify.datagateway.partners_users.PartnersUsersService/Create"
-	PartnersUsersService_Update_FullMethodName   = "/soustify.datagateway.partners_users.PartnersUsersService/Update"
-	PartnersUsersService_Inactive_FullMethodName = "/soustify.datagateway.partners_users.PartnersUsersService/Inactive"
-	PartnersUsersService_Active_FullMethodName   = "/soustify.datagateway.partners_users.PartnersUsersService/Active"
-	PartnersUsersService_FindOne_FullMethodName  = "/soustify.datagateway.partners_users.PartnersUsersService/FindOne"
-	PartnersUsersService_Delete_FullMethodName   = "/soustify.datagateway.partners_users.PartnersUsersService/Delete"
+	PartnersUsersService_Paginate_FullMethodName = "/partners_users.PartnersUsersService/Paginate"
+	PartnersUsersService_Count_FullMethodName    = "/partners_users.PartnersUsersService/Count"
+	PartnersUsersService_Create_FullMethodName   = "/partners_users.PartnersUsersService/Create"
+	PartnersUsersService_Update_FullMethodName   = "/partners_users.PartnersUsersService/Update"
+	PartnersUsersService_Inactive_FullMethodName = "/partners_users.PartnersUsersService/Inactive"
+	PartnersUsersService_Active_FullMethodName   = "/partners_users.PartnersUsersService/Active"
+	PartnersUsersService_FindOne_FullMethodName  = "/partners_users.PartnersUsersService/FindOne"
+	PartnersUsersService_Delete_FullMethodName   = "/partners_users.PartnersUsersService/Delete"
 )
 
 // PartnersUsersServiceClient is the client API for PartnersUsersService service.
@@ -520,7 +520,7 @@ func (x *partnersUsersServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PartnersUsersService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.partners_users.PartnersUsersService",
+	ServiceName: "partners_users.PartnersUsersService",
 	HandlerType: (*PartnersUsersServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

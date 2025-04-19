@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AdminUsersService_Paginate_FullMethodName = "/soustify.datagateway.admin_users.AdminUsersService/Paginate"
-	AdminUsersService_Count_FullMethodName    = "/soustify.datagateway.admin_users.AdminUsersService/Count"
-	AdminUsersService_Create_FullMethodName   = "/soustify.datagateway.admin_users.AdminUsersService/Create"
-	AdminUsersService_Update_FullMethodName   = "/soustify.datagateway.admin_users.AdminUsersService/Update"
-	AdminUsersService_Inactive_FullMethodName = "/soustify.datagateway.admin_users.AdminUsersService/Inactive"
-	AdminUsersService_Active_FullMethodName   = "/soustify.datagateway.admin_users.AdminUsersService/Active"
-	AdminUsersService_FindOne_FullMethodName  = "/soustify.datagateway.admin_users.AdminUsersService/FindOne"
-	AdminUsersService_Delete_FullMethodName   = "/soustify.datagateway.admin_users.AdminUsersService/Delete"
+	AdminUsersService_Paginate_FullMethodName = "/admin_users.AdminUsersService/Paginate"
+	AdminUsersService_Count_FullMethodName    = "/admin_users.AdminUsersService/Count"
+	AdminUsersService_Create_FullMethodName   = "/admin_users.AdminUsersService/Create"
+	AdminUsersService_Update_FullMethodName   = "/admin_users.AdminUsersService/Update"
+	AdminUsersService_Inactive_FullMethodName = "/admin_users.AdminUsersService/Inactive"
+	AdminUsersService_Active_FullMethodName   = "/admin_users.AdminUsersService/Active"
+	AdminUsersService_FindOne_FullMethodName  = "/admin_users.AdminUsersService/FindOne"
+	AdminUsersService_Delete_FullMethodName   = "/admin_users.AdminUsersService/Delete"
 )
 
 // AdminUsersServiceClient is the client API for AdminUsersService service.
@@ -520,7 +520,7 @@ func (x *adminUsersServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AdminUsersService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.admin_users.AdminUsersService",
+	ServiceName: "admin_users.AdminUsersService",
 	HandlerType: (*AdminUsersServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

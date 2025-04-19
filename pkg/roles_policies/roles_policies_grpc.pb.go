@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RolesPoliciesService_Paginate_FullMethodName = "/soustify.datagateway.roles_policies.RolesPoliciesService/Paginate"
-	RolesPoliciesService_Count_FullMethodName    = "/soustify.datagateway.roles_policies.RolesPoliciesService/Count"
-	RolesPoliciesService_Create_FullMethodName   = "/soustify.datagateway.roles_policies.RolesPoliciesService/Create"
-	RolesPoliciesService_Update_FullMethodName   = "/soustify.datagateway.roles_policies.RolesPoliciesService/Update"
-	RolesPoliciesService_Inactive_FullMethodName = "/soustify.datagateway.roles_policies.RolesPoliciesService/Inactive"
-	RolesPoliciesService_Active_FullMethodName   = "/soustify.datagateway.roles_policies.RolesPoliciesService/Active"
-	RolesPoliciesService_FindOne_FullMethodName  = "/soustify.datagateway.roles_policies.RolesPoliciesService/FindOne"
-	RolesPoliciesService_Delete_FullMethodName   = "/soustify.datagateway.roles_policies.RolesPoliciesService/Delete"
+	RolesPoliciesService_Paginate_FullMethodName = "/roles_policies.RolesPoliciesService/Paginate"
+	RolesPoliciesService_Count_FullMethodName    = "/roles_policies.RolesPoliciesService/Count"
+	RolesPoliciesService_Create_FullMethodName   = "/roles_policies.RolesPoliciesService/Create"
+	RolesPoliciesService_Update_FullMethodName   = "/roles_policies.RolesPoliciesService/Update"
+	RolesPoliciesService_Inactive_FullMethodName = "/roles_policies.RolesPoliciesService/Inactive"
+	RolesPoliciesService_Active_FullMethodName   = "/roles_policies.RolesPoliciesService/Active"
+	RolesPoliciesService_FindOne_FullMethodName  = "/roles_policies.RolesPoliciesService/FindOne"
+	RolesPoliciesService_Delete_FullMethodName   = "/roles_policies.RolesPoliciesService/Delete"
 )
 
 // RolesPoliciesServiceClient is the client API for RolesPoliciesService service.
@@ -520,7 +520,7 @@ func (x *rolesPoliciesServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var RolesPoliciesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.roles_policies.RolesPoliciesService",
+	ServiceName: "roles_policies.RolesPoliciesService",
 	HandlerType: (*RolesPoliciesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

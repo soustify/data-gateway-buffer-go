@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PartnersContactsService_Paginate_FullMethodName = "/soustify.datagateway.partners_contacts.PartnersContactsService/Paginate"
-	PartnersContactsService_Count_FullMethodName    = "/soustify.datagateway.partners_contacts.PartnersContactsService/Count"
-	PartnersContactsService_Create_FullMethodName   = "/soustify.datagateway.partners_contacts.PartnersContactsService/Create"
-	PartnersContactsService_Update_FullMethodName   = "/soustify.datagateway.partners_contacts.PartnersContactsService/Update"
-	PartnersContactsService_Inactive_FullMethodName = "/soustify.datagateway.partners_contacts.PartnersContactsService/Inactive"
-	PartnersContactsService_Active_FullMethodName   = "/soustify.datagateway.partners_contacts.PartnersContactsService/Active"
-	PartnersContactsService_FindOne_FullMethodName  = "/soustify.datagateway.partners_contacts.PartnersContactsService/FindOne"
-	PartnersContactsService_Delete_FullMethodName   = "/soustify.datagateway.partners_contacts.PartnersContactsService/Delete"
+	PartnersContactsService_Paginate_FullMethodName = "/partners_contacts.PartnersContactsService/Paginate"
+	PartnersContactsService_Count_FullMethodName    = "/partners_contacts.PartnersContactsService/Count"
+	PartnersContactsService_Create_FullMethodName   = "/partners_contacts.PartnersContactsService/Create"
+	PartnersContactsService_Update_FullMethodName   = "/partners_contacts.PartnersContactsService/Update"
+	PartnersContactsService_Inactive_FullMethodName = "/partners_contacts.PartnersContactsService/Inactive"
+	PartnersContactsService_Active_FullMethodName   = "/partners_contacts.PartnersContactsService/Active"
+	PartnersContactsService_FindOne_FullMethodName  = "/partners_contacts.PartnersContactsService/FindOne"
+	PartnersContactsService_Delete_FullMethodName   = "/partners_contacts.PartnersContactsService/Delete"
 )
 
 // PartnersContactsServiceClient is the client API for PartnersContactsService service.
@@ -521,7 +521,7 @@ func (x *partnersContactsServiceDeleteServer) Recv() (*input.UUIDRequest, error)
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var PartnersContactsService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.partners_contacts.PartnersContactsService",
+	ServiceName: "partners_contacts.PartnersContactsService",
 	HandlerType: (*PartnersContactsServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{

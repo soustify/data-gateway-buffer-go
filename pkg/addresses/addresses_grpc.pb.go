@@ -21,14 +21,14 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	AddressesService_Paginate_FullMethodName = "/soustify.datagateway.addresses.AddressesService/Paginate"
-	AddressesService_Count_FullMethodName    = "/soustify.datagateway.addresses.AddressesService/Count"
-	AddressesService_Create_FullMethodName   = "/soustify.datagateway.addresses.AddressesService/Create"
-	AddressesService_Update_FullMethodName   = "/soustify.datagateway.addresses.AddressesService/Update"
-	AddressesService_Inactive_FullMethodName = "/soustify.datagateway.addresses.AddressesService/Inactive"
-	AddressesService_Active_FullMethodName   = "/soustify.datagateway.addresses.AddressesService/Active"
-	AddressesService_FindOne_FullMethodName  = "/soustify.datagateway.addresses.AddressesService/FindOne"
-	AddressesService_Delete_FullMethodName   = "/soustify.datagateway.addresses.AddressesService/Delete"
+	AddressesService_Paginate_FullMethodName = "/addresses.AddressesService/Paginate"
+	AddressesService_Count_FullMethodName    = "/addresses.AddressesService/Count"
+	AddressesService_Create_FullMethodName   = "/addresses.AddressesService/Create"
+	AddressesService_Update_FullMethodName   = "/addresses.AddressesService/Update"
+	AddressesService_Inactive_FullMethodName = "/addresses.AddressesService/Inactive"
+	AddressesService_Active_FullMethodName   = "/addresses.AddressesService/Active"
+	AddressesService_FindOne_FullMethodName  = "/addresses.AddressesService/FindOne"
+	AddressesService_Delete_FullMethodName   = "/addresses.AddressesService/Delete"
 )
 
 // AddressesServiceClient is the client API for AddressesService service.
@@ -520,7 +520,7 @@ func (x *addressesServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var AddressesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "soustify.datagateway.addresses.AddressesService",
+	ServiceName: "addresses.AddressesService",
 	HandlerType: (*AddressesServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
