@@ -67,6 +67,18 @@ func (m *Request) validate(all bool) error {
 
 	var errors []error
 
+	if err := m._validateUuid(m.GetId()); err != nil {
+		err = RequestValidationError{
+			field:  "Id",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
 		err := RequestValidationError{
 			field:  "EnStatus",
@@ -91,6 +103,14 @@ func (m *Request) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return RequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *Request) _validateUuid(uuid string) error {
+	if matched := _roles_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil

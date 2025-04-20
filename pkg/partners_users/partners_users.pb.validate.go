@@ -67,6 +67,18 @@ func (m *Request) validate(all bool) error {
 
 	var errors []error
 
+	if err := m._validateUuid(m.GetId()); err != nil {
+		err = RequestValidationError{
+			field:  "Id",
+			reason: "value must be a valid UUID",
+			cause:  err,
+		}
+		if !all {
+			return err
+		}
+		errors = append(errors, err)
+	}
+
 	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
 		err := RequestValidationError{
 			field:  "EnStatus",
