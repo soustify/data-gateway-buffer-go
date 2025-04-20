@@ -17,10 +17,6 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
-
-	input "github.com/soustify/data-gateway-buffer-go/pkg/input"
-
-	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
 )
 
 // ensure the imports are used
@@ -37,10 +33,6 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
-
-	_ = input.StatusRequest(0)
-
-	_ = output.StatusResponse(0)
 )
 
 // define the regex for a UUID once up-front
@@ -79,10 +71,10 @@ func (m *Request) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
+	if utf8.RuneCountInString(m.GetNeighborhood()) > 200 {
 		err := RequestValidationError{
-			field:  "EnStatus",
-			reason: "value must be in list [ENABLED DISABLED]",
+			field:  "Neighborhood",
+			reason: "value length must be at most 200 runes",
 		}
 		if !all {
 			return err
@@ -139,17 +131,6 @@ func (m *Request) validate(all bool) error {
 	if utf8.RuneCountInString(m.GetComplement()) > 200 {
 		err := RequestValidationError{
 			field:  "Complement",
-			reason: "value length must be at most 200 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if utf8.RuneCountInString(m.GetNeighborhood()) > 200 {
-		err := RequestValidationError{
-			field:  "Neighborhood",
 			reason: "value length must be at most 200 runes",
 		}
 		if !all {
@@ -243,11 +224,6 @@ var _ interface {
 	ErrorName() string
 } = RequestValidationError{}
 
-var _Request_EnStatus_InLookup = map[input.StatusRequest]struct{}{
-	0: {},
-	1: {},
-}
-
 // Validate checks the field values on Response with the rules defined in the
 // proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
@@ -281,8 +257,6 @@ func (m *Response) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
-
-	// no validation rules for Status
 
 	if err := m._validateUuid(m.GetIdAuditable()); err != nil {
 		err = ResponseValidationError{

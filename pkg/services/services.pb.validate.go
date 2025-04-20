@@ -18,8 +18,6 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	input "github.com/soustify/data-gateway-buffer-go/pkg/input"
-
 	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
 )
 
@@ -37,8 +35,6 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
-
-	_ = input.StatusRequest(0)
 
 	_ = output.StatusResponse(0)
 )
@@ -67,10 +63,11 @@ func (m *Request) validate(all bool) error {
 
 	var errors []error
 
-	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
-		err := RequestValidationError{
-			field:  "EnStatus",
-			reason: "value must be in list [ENABLED DISABLED]",
+	if err := m._validateUuid(m.GetId()); err != nil {
+		err = RequestValidationError{
+			field:  "Id",
+			reason: "value must be a valid UUID",
+			cause:  err,
 		}
 		if !all {
 			return err
@@ -102,6 +99,14 @@ func (m *Request) validate(all bool) error {
 
 	if len(errors) > 0 {
 		return RequestMultiError(errors)
+	}
+
+	return nil
+}
+
+func (m *Request) _validateUuid(uuid string) error {
+	if matched := _services_uuidPattern.MatchString(uuid); !matched {
+		return errors.New("invalid uuid format")
 	}
 
 	return nil
@@ -176,11 +181,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RequestValidationError{}
-
-var _Request_EnStatus_InLookup = map[input.StatusRequest]struct{}{
-	0: {},
-	1: {},
-}
 
 // Validate checks the field values on Response with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

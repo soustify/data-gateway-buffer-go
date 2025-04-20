@@ -18,8 +18,6 @@ import (
 
 	"google.golang.org/protobuf/types/known/anypb"
 
-	input "github.com/soustify/data-gateway-buffer-go/pkg/input"
-
 	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
 )
 
@@ -37,8 +35,6 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
-
-	_ = input.StatusRequest(0)
 
 	_ = output.StatusResponse(0)
 )
@@ -79,17 +75,6 @@ func (m *Request) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
-		err := RequestValidationError{
-			field:  "EnStatus",
-			reason: "value must be in list [ENABLED DISABLED]",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 200 {
 		err := RequestValidationError{
 			field:  "Name",
@@ -105,18 +90,6 @@ func (m *Request) validate(all bool) error {
 		err := RequestValidationError{
 			field:  "Document",
 			reason: "value length must be at most 200 runes",
-		}
-		if !all {
-			return err
-		}
-		errors = append(errors, err)
-	}
-
-	if err := m._validateUuid(m.GetIdDocumentType()); err != nil {
-		err = RequestValidationError{
-			field:  "IdDocumentType",
-			reason: "value must be a valid UUID",
-			cause:  err,
 		}
 		if !all {
 			return err
@@ -208,11 +181,6 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = RequestValidationError{}
-
-var _Request_EnStatus_InLookup = map[input.StatusRequest]struct{}{
-	0: {},
-	1: {},
-}
 
 // Validate checks the field values on Response with the rules defined in the
 // proto definition for this message. If any rules are violated, the first

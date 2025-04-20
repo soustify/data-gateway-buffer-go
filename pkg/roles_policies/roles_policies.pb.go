@@ -92,11 +92,10 @@ type Response struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	IdRole      string                `protobuf:"bytes,1,opt,name=id_role,json=idRole,proto3" json:"id_role,omitempty"`
-	IdPolicy    string                `protobuf:"bytes,2,opt,name=id_policy,json=idPolicy,proto3" json:"id_policy,omitempty"`
-	IdAuditable string                `protobuf:"bytes,3,opt,name=id_auditable,json=idAuditable,proto3" json:"id_auditable,omitempty"`
-	Status      output.StatusResponse `protobuf:"varint,4,opt,name=status,proto3,enum=output.StatusResponse" json:"status,omitempty"`
-	Id          string                `protobuf:"bytes,5,opt,name=id,proto3" json:"id,omitempty"`
+	IdRole      string `protobuf:"bytes,1,opt,name=id_role,json=idRole,proto3" json:"id_role,omitempty"`
+	IdPolicy    string `protobuf:"bytes,2,opt,name=id_policy,json=idPolicy,proto3" json:"id_policy,omitempty"`
+	IdAuditable string `protobuf:"bytes,3,opt,name=id_auditable,json=idAuditable,proto3" json:"id_auditable,omitempty"`
+	Id          string `protobuf:"bytes,4,opt,name=id,proto3" json:"id,omitempty"`
 }
 
 func (x *Response) Reset() {
@@ -152,13 +151,6 @@ func (x *Response) GetIdAuditable() string {
 	return ""
 }
 
-func (x *Response) GetStatus() output.StatusResponse {
-	if x != nil {
-		return x.Status
-	}
-	return output.StatusResponse(0)
-}
-
 func (x *Response) GetId() string {
 	if x != nil {
 		return x.Id
@@ -183,7 +175,7 @@ var file_roles_policies_proto_rawDesc = []byte{
 	0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x08, 0x69,
 	0x64, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x12, 0x18, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x03, 0x20,
 	0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x02, 0x69,
-	0x64, 0x22, 0xcb, 0x01, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x21,
+	0x64, 0x22, 0x9b, 0x01, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x21,
 	0x0a, 0x07, 0x69, 0x64, 0x5f, 0x72, 0x6f, 0x6c, 0x65, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42,
 	0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x06, 0x69, 0x64, 0x52, 0x6f, 0x6c,
 	0x65, 0x12, 0x25, 0x0a, 0x09, 0x69, 0x64, 0x5f, 0x70, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x18, 0x02,
@@ -191,10 +183,7 @@ var file_roles_policies_proto_rawDesc = []byte{
 	0x69, 0x64, 0x50, 0x6f, 0x6c, 0x69, 0x63, 0x79, 0x12, 0x2b, 0x0a, 0x0c, 0x69, 0x64, 0x5f, 0x61,
 	0x75, 0x64, 0x69, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08,
 	0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0b, 0x69, 0x64, 0x41, 0x75, 0x64, 0x69,
-	0x74, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x2e, 0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18,
-	0x04, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x16, 0x2e, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x2e, 0x53,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x06, 0x73,
-	0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x18, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x05, 0x20, 0x01, 0x28,
+	0x74, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x18, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x04, 0x20, 0x01, 0x28,
 	0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x02, 0x69, 0x64, 0x32,
 	0x83, 0x04, 0x0a, 0x07, 0x53, 0x65, 0x72, 0x76, 0x69, 0x63, 0x65, 0x12, 0x40, 0x0a, 0x08, 0x50,
 	0x61, 0x67, 0x69, 0x6e, 0x61, 0x74, 0x65, 0x12, 0x18, 0x2e, 0x69, 0x6e, 0x70, 0x75, 0x74, 0x2e,
@@ -254,37 +243,35 @@ var file_roles_policies_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_roles_policies_proto_goTypes = []interface{}{
 	(*Request)(nil),                        // 0: roles_policies.Request
 	(*Response)(nil),                       // 1: roles_policies.Response
-	(output.StatusResponse)(0),             // 2: output.StatusResponse
-	(*input.PaginationRequest)(nil),        // 3: input.PaginationRequest
-	(*input.FilteredRequest)(nil),          // 4: input.FilteredRequest
-	(*input.UUIDRequest)(nil),              // 5: input.UUIDRequest
-	(*output.CountResponse)(nil),           // 6: output.CountResponse
-	(*output.PersistenceDataResponse)(nil), // 7: output.PersistenceDataResponse
-	(*output.StatusDataResponse)(nil),      // 8: output.StatusDataResponse
+	(*input.PaginationRequest)(nil),        // 2: input.PaginationRequest
+	(*input.FilteredRequest)(nil),          // 3: input.FilteredRequest
+	(*input.UUIDRequest)(nil),              // 4: input.UUIDRequest
+	(*output.CountResponse)(nil),           // 5: output.CountResponse
+	(*output.PersistenceDataResponse)(nil), // 6: output.PersistenceDataResponse
+	(*output.StatusDataResponse)(nil),      // 7: output.StatusDataResponse
 }
 var file_roles_policies_proto_depIdxs = []int32{
-	2, // 0: roles_policies.Response.status:type_name -> output.StatusResponse
-	3, // 1: roles_policies.Service.Paginate:input_type -> input.PaginationRequest
-	4, // 2: roles_policies.Service.Count:input_type -> input.FilteredRequest
-	0, // 3: roles_policies.Service.Create:input_type -> roles_policies.Request
-	0, // 4: roles_policies.Service.Update:input_type -> roles_policies.Request
-	5, // 5: roles_policies.Service.Inactive:input_type -> input.UUIDRequest
-	5, // 6: roles_policies.Service.Active:input_type -> input.UUIDRequest
-	5, // 7: roles_policies.Service.FindOne:input_type -> input.UUIDRequest
-	5, // 8: roles_policies.Service.Delete:input_type -> input.UUIDRequest
-	1, // 9: roles_policies.Service.Paginate:output_type -> roles_policies.Response
-	6, // 10: roles_policies.Service.Count:output_type -> output.CountResponse
-	7, // 11: roles_policies.Service.Create:output_type -> output.PersistenceDataResponse
-	7, // 12: roles_policies.Service.Update:output_type -> output.PersistenceDataResponse
-	8, // 13: roles_policies.Service.Inactive:output_type -> output.StatusDataResponse
-	8, // 14: roles_policies.Service.Active:output_type -> output.StatusDataResponse
-	1, // 15: roles_policies.Service.FindOne:output_type -> roles_policies.Response
-	7, // 16: roles_policies.Service.Delete:output_type -> output.PersistenceDataResponse
-	9, // [9:17] is the sub-list for method output_type
-	1, // [1:9] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	2, // 0: roles_policies.Service.Paginate:input_type -> input.PaginationRequest
+	3, // 1: roles_policies.Service.Count:input_type -> input.FilteredRequest
+	0, // 2: roles_policies.Service.Create:input_type -> roles_policies.Request
+	0, // 3: roles_policies.Service.Update:input_type -> roles_policies.Request
+	4, // 4: roles_policies.Service.Inactive:input_type -> input.UUIDRequest
+	4, // 5: roles_policies.Service.Active:input_type -> input.UUIDRequest
+	4, // 6: roles_policies.Service.FindOne:input_type -> input.UUIDRequest
+	4, // 7: roles_policies.Service.Delete:input_type -> input.UUIDRequest
+	1, // 8: roles_policies.Service.Paginate:output_type -> roles_policies.Response
+	5, // 9: roles_policies.Service.Count:output_type -> output.CountResponse
+	6, // 10: roles_policies.Service.Create:output_type -> output.PersistenceDataResponse
+	6, // 11: roles_policies.Service.Update:output_type -> output.PersistenceDataResponse
+	7, // 12: roles_policies.Service.Inactive:output_type -> output.StatusDataResponse
+	7, // 13: roles_policies.Service.Active:output_type -> output.StatusDataResponse
+	1, // 14: roles_policies.Service.FindOne:output_type -> roles_policies.Response
+	6, // 15: roles_policies.Service.Delete:output_type -> output.PersistenceDataResponse
+	8, // [8:16] is the sub-list for method output_type
+	0, // [0:8] is the sub-list for method input_type
+	0, // [0:0] is the sub-list for extension type_name
+	0, // [0:0] is the sub-list for extension extendee
+	0, // [0:0] is the sub-list for field type_name
 }
 
 func init() { file_roles_policies_proto_init() }

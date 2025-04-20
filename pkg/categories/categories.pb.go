@@ -29,9 +29,8 @@ type Request struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id       string              `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	EnStatus input.StatusRequest `protobuf:"varint,2,opt,name=en_status,json=enStatus,proto3,enum=input.StatusRequest" json:"en_status,omitempty"`
-	Name     string              `protobuf:"bytes,3,opt,name=name,proto3" json:"name,omitempty"`
+	Id   string `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Name string `protobuf:"bytes,2,opt,name=name,proto3" json:"name,omitempty"`
 }
 
 func (x *Request) Reset() {
@@ -71,13 +70,6 @@ func (x *Request) GetId() string {
 		return x.Id
 	}
 	return ""
-}
-
-func (x *Request) GetEnStatus() input.StatusRequest {
-	if x != nil {
-		return x.EnStatus
-	}
-	return input.StatusRequest(0)
 }
 
 func (x *Request) GetName() string {
@@ -167,14 +159,10 @@ var file_categories_proto_rawDesc = []byte{
 	0x70, 0x75, 0x74, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x0e, 0x76, 0x61, 0x6c, 0x69, 0x64,
 	0x61, 0x74, 0x65, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x1a, 0x1f, 0x67, 0x6f, 0x6f, 0x67, 0x6c,
 	0x65, 0x2f, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x62, 0x75, 0x66, 0x2f, 0x74, 0x69, 0x6d, 0x65, 0x73,
-	0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x82, 0x01, 0x0a, 0x07, 0x52,
-	0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01,
-	0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x02, 0x69, 0x64,
-	0x12, 0x3d, 0x0a, 0x09, 0x65, 0x6e, 0x5f, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20,
-	0x01, 0x28, 0x0e, 0x32, 0x14, 0x2e, 0x69, 0x6e, 0x70, 0x75, 0x74, 0x2e, 0x53, 0x74, 0x61, 0x74,
-	0x75, 0x73, 0x52, 0x65, 0x71, 0x75, 0x65, 0x73, 0x74, 0x42, 0x0a, 0xfa, 0x42, 0x07, 0x82, 0x01,
-	0x04, 0x18, 0x00, 0x18, 0x01, 0x52, 0x08, 0x65, 0x6e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12,
-	0x1e, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x03, 0x20, 0x01, 0x28, 0x09, 0x42, 0x0a, 0xfa,
+	0x74, 0x61, 0x6d, 0x70, 0x2e, 0x70, 0x72, 0x6f, 0x74, 0x6f, 0x22, 0x43, 0x0a, 0x07, 0x52, 0x65,
+	0x71, 0x75, 0x65, 0x73, 0x74, 0x12, 0x18, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28,
+	0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x02, 0x69, 0x64, 0x12,
+	0x1e, 0x0a, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x18, 0x02, 0x20, 0x01, 0x28, 0x09, 0x42, 0x0a, 0xfa,
 	0x42, 0x07, 0x72, 0x05, 0x10, 0x01, 0x18, 0xc8, 0x01, 0x52, 0x04, 0x6e, 0x61, 0x6d, 0x65, 0x22,
 	0xa1, 0x01, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x02,
 	0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0,
@@ -243,39 +231,37 @@ var file_categories_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_categories_proto_goTypes = []interface{}{
 	(*Request)(nil),                        // 0: categories.Request
 	(*Response)(nil),                       // 1: categories.Response
-	(input.StatusRequest)(0),               // 2: input.StatusRequest
-	(output.StatusResponse)(0),             // 3: output.StatusResponse
-	(*input.PaginationRequest)(nil),        // 4: input.PaginationRequest
-	(*input.FilteredRequest)(nil),          // 5: input.FilteredRequest
-	(*input.UUIDRequest)(nil),              // 6: input.UUIDRequest
-	(*output.CountResponse)(nil),           // 7: output.CountResponse
-	(*output.PersistenceDataResponse)(nil), // 8: output.PersistenceDataResponse
-	(*output.StatusDataResponse)(nil),      // 9: output.StatusDataResponse
+	(output.StatusResponse)(0),             // 2: output.StatusResponse
+	(*input.PaginationRequest)(nil),        // 3: input.PaginationRequest
+	(*input.FilteredRequest)(nil),          // 4: input.FilteredRequest
+	(*input.UUIDRequest)(nil),              // 5: input.UUIDRequest
+	(*output.CountResponse)(nil),           // 6: output.CountResponse
+	(*output.PersistenceDataResponse)(nil), // 7: output.PersistenceDataResponse
+	(*output.StatusDataResponse)(nil),      // 8: output.StatusDataResponse
 }
 var file_categories_proto_depIdxs = []int32{
-	2,  // 0: categories.Request.en_status:type_name -> input.StatusRequest
-	3,  // 1: categories.Response.status:type_name -> output.StatusResponse
-	4,  // 2: categories.Service.Paginate:input_type -> input.PaginationRequest
-	5,  // 3: categories.Service.Count:input_type -> input.FilteredRequest
-	0,  // 4: categories.Service.Create:input_type -> categories.Request
-	0,  // 5: categories.Service.Update:input_type -> categories.Request
-	6,  // 6: categories.Service.Inactive:input_type -> input.UUIDRequest
-	6,  // 7: categories.Service.Active:input_type -> input.UUIDRequest
-	6,  // 8: categories.Service.FindOne:input_type -> input.UUIDRequest
-	6,  // 9: categories.Service.Delete:input_type -> input.UUIDRequest
-	1,  // 10: categories.Service.Paginate:output_type -> categories.Response
-	7,  // 11: categories.Service.Count:output_type -> output.CountResponse
-	8,  // 12: categories.Service.Create:output_type -> output.PersistenceDataResponse
-	8,  // 13: categories.Service.Update:output_type -> output.PersistenceDataResponse
-	9,  // 14: categories.Service.Inactive:output_type -> output.StatusDataResponse
-	9,  // 15: categories.Service.Active:output_type -> output.StatusDataResponse
-	1,  // 16: categories.Service.FindOne:output_type -> categories.Response
-	8,  // 17: categories.Service.Delete:output_type -> output.PersistenceDataResponse
-	10, // [10:18] is the sub-list for method output_type
-	2,  // [2:10] is the sub-list for method input_type
-	2,  // [2:2] is the sub-list for extension type_name
-	2,  // [2:2] is the sub-list for extension extendee
-	0,  // [0:2] is the sub-list for field type_name
+	2, // 0: categories.Response.status:type_name -> output.StatusResponse
+	3, // 1: categories.Service.Paginate:input_type -> input.PaginationRequest
+	4, // 2: categories.Service.Count:input_type -> input.FilteredRequest
+	0, // 3: categories.Service.Create:input_type -> categories.Request
+	0, // 4: categories.Service.Update:input_type -> categories.Request
+	5, // 5: categories.Service.Inactive:input_type -> input.UUIDRequest
+	5, // 6: categories.Service.Active:input_type -> input.UUIDRequest
+	5, // 7: categories.Service.FindOne:input_type -> input.UUIDRequest
+	5, // 8: categories.Service.Delete:input_type -> input.UUIDRequest
+	1, // 9: categories.Service.Paginate:output_type -> categories.Response
+	6, // 10: categories.Service.Count:output_type -> output.CountResponse
+	7, // 11: categories.Service.Create:output_type -> output.PersistenceDataResponse
+	7, // 12: categories.Service.Update:output_type -> output.PersistenceDataResponse
+	8, // 13: categories.Service.Inactive:output_type -> output.StatusDataResponse
+	8, // 14: categories.Service.Active:output_type -> output.StatusDataResponse
+	1, // 15: categories.Service.FindOne:output_type -> categories.Response
+	7, // 16: categories.Service.Delete:output_type -> output.PersistenceDataResponse
+	9, // [9:17] is the sub-list for method output_type
+	1, // [1:9] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_categories_proto_init() }
