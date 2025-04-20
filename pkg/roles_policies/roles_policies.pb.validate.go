@@ -17,6 +17,8 @@ import (
 	"unicode/utf8"
 
 	"google.golang.org/protobuf/types/known/anypb"
+
+	output "github.com/soustify/data-gateway-buffer-go/pkg/output"
 )
 
 // ensure the imports are used
@@ -33,6 +35,8 @@ var (
 	_ = (*mail.Address)(nil)
 	_ = anypb.Any{}
 	_ = sort.Sort
+
+	_ = output.StatusResponse(0)
 )
 
 // define the regex for a UUID once up-front
@@ -249,6 +253,8 @@ func (m *Response) validate(all bool) error {
 		}
 		errors = append(errors, err)
 	}
+
+	// no validation rules for Status
 
 	if len(errors) > 0 {
 		return ResponseMultiError(errors)

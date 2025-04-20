@@ -132,15 +132,16 @@ type Response struct {
 	sizeCache     protoimpl.SizeCache
 	unknownFields protoimpl.UnknownFields
 
-	Id           string  `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
-	IdAuditable  string  `protobuf:"bytes,3,opt,name=id_auditable,json=idAuditable,proto3" json:"id_auditable,omitempty"`
-	Street       string  `protobuf:"bytes,4,opt,name=street,proto3" json:"street,omitempty"`
-	Number       float64 `protobuf:"fixed64,5,opt,name=number,proto3" json:"number,omitempty"`
-	Latitude     float64 `protobuf:"fixed64,6,opt,name=latitude,proto3" json:"latitude,omitempty"`
-	Longitude    float64 `protobuf:"fixed64,7,opt,name=longitude,proto3" json:"longitude,omitempty"`
-	ZipCode      string  `protobuf:"bytes,8,opt,name=zip_code,json=zipCode,proto3" json:"zip_code,omitempty"`
-	Complement   string  `protobuf:"bytes,9,opt,name=complement,proto3" json:"complement,omitempty"`
-	Neighborhood string  `protobuf:"bytes,10,opt,name=neighborhood,proto3" json:"neighborhood,omitempty"`
+	Id           string                `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Status       output.StatusResponse `protobuf:"varint,2,opt,name=status,proto3,enum=output.StatusResponse" json:"status,omitempty"`
+	IdAuditable  string                `protobuf:"bytes,3,opt,name=id_auditable,json=idAuditable,proto3" json:"id_auditable,omitempty"`
+	Street       string                `protobuf:"bytes,4,opt,name=street,proto3" json:"street,omitempty"`
+	Number       float64               `protobuf:"fixed64,5,opt,name=number,proto3" json:"number,omitempty"`
+	Latitude     float64               `protobuf:"fixed64,6,opt,name=latitude,proto3" json:"latitude,omitempty"`
+	Longitude    float64               `protobuf:"fixed64,7,opt,name=longitude,proto3" json:"longitude,omitempty"`
+	ZipCode      string                `protobuf:"bytes,8,opt,name=zip_code,json=zipCode,proto3" json:"zip_code,omitempty"`
+	Complement   string                `protobuf:"bytes,9,opt,name=complement,proto3" json:"complement,omitempty"`
+	Neighborhood string                `protobuf:"bytes,10,opt,name=neighborhood,proto3" json:"neighborhood,omitempty"`
 }
 
 func (x *Response) Reset() {
@@ -180,6 +181,13 @@ func (x *Response) GetId() string {
 		return x.Id
 	}
 	return ""
+}
+
+func (x *Response) GetStatus() output.StatusResponse {
+	if x != nil {
+		return x.Status
+	}
+	return output.StatusResponse(0)
 }
 
 func (x *Response) GetIdAuditable() string {
@@ -268,9 +276,12 @@ var file_addresses_proto_rawDesc = []byte{
 	0x01, 0x18, 0xc8, 0x01, 0x52, 0x07, 0x7a, 0x69, 0x70, 0x43, 0x6f, 0x64, 0x65, 0x12, 0x28, 0x0a,
 	0x0a, 0x63, 0x6f, 0x6d, 0x70, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x18, 0x08, 0x20, 0x01, 0x28,
 	0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0x18, 0xc8, 0x01, 0x52, 0x0a, 0x63, 0x6f, 0x6d,
-	0x70, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0xfa, 0x02, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70,
+	0x70, 0x6c, 0x65, 0x6d, 0x65, 0x6e, 0x74, 0x22, 0xaa, 0x03, 0x0a, 0x08, 0x52, 0x65, 0x73, 0x70,
 	0x6f, 0x6e, 0x73, 0x65, 0x12, 0x18, 0x0a, 0x02, 0x69, 0x64, 0x18, 0x01, 0x20, 0x01, 0x28, 0x09,
-	0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x02, 0x69, 0x64, 0x12, 0x2b,
+	0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x02, 0x69, 0x64, 0x12, 0x2e,
+	0x0a, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x18, 0x02, 0x20, 0x01, 0x28, 0x0e, 0x32, 0x16,
+	0x2e, 0x6f, 0x75, 0x74, 0x70, 0x75, 0x74, 0x2e, 0x53, 0x74, 0x61, 0x74, 0x75, 0x73, 0x52, 0x65,
+	0x73, 0x70, 0x6f, 0x6e, 0x73, 0x65, 0x52, 0x06, 0x73, 0x74, 0x61, 0x74, 0x75, 0x73, 0x12, 0x2b,
 	0x0a, 0x0c, 0x69, 0x64, 0x5f, 0x61, 0x75, 0x64, 0x69, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x18, 0x03,
 	0x20, 0x01, 0x28, 0x09, 0x42, 0x08, 0xfa, 0x42, 0x05, 0x72, 0x03, 0xb0, 0x01, 0x01, 0x52, 0x0b,
 	0x69, 0x64, 0x41, 0x75, 0x64, 0x69, 0x74, 0x61, 0x62, 0x6c, 0x65, 0x12, 0x20, 0x0a, 0x06, 0x73,
@@ -348,35 +359,37 @@ var file_addresses_proto_msgTypes = make([]protoimpl.MessageInfo, 2)
 var file_addresses_proto_goTypes = []interface{}{
 	(*Request)(nil),                        // 0: addresses.Request
 	(*Response)(nil),                       // 1: addresses.Response
-	(*input.PaginationRequest)(nil),        // 2: input.PaginationRequest
-	(*input.FilteredRequest)(nil),          // 3: input.FilteredRequest
-	(*input.UUIDRequest)(nil),              // 4: input.UUIDRequest
-	(*output.CountResponse)(nil),           // 5: output.CountResponse
-	(*output.PersistenceDataResponse)(nil), // 6: output.PersistenceDataResponse
-	(*output.StatusDataResponse)(nil),      // 7: output.StatusDataResponse
+	(output.StatusResponse)(0),             // 2: output.StatusResponse
+	(*input.PaginationRequest)(nil),        // 3: input.PaginationRequest
+	(*input.FilteredRequest)(nil),          // 4: input.FilteredRequest
+	(*input.UUIDRequest)(nil),              // 5: input.UUIDRequest
+	(*output.CountResponse)(nil),           // 6: output.CountResponse
+	(*output.PersistenceDataResponse)(nil), // 7: output.PersistenceDataResponse
+	(*output.StatusDataResponse)(nil),      // 8: output.StatusDataResponse
 }
 var file_addresses_proto_depIdxs = []int32{
-	2, // 0: addresses.Service.Paginate:input_type -> input.PaginationRequest
-	3, // 1: addresses.Service.Count:input_type -> input.FilteredRequest
-	0, // 2: addresses.Service.Create:input_type -> addresses.Request
-	0, // 3: addresses.Service.Update:input_type -> addresses.Request
-	4, // 4: addresses.Service.Inactive:input_type -> input.UUIDRequest
-	4, // 5: addresses.Service.Active:input_type -> input.UUIDRequest
-	4, // 6: addresses.Service.FindOne:input_type -> input.UUIDRequest
-	4, // 7: addresses.Service.Delete:input_type -> input.UUIDRequest
-	1, // 8: addresses.Service.Paginate:output_type -> addresses.Response
-	5, // 9: addresses.Service.Count:output_type -> output.CountResponse
-	6, // 10: addresses.Service.Create:output_type -> output.PersistenceDataResponse
-	6, // 11: addresses.Service.Update:output_type -> output.PersistenceDataResponse
-	7, // 12: addresses.Service.Inactive:output_type -> output.StatusDataResponse
-	7, // 13: addresses.Service.Active:output_type -> output.StatusDataResponse
-	1, // 14: addresses.Service.FindOne:output_type -> addresses.Response
-	6, // 15: addresses.Service.Delete:output_type -> output.PersistenceDataResponse
-	8, // [8:16] is the sub-list for method output_type
-	0, // [0:8] is the sub-list for method input_type
-	0, // [0:0] is the sub-list for extension type_name
-	0, // [0:0] is the sub-list for extension extendee
-	0, // [0:0] is the sub-list for field type_name
+	2, // 0: addresses.Response.status:type_name -> output.StatusResponse
+	3, // 1: addresses.Service.Paginate:input_type -> input.PaginationRequest
+	4, // 2: addresses.Service.Count:input_type -> input.FilteredRequest
+	0, // 3: addresses.Service.Create:input_type -> addresses.Request
+	0, // 4: addresses.Service.Update:input_type -> addresses.Request
+	5, // 5: addresses.Service.Inactive:input_type -> input.UUIDRequest
+	5, // 6: addresses.Service.Active:input_type -> input.UUIDRequest
+	5, // 7: addresses.Service.FindOne:input_type -> input.UUIDRequest
+	5, // 8: addresses.Service.Delete:input_type -> input.UUIDRequest
+	1, // 9: addresses.Service.Paginate:output_type -> addresses.Response
+	6, // 10: addresses.Service.Count:output_type -> output.CountResponse
+	7, // 11: addresses.Service.Create:output_type -> output.PersistenceDataResponse
+	7, // 12: addresses.Service.Update:output_type -> output.PersistenceDataResponse
+	8, // 13: addresses.Service.Inactive:output_type -> output.StatusDataResponse
+	8, // 14: addresses.Service.Active:output_type -> output.StatusDataResponse
+	1, // 15: addresses.Service.FindOne:output_type -> addresses.Response
+	7, // 16: addresses.Service.Delete:output_type -> output.PersistenceDataResponse
+	9, // [9:17] is the sub-list for method output_type
+	1, // [1:9] is the sub-list for method input_type
+	1, // [1:1] is the sub-list for extension type_name
+	1, // [1:1] is the sub-list for extension extendee
+	0, // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_addresses_proto_init() }
