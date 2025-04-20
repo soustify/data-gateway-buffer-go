@@ -21,44 +21,44 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PartnersUsersService_Paginate_FullMethodName = "/partners_users.PartnersUsersService/Paginate"
-	PartnersUsersService_Count_FullMethodName    = "/partners_users.PartnersUsersService/Count"
-	PartnersUsersService_Create_FullMethodName   = "/partners_users.PartnersUsersService/Create"
-	PartnersUsersService_Update_FullMethodName   = "/partners_users.PartnersUsersService/Update"
-	PartnersUsersService_Inactive_FullMethodName = "/partners_users.PartnersUsersService/Inactive"
-	PartnersUsersService_Active_FullMethodName   = "/partners_users.PartnersUsersService/Active"
-	PartnersUsersService_FindOne_FullMethodName  = "/partners_users.PartnersUsersService/FindOne"
-	PartnersUsersService_Delete_FullMethodName   = "/partners_users.PartnersUsersService/Delete"
+	Service_Paginate_FullMethodName = "/partners_users.Service/Paginate"
+	Service_Count_FullMethodName    = "/partners_users.Service/Count"
+	Service_Create_FullMethodName   = "/partners_users.Service/Create"
+	Service_Update_FullMethodName   = "/partners_users.Service/Update"
+	Service_Inactive_FullMethodName = "/partners_users.Service/Inactive"
+	Service_Active_FullMethodName   = "/partners_users.Service/Active"
+	Service_FindOne_FullMethodName  = "/partners_users.Service/FindOne"
+	Service_Delete_FullMethodName   = "/partners_users.Service/Delete"
 )
 
-// PartnersUsersServiceClient is the client API for PartnersUsersService service.
+// ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PartnersUsersServiceClient interface {
-	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (PartnersUsersService_PaginateClient, error)
+type ServiceClient interface {
+	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error)
 	Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error)
-	Create(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_CreateClient, error)
-	Update(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_UpdateClient, error)
-	Inactive(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_InactiveClient, error)
-	Active(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_ActiveClient, error)
-	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*PartnersUsersResponse, error)
-	Delete(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_DeleteClient, error)
+	Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error)
+	Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error)
+	Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error)
+	Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error)
+	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error)
+	Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error)
 }
 
-type partnersUsersServiceClient struct {
+type serviceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPartnersUsersServiceClient(cc grpc.ClientConnInterface) PartnersUsersServiceClient {
-	return &partnersUsersServiceClient{cc}
+func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
+	return &serviceClient{cc}
 }
 
-func (c *partnersUsersServiceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (PartnersUsersService_PaginateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersUsersService_ServiceDesc.Streams[0], PartnersUsersService_Paginate_FullMethodName, opts...)
+func (c *serviceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_Paginate_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersUsersServicePaginateClient{stream}
+	x := &servicePaginateClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -68,56 +68,56 @@ func (c *partnersUsersServiceClient) Paginate(ctx context.Context, in *input.Pag
 	return x, nil
 }
 
-type PartnersUsersService_PaginateClient interface {
-	Recv() (*PartnersUsersResponse, error)
+type Service_PaginateClient interface {
+	Recv() (*Response, error)
 	grpc.ClientStream
 }
 
-type partnersUsersServicePaginateClient struct {
+type servicePaginateClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersUsersServicePaginateClient) Recv() (*PartnersUsersResponse, error) {
-	m := new(PartnersUsersResponse)
+func (x *servicePaginateClient) Recv() (*Response, error) {
+	m := new(Response)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *partnersUsersServiceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
+func (c *serviceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
 	out := new(output.CountResponse)
-	err := c.cc.Invoke(ctx, PartnersUsersService_Count_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_Count_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *partnersUsersServiceClient) Create(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_CreateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersUsersService_ServiceDesc.Streams[1], PartnersUsersService_Create_FullMethodName, opts...)
+func (c *serviceClient) Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[1], Service_Create_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersUsersServiceCreateClient{stream}
+	x := &serviceCreateClient{stream}
 	return x, nil
 }
 
-type PartnersUsersService_CreateClient interface {
-	Send(*PartnersUsersRequest) error
+type Service_CreateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersUsersServiceCreateClient struct {
+type serviceCreateClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersUsersServiceCreateClient) Send(m *PartnersUsersRequest) error {
+func (x *serviceCreateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -128,30 +128,30 @@ func (x *partnersUsersServiceCreateClient) CloseAndRecv() (*output.PersistenceDa
 	return m, nil
 }
 
-func (c *partnersUsersServiceClient) Update(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_UpdateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersUsersService_ServiceDesc.Streams[2], PartnersUsersService_Update_FullMethodName, opts...)
+func (c *serviceClient) Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[2], Service_Update_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersUsersServiceUpdateClient{stream}
+	x := &serviceUpdateClient{stream}
 	return x, nil
 }
 
-type PartnersUsersService_UpdateClient interface {
-	Send(*PartnersUsersRequest) error
+type Service_UpdateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersUsersServiceUpdateClient struct {
+type serviceUpdateClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersUsersServiceUpdateClient) Send(m *PartnersUsersRequest) error {
+func (x *serviceUpdateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -162,30 +162,30 @@ func (x *partnersUsersServiceUpdateClient) CloseAndRecv() (*output.PersistenceDa
 	return m, nil
 }
 
-func (c *partnersUsersServiceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_InactiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersUsersService_ServiceDesc.Streams[3], PartnersUsersService_Inactive_FullMethodName, opts...)
+func (c *serviceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[3], Service_Inactive_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersUsersServiceInactiveClient{stream}
+	x := &serviceInactiveClient{stream}
 	return x, nil
 }
 
-type PartnersUsersService_InactiveClient interface {
+type Service_InactiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersUsersServiceInactiveClient struct {
+type serviceInactiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersUsersServiceInactiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceInactiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -196,30 +196,30 @@ func (x *partnersUsersServiceInactiveClient) CloseAndRecv() (*output.StatusDataR
 	return m, nil
 }
 
-func (c *partnersUsersServiceClient) Active(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_ActiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersUsersService_ServiceDesc.Streams[4], PartnersUsersService_Active_FullMethodName, opts...)
+func (c *serviceClient) Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[4], Service_Active_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersUsersServiceActiveClient{stream}
+	x := &serviceActiveClient{stream}
 	return x, nil
 }
 
-type PartnersUsersService_ActiveClient interface {
+type Service_ActiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersUsersServiceActiveClient struct {
+type serviceActiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersUsersServiceActiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceActiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -230,39 +230,39 @@ func (x *partnersUsersServiceActiveClient) CloseAndRecv() (*output.StatusDataRes
 	return m, nil
 }
 
-func (c *partnersUsersServiceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*PartnersUsersResponse, error) {
-	out := new(PartnersUsersResponse)
-	err := c.cc.Invoke(ctx, PartnersUsersService_FindOne_FullMethodName, in, out, opts...)
+func (c *serviceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, Service_FindOne_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *partnersUsersServiceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (PartnersUsersService_DeleteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersUsersService_ServiceDesc.Streams[5], PartnersUsersService_Delete_FullMethodName, opts...)
+func (c *serviceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[5], Service_Delete_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersUsersServiceDeleteClient{stream}
+	x := &serviceDeleteClient{stream}
 	return x, nil
 }
 
-type PartnersUsersService_DeleteClient interface {
+type Service_DeleteClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersUsersServiceDeleteClient struct {
+type serviceDeleteClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersUsersServiceDeleteClient) Send(m *input.UUIDRequest) error {
+func (x *serviceDeleteClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -273,172 +273,172 @@ func (x *partnersUsersServiceDeleteClient) CloseAndRecv() (*output.PersistenceDa
 	return m, nil
 }
 
-// PartnersUsersServiceServer is the server API for PartnersUsersService service.
-// All implementations must embed UnimplementedPartnersUsersServiceServer
+// ServiceServer is the server API for Service service.
+// All implementations must embed UnimplementedServiceServer
 // for forward compatibility
-type PartnersUsersServiceServer interface {
-	Paginate(*input.PaginationRequest, PartnersUsersService_PaginateServer) error
+type ServiceServer interface {
+	Paginate(*input.PaginationRequest, Service_PaginateServer) error
 	Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error)
-	Create(PartnersUsersService_CreateServer) error
-	Update(PartnersUsersService_UpdateServer) error
-	Inactive(PartnersUsersService_InactiveServer) error
-	Active(PartnersUsersService_ActiveServer) error
-	FindOne(context.Context, *input.UUIDRequest) (*PartnersUsersResponse, error)
-	Delete(PartnersUsersService_DeleteServer) error
-	mustEmbedUnimplementedPartnersUsersServiceServer()
+	Create(Service_CreateServer) error
+	Update(Service_UpdateServer) error
+	Inactive(Service_InactiveServer) error
+	Active(Service_ActiveServer) error
+	FindOne(context.Context, *input.UUIDRequest) (*Response, error)
+	Delete(Service_DeleteServer) error
+	mustEmbedUnimplementedServiceServer()
 }
 
-// UnimplementedPartnersUsersServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedPartnersUsersServiceServer struct {
+// UnimplementedServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedPartnersUsersServiceServer) Paginate(*input.PaginationRequest, PartnersUsersService_PaginateServer) error {
+func (UnimplementedServiceServer) Paginate(*input.PaginationRequest, Service_PaginateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Paginate not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
+func (UnimplementedServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Count not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) Create(PartnersUsersService_CreateServer) error {
+func (UnimplementedServiceServer) Create(Service_CreateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) Update(PartnersUsersService_UpdateServer) error {
+func (UnimplementedServiceServer) Update(Service_UpdateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) Inactive(PartnersUsersService_InactiveServer) error {
+func (UnimplementedServiceServer) Inactive(Service_InactiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Inactive not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) Active(PartnersUsersService_ActiveServer) error {
+func (UnimplementedServiceServer) Active(Service_ActiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Active not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) FindOne(context.Context, *input.UUIDRequest) (*PartnersUsersResponse, error) {
+func (UnimplementedServiceServer) FindOne(context.Context, *input.UUIDRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) Delete(PartnersUsersService_DeleteServer) error {
+func (UnimplementedServiceServer) Delete(Service_DeleteServer) error {
 	return status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedPartnersUsersServiceServer) mustEmbedUnimplementedPartnersUsersServiceServer() {}
+func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
-// UnsafePartnersUsersServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PartnersUsersServiceServer will
+// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServiceServer will
 // result in compilation errors.
-type UnsafePartnersUsersServiceServer interface {
-	mustEmbedUnimplementedPartnersUsersServiceServer()
+type UnsafeServiceServer interface {
+	mustEmbedUnimplementedServiceServer()
 }
 
-func RegisterPartnersUsersServiceServer(s grpc.ServiceRegistrar, srv PartnersUsersServiceServer) {
-	s.RegisterService(&PartnersUsersService_ServiceDesc, srv)
+func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
+	s.RegisterService(&Service_ServiceDesc, srv)
 }
 
-func _PartnersUsersService_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _Service_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(input.PaginationRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(PartnersUsersServiceServer).Paginate(m, &partnersUsersServicePaginateServer{stream})
+	return srv.(ServiceServer).Paginate(m, &servicePaginateServer{stream})
 }
 
-type PartnersUsersService_PaginateServer interface {
-	Send(*PartnersUsersResponse) error
+type Service_PaginateServer interface {
+	Send(*Response) error
 	grpc.ServerStream
 }
 
-type partnersUsersServicePaginateServer struct {
+type servicePaginateServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersUsersServicePaginateServer) Send(m *PartnersUsersResponse) error {
+func (x *servicePaginateServer) Send(m *Response) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _PartnersUsersService_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.FilteredRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PartnersUsersServiceServer).Count(ctx, in)
+		return srv.(ServiceServer).Count(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PartnersUsersService_Count_FullMethodName,
+		FullMethod: Service_Count_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PartnersUsersServiceServer).Count(ctx, req.(*input.FilteredRequest))
+		return srv.(ServiceServer).Count(ctx, req.(*input.FilteredRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PartnersUsersService_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersUsersServiceServer).Create(&partnersUsersServiceCreateServer{stream})
+func _Service_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Create(&serviceCreateServer{stream})
 }
 
-type PartnersUsersService_CreateServer interface {
+type Service_CreateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*PartnersUsersRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type partnersUsersServiceCreateServer struct {
+type serviceCreateServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersUsersServiceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceCreateServer) Recv() (*PartnersUsersRequest, error) {
-	m := new(PartnersUsersRequest)
+func (x *serviceCreateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _PartnersUsersService_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersUsersServiceServer).Update(&partnersUsersServiceUpdateServer{stream})
+func _Service_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Update(&serviceUpdateServer{stream})
 }
 
-type PartnersUsersService_UpdateServer interface {
+type Service_UpdateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*PartnersUsersRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type partnersUsersServiceUpdateServer struct {
+type serviceUpdateServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersUsersServiceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceUpdateServer) Recv() (*PartnersUsersRequest, error) {
-	m := new(PartnersUsersRequest)
+func (x *serviceUpdateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _PartnersUsersService_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersUsersServiceServer).Inactive(&partnersUsersServiceInactiveServer{stream})
+func _Service_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Inactive(&serviceInactiveServer{stream})
 }
 
-type PartnersUsersService_InactiveServer interface {
+type Service_InactiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type partnersUsersServiceInactiveServer struct {
+type serviceInactiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersUsersServiceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceInactiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceInactiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -446,25 +446,25 @@ func (x *partnersUsersServiceInactiveServer) Recv() (*input.UUIDRequest, error) 
 	return m, nil
 }
 
-func _PartnersUsersService_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersUsersServiceServer).Active(&partnersUsersServiceActiveServer{stream})
+func _Service_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Active(&serviceActiveServer{stream})
 }
 
-type PartnersUsersService_ActiveServer interface {
+type Service_ActiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type partnersUsersServiceActiveServer struct {
+type serviceActiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersUsersServiceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceActiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceActiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -472,43 +472,43 @@ func (x *partnersUsersServiceActiveServer) Recv() (*input.UUIDRequest, error) {
 	return m, nil
 }
 
-func _PartnersUsersService_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.UUIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PartnersUsersServiceServer).FindOne(ctx, in)
+		return srv.(ServiceServer).FindOne(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PartnersUsersService_FindOne_FullMethodName,
+		FullMethod: Service_FindOne_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PartnersUsersServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
+		return srv.(ServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PartnersUsersService_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersUsersServiceServer).Delete(&partnersUsersServiceDeleteServer{stream})
+func _Service_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Delete(&serviceDeleteServer{stream})
 }
 
-type PartnersUsersService_DeleteServer interface {
+type Service_DeleteServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type partnersUsersServiceDeleteServer struct {
+type serviceDeleteServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersUsersServiceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersUsersServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceDeleteServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -516,51 +516,51 @@ func (x *partnersUsersServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 	return m, nil
 }
 
-// PartnersUsersService_ServiceDesc is the grpc.ServiceDesc for PartnersUsersService service.
+// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var PartnersUsersService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "partners_users.PartnersUsersService",
-	HandlerType: (*PartnersUsersServiceServer)(nil),
+var Service_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "partners_users.Service",
+	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Count",
-			Handler:    _PartnersUsersService_Count_Handler,
+			Handler:    _Service_Count_Handler,
 		},
 		{
 			MethodName: "FindOne",
-			Handler:    _PartnersUsersService_FindOne_Handler,
+			Handler:    _Service_FindOne_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Paginate",
-			Handler:       _PartnersUsersService_Paginate_Handler,
+			Handler:       _Service_Paginate_Handler,
 			ServerStreams: true,
 		},
 		{
 			StreamName:    "Create",
-			Handler:       _PartnersUsersService_Create_Handler,
+			Handler:       _Service_Create_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Update",
-			Handler:       _PartnersUsersService_Update_Handler,
+			Handler:       _Service_Update_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Inactive",
-			Handler:       _PartnersUsersService_Inactive_Handler,
+			Handler:       _Service_Inactive_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Active",
-			Handler:       _PartnersUsersService_Active_Handler,
+			Handler:       _Service_Active_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Delete",
-			Handler:       _PartnersUsersService_Delete_Handler,
+			Handler:       _Service_Delete_Handler,
 			ClientStreams: true,
 		},
 	},

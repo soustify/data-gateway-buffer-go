@@ -21,44 +21,44 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	RolesPoliciesService_Paginate_FullMethodName = "/roles_policies.RolesPoliciesService/Paginate"
-	RolesPoliciesService_Count_FullMethodName    = "/roles_policies.RolesPoliciesService/Count"
-	RolesPoliciesService_Create_FullMethodName   = "/roles_policies.RolesPoliciesService/Create"
-	RolesPoliciesService_Update_FullMethodName   = "/roles_policies.RolesPoliciesService/Update"
-	RolesPoliciesService_Inactive_FullMethodName = "/roles_policies.RolesPoliciesService/Inactive"
-	RolesPoliciesService_Active_FullMethodName   = "/roles_policies.RolesPoliciesService/Active"
-	RolesPoliciesService_FindOne_FullMethodName  = "/roles_policies.RolesPoliciesService/FindOne"
-	RolesPoliciesService_Delete_FullMethodName   = "/roles_policies.RolesPoliciesService/Delete"
+	Service_Paginate_FullMethodName = "/roles_policies.Service/Paginate"
+	Service_Count_FullMethodName    = "/roles_policies.Service/Count"
+	Service_Create_FullMethodName   = "/roles_policies.Service/Create"
+	Service_Update_FullMethodName   = "/roles_policies.Service/Update"
+	Service_Inactive_FullMethodName = "/roles_policies.Service/Inactive"
+	Service_Active_FullMethodName   = "/roles_policies.Service/Active"
+	Service_FindOne_FullMethodName  = "/roles_policies.Service/FindOne"
+	Service_Delete_FullMethodName   = "/roles_policies.Service/Delete"
 )
 
-// RolesPoliciesServiceClient is the client API for RolesPoliciesService service.
+// ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type RolesPoliciesServiceClient interface {
-	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (RolesPoliciesService_PaginateClient, error)
+type ServiceClient interface {
+	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error)
 	Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error)
-	Create(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_CreateClient, error)
-	Update(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_UpdateClient, error)
-	Inactive(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_InactiveClient, error)
-	Active(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_ActiveClient, error)
-	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*RolesPoliciesResponse, error)
-	Delete(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_DeleteClient, error)
+	Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error)
+	Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error)
+	Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error)
+	Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error)
+	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error)
+	Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error)
 }
 
-type rolesPoliciesServiceClient struct {
+type serviceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewRolesPoliciesServiceClient(cc grpc.ClientConnInterface) RolesPoliciesServiceClient {
-	return &rolesPoliciesServiceClient{cc}
+func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
+	return &serviceClient{cc}
 }
 
-func (c *rolesPoliciesServiceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (RolesPoliciesService_PaginateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &RolesPoliciesService_ServiceDesc.Streams[0], RolesPoliciesService_Paginate_FullMethodName, opts...)
+func (c *serviceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_Paginate_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &rolesPoliciesServicePaginateClient{stream}
+	x := &servicePaginateClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -68,56 +68,56 @@ func (c *rolesPoliciesServiceClient) Paginate(ctx context.Context, in *input.Pag
 	return x, nil
 }
 
-type RolesPoliciesService_PaginateClient interface {
-	Recv() (*RolesPoliciesResponse, error)
+type Service_PaginateClient interface {
+	Recv() (*Response, error)
 	grpc.ClientStream
 }
 
-type rolesPoliciesServicePaginateClient struct {
+type servicePaginateClient struct {
 	grpc.ClientStream
 }
 
-func (x *rolesPoliciesServicePaginateClient) Recv() (*RolesPoliciesResponse, error) {
-	m := new(RolesPoliciesResponse)
+func (x *servicePaginateClient) Recv() (*Response, error) {
+	m := new(Response)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *rolesPoliciesServiceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
+func (c *serviceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
 	out := new(output.CountResponse)
-	err := c.cc.Invoke(ctx, RolesPoliciesService_Count_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_Count_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rolesPoliciesServiceClient) Create(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_CreateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &RolesPoliciesService_ServiceDesc.Streams[1], RolesPoliciesService_Create_FullMethodName, opts...)
+func (c *serviceClient) Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[1], Service_Create_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &rolesPoliciesServiceCreateClient{stream}
+	x := &serviceCreateClient{stream}
 	return x, nil
 }
 
-type RolesPoliciesService_CreateClient interface {
-	Send(*RolesPoliciesRequest) error
+type Service_CreateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type rolesPoliciesServiceCreateClient struct {
+type serviceCreateClient struct {
 	grpc.ClientStream
 }
 
-func (x *rolesPoliciesServiceCreateClient) Send(m *RolesPoliciesRequest) error {
+func (x *serviceCreateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -128,30 +128,30 @@ func (x *rolesPoliciesServiceCreateClient) CloseAndRecv() (*output.PersistenceDa
 	return m, nil
 }
 
-func (c *rolesPoliciesServiceClient) Update(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_UpdateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &RolesPoliciesService_ServiceDesc.Streams[2], RolesPoliciesService_Update_FullMethodName, opts...)
+func (c *serviceClient) Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[2], Service_Update_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &rolesPoliciesServiceUpdateClient{stream}
+	x := &serviceUpdateClient{stream}
 	return x, nil
 }
 
-type RolesPoliciesService_UpdateClient interface {
-	Send(*RolesPoliciesRequest) error
+type Service_UpdateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type rolesPoliciesServiceUpdateClient struct {
+type serviceUpdateClient struct {
 	grpc.ClientStream
 }
 
-func (x *rolesPoliciesServiceUpdateClient) Send(m *RolesPoliciesRequest) error {
+func (x *serviceUpdateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -162,30 +162,30 @@ func (x *rolesPoliciesServiceUpdateClient) CloseAndRecv() (*output.PersistenceDa
 	return m, nil
 }
 
-func (c *rolesPoliciesServiceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_InactiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &RolesPoliciesService_ServiceDesc.Streams[3], RolesPoliciesService_Inactive_FullMethodName, opts...)
+func (c *serviceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[3], Service_Inactive_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &rolesPoliciesServiceInactiveClient{stream}
+	x := &serviceInactiveClient{stream}
 	return x, nil
 }
 
-type RolesPoliciesService_InactiveClient interface {
+type Service_InactiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type rolesPoliciesServiceInactiveClient struct {
+type serviceInactiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *rolesPoliciesServiceInactiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceInactiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -196,30 +196,30 @@ func (x *rolesPoliciesServiceInactiveClient) CloseAndRecv() (*output.StatusDataR
 	return m, nil
 }
 
-func (c *rolesPoliciesServiceClient) Active(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_ActiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &RolesPoliciesService_ServiceDesc.Streams[4], RolesPoliciesService_Active_FullMethodName, opts...)
+func (c *serviceClient) Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[4], Service_Active_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &rolesPoliciesServiceActiveClient{stream}
+	x := &serviceActiveClient{stream}
 	return x, nil
 }
 
-type RolesPoliciesService_ActiveClient interface {
+type Service_ActiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type rolesPoliciesServiceActiveClient struct {
+type serviceActiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *rolesPoliciesServiceActiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceActiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -230,39 +230,39 @@ func (x *rolesPoliciesServiceActiveClient) CloseAndRecv() (*output.StatusDataRes
 	return m, nil
 }
 
-func (c *rolesPoliciesServiceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*RolesPoliciesResponse, error) {
-	out := new(RolesPoliciesResponse)
-	err := c.cc.Invoke(ctx, RolesPoliciesService_FindOne_FullMethodName, in, out, opts...)
+func (c *serviceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, Service_FindOne_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *rolesPoliciesServiceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (RolesPoliciesService_DeleteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &RolesPoliciesService_ServiceDesc.Streams[5], RolesPoliciesService_Delete_FullMethodName, opts...)
+func (c *serviceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[5], Service_Delete_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &rolesPoliciesServiceDeleteClient{stream}
+	x := &serviceDeleteClient{stream}
 	return x, nil
 }
 
-type RolesPoliciesService_DeleteClient interface {
+type Service_DeleteClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type rolesPoliciesServiceDeleteClient struct {
+type serviceDeleteClient struct {
 	grpc.ClientStream
 }
 
-func (x *rolesPoliciesServiceDeleteClient) Send(m *input.UUIDRequest) error {
+func (x *serviceDeleteClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -273,172 +273,172 @@ func (x *rolesPoliciesServiceDeleteClient) CloseAndRecv() (*output.PersistenceDa
 	return m, nil
 }
 
-// RolesPoliciesServiceServer is the server API for RolesPoliciesService service.
-// All implementations must embed UnimplementedRolesPoliciesServiceServer
+// ServiceServer is the server API for Service service.
+// All implementations must embed UnimplementedServiceServer
 // for forward compatibility
-type RolesPoliciesServiceServer interface {
-	Paginate(*input.PaginationRequest, RolesPoliciesService_PaginateServer) error
+type ServiceServer interface {
+	Paginate(*input.PaginationRequest, Service_PaginateServer) error
 	Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error)
-	Create(RolesPoliciesService_CreateServer) error
-	Update(RolesPoliciesService_UpdateServer) error
-	Inactive(RolesPoliciesService_InactiveServer) error
-	Active(RolesPoliciesService_ActiveServer) error
-	FindOne(context.Context, *input.UUIDRequest) (*RolesPoliciesResponse, error)
-	Delete(RolesPoliciesService_DeleteServer) error
-	mustEmbedUnimplementedRolesPoliciesServiceServer()
+	Create(Service_CreateServer) error
+	Update(Service_UpdateServer) error
+	Inactive(Service_InactiveServer) error
+	Active(Service_ActiveServer) error
+	FindOne(context.Context, *input.UUIDRequest) (*Response, error)
+	Delete(Service_DeleteServer) error
+	mustEmbedUnimplementedServiceServer()
 }
 
-// UnimplementedRolesPoliciesServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedRolesPoliciesServiceServer struct {
+// UnimplementedServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedRolesPoliciesServiceServer) Paginate(*input.PaginationRequest, RolesPoliciesService_PaginateServer) error {
+func (UnimplementedServiceServer) Paginate(*input.PaginationRequest, Service_PaginateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Paginate not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
+func (UnimplementedServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Count not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) Create(RolesPoliciesService_CreateServer) error {
+func (UnimplementedServiceServer) Create(Service_CreateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) Update(RolesPoliciesService_UpdateServer) error {
+func (UnimplementedServiceServer) Update(Service_UpdateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) Inactive(RolesPoliciesService_InactiveServer) error {
+func (UnimplementedServiceServer) Inactive(Service_InactiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Inactive not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) Active(RolesPoliciesService_ActiveServer) error {
+func (UnimplementedServiceServer) Active(Service_ActiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Active not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) FindOne(context.Context, *input.UUIDRequest) (*RolesPoliciesResponse, error) {
+func (UnimplementedServiceServer) FindOne(context.Context, *input.UUIDRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) Delete(RolesPoliciesService_DeleteServer) error {
+func (UnimplementedServiceServer) Delete(Service_DeleteServer) error {
 	return status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedRolesPoliciesServiceServer) mustEmbedUnimplementedRolesPoliciesServiceServer() {}
+func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
-// UnsafeRolesPoliciesServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to RolesPoliciesServiceServer will
+// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServiceServer will
 // result in compilation errors.
-type UnsafeRolesPoliciesServiceServer interface {
-	mustEmbedUnimplementedRolesPoliciesServiceServer()
+type UnsafeServiceServer interface {
+	mustEmbedUnimplementedServiceServer()
 }
 
-func RegisterRolesPoliciesServiceServer(s grpc.ServiceRegistrar, srv RolesPoliciesServiceServer) {
-	s.RegisterService(&RolesPoliciesService_ServiceDesc, srv)
+func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
+	s.RegisterService(&Service_ServiceDesc, srv)
 }
 
-func _RolesPoliciesService_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _Service_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(input.PaginationRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(RolesPoliciesServiceServer).Paginate(m, &rolesPoliciesServicePaginateServer{stream})
+	return srv.(ServiceServer).Paginate(m, &servicePaginateServer{stream})
 }
 
-type RolesPoliciesService_PaginateServer interface {
-	Send(*RolesPoliciesResponse) error
+type Service_PaginateServer interface {
+	Send(*Response) error
 	grpc.ServerStream
 }
 
-type rolesPoliciesServicePaginateServer struct {
+type servicePaginateServer struct {
 	grpc.ServerStream
 }
 
-func (x *rolesPoliciesServicePaginateServer) Send(m *RolesPoliciesResponse) error {
+func (x *servicePaginateServer) Send(m *Response) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _RolesPoliciesService_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.FilteredRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RolesPoliciesServiceServer).Count(ctx, in)
+		return srv.(ServiceServer).Count(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RolesPoliciesService_Count_FullMethodName,
+		FullMethod: Service_Count_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RolesPoliciesServiceServer).Count(ctx, req.(*input.FilteredRequest))
+		return srv.(ServiceServer).Count(ctx, req.(*input.FilteredRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RolesPoliciesService_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(RolesPoliciesServiceServer).Create(&rolesPoliciesServiceCreateServer{stream})
+func _Service_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Create(&serviceCreateServer{stream})
 }
 
-type RolesPoliciesService_CreateServer interface {
+type Service_CreateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*RolesPoliciesRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type rolesPoliciesServiceCreateServer struct {
+type serviceCreateServer struct {
 	grpc.ServerStream
 }
 
-func (x *rolesPoliciesServiceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceCreateServer) Recv() (*RolesPoliciesRequest, error) {
-	m := new(RolesPoliciesRequest)
+func (x *serviceCreateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _RolesPoliciesService_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(RolesPoliciesServiceServer).Update(&rolesPoliciesServiceUpdateServer{stream})
+func _Service_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Update(&serviceUpdateServer{stream})
 }
 
-type RolesPoliciesService_UpdateServer interface {
+type Service_UpdateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*RolesPoliciesRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type rolesPoliciesServiceUpdateServer struct {
+type serviceUpdateServer struct {
 	grpc.ServerStream
 }
 
-func (x *rolesPoliciesServiceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceUpdateServer) Recv() (*RolesPoliciesRequest, error) {
-	m := new(RolesPoliciesRequest)
+func (x *serviceUpdateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _RolesPoliciesService_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(RolesPoliciesServiceServer).Inactive(&rolesPoliciesServiceInactiveServer{stream})
+func _Service_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Inactive(&serviceInactiveServer{stream})
 }
 
-type RolesPoliciesService_InactiveServer interface {
+type Service_InactiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type rolesPoliciesServiceInactiveServer struct {
+type serviceInactiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *rolesPoliciesServiceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceInactiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceInactiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -446,25 +446,25 @@ func (x *rolesPoliciesServiceInactiveServer) Recv() (*input.UUIDRequest, error) 
 	return m, nil
 }
 
-func _RolesPoliciesService_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(RolesPoliciesServiceServer).Active(&rolesPoliciesServiceActiveServer{stream})
+func _Service_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Active(&serviceActiveServer{stream})
 }
 
-type RolesPoliciesService_ActiveServer interface {
+type Service_ActiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type rolesPoliciesServiceActiveServer struct {
+type serviceActiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *rolesPoliciesServiceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceActiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceActiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -472,43 +472,43 @@ func (x *rolesPoliciesServiceActiveServer) Recv() (*input.UUIDRequest, error) {
 	return m, nil
 }
 
-func _RolesPoliciesService_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.UUIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(RolesPoliciesServiceServer).FindOne(ctx, in)
+		return srv.(ServiceServer).FindOne(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: RolesPoliciesService_FindOne_FullMethodName,
+		FullMethod: Service_FindOne_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(RolesPoliciesServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
+		return srv.(ServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _RolesPoliciesService_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(RolesPoliciesServiceServer).Delete(&rolesPoliciesServiceDeleteServer{stream})
+func _Service_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Delete(&serviceDeleteServer{stream})
 }
 
-type RolesPoliciesService_DeleteServer interface {
+type Service_DeleteServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type rolesPoliciesServiceDeleteServer struct {
+type serviceDeleteServer struct {
 	grpc.ServerStream
 }
 
-func (x *rolesPoliciesServiceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *rolesPoliciesServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceDeleteServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -516,51 +516,51 @@ func (x *rolesPoliciesServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 	return m, nil
 }
 
-// RolesPoliciesService_ServiceDesc is the grpc.ServiceDesc for RolesPoliciesService service.
+// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var RolesPoliciesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "roles_policies.RolesPoliciesService",
-	HandlerType: (*RolesPoliciesServiceServer)(nil),
+var Service_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "roles_policies.Service",
+	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Count",
-			Handler:    _RolesPoliciesService_Count_Handler,
+			Handler:    _Service_Count_Handler,
 		},
 		{
 			MethodName: "FindOne",
-			Handler:    _RolesPoliciesService_FindOne_Handler,
+			Handler:    _Service_FindOne_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Paginate",
-			Handler:       _RolesPoliciesService_Paginate_Handler,
+			Handler:       _Service_Paginate_Handler,
 			ServerStreams: true,
 		},
 		{
 			StreamName:    "Create",
-			Handler:       _RolesPoliciesService_Create_Handler,
+			Handler:       _Service_Create_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Update",
-			Handler:       _RolesPoliciesService_Update_Handler,
+			Handler:       _Service_Update_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Inactive",
-			Handler:       _RolesPoliciesService_Inactive_Handler,
+			Handler:       _Service_Inactive_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Active",
-			Handler:       _RolesPoliciesService_Active_Handler,
+			Handler:       _Service_Active_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Delete",
-			Handler:       _RolesPoliciesService_Delete_Handler,
+			Handler:       _Service_Delete_Handler,
 			ClientStreams: true,
 		},
 	},

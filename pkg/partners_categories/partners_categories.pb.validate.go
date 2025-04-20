@@ -42,22 +42,21 @@ var (
 // define the regex for a UUID once up-front
 var _partners_categories_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on PartnersCategoriesRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *PartnersCategoriesRequest) Validate() error {
+// Validate checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Request) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PartnersCategoriesRequest with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// PartnersCategoriesRequestMultiError, or nil if none found.
-func (m *PartnersCategoriesRequest) ValidateAll() error {
+// ValidateAll checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in RequestMultiError, or nil if none found.
+func (m *Request) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PartnersCategoriesRequest) validate(all bool) error {
+func (m *Request) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -65,7 +64,7 @@ func (m *PartnersCategoriesRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetIdPartner()); err != nil {
-		err = PartnersCategoriesRequestValidationError{
+		err = RequestValidationError{
 			field:  "IdPartner",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -77,7 +76,7 @@ func (m *PartnersCategoriesRequest) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdCategory()); err != nil {
-		err = PartnersCategoriesRequestValidationError{
+		err = RequestValidationError{
 			field:  "IdCategory",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -89,13 +88,13 @@ func (m *PartnersCategoriesRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PartnersCategoriesRequestMultiError(errors)
+		return RequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *PartnersCategoriesRequest) _validateUuid(uuid string) error {
+func (m *Request) _validateUuid(uuid string) error {
 	if matched := _partners_categories_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -103,13 +102,12 @@ func (m *PartnersCategoriesRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// PartnersCategoriesRequestMultiError is an error wrapping multiple validation
-// errors returned by PartnersCategoriesRequest.ValidateAll() if the
-// designated constraints aren't met.
-type PartnersCategoriesRequestMultiError []error
+// RequestMultiError is an error wrapping multiple validation errors returned
+// by Request.ValidateAll() if the designated constraints aren't met.
+type RequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PartnersCategoriesRequestMultiError) Error() string {
+func (m RequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -118,11 +116,11 @@ func (m PartnersCategoriesRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PartnersCategoriesRequestMultiError) AllErrors() []error { return m }
+func (m RequestMultiError) AllErrors() []error { return m }
 
-// PartnersCategoriesRequestValidationError is the validation error returned by
-// PartnersCategoriesRequest.Validate if the designated constraints aren't met.
-type PartnersCategoriesRequestValidationError struct {
+// RequestValidationError is the validation error returned by Request.Validate
+// if the designated constraints aren't met.
+type RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -130,24 +128,22 @@ type PartnersCategoriesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e PartnersCategoriesRequestValidationError) Field() string { return e.field }
+func (e RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PartnersCategoriesRequestValidationError) Reason() string { return e.reason }
+func (e RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PartnersCategoriesRequestValidationError) Cause() error { return e.cause }
+func (e RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PartnersCategoriesRequestValidationError) Key() bool { return e.key }
+func (e RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PartnersCategoriesRequestValidationError) ErrorName() string {
-	return "PartnersCategoriesRequestValidationError"
-}
+func (e RequestValidationError) ErrorName() string { return "RequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e PartnersCategoriesRequestValidationError) Error() string {
+func (e RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -159,14 +155,14 @@ func (e PartnersCategoriesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPartnersCategoriesRequest.%s: %s%s",
+		"invalid %sRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PartnersCategoriesRequestValidationError{}
+var _ error = RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -174,24 +170,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PartnersCategoriesRequestValidationError{}
+} = RequestValidationError{}
 
-// Validate checks the field values on PartnersCategoriesResponse with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *PartnersCategoriesResponse) Validate() error {
+// Validate checks the field values on Response with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Response) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PartnersCategoriesResponse with the
-// rules defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// PartnersCategoriesResponseMultiError, or nil if none found.
-func (m *PartnersCategoriesResponse) ValidateAll() error {
+// ValidateAll checks the field values on Response with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ResponseMultiError, or nil
+// if none found.
+func (m *Response) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PartnersCategoriesResponse) validate(all bool) error {
+func (m *Response) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -199,7 +195,7 @@ func (m *PartnersCategoriesResponse) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = PartnersCategoriesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -213,7 +209,7 @@ func (m *PartnersCategoriesResponse) validate(all bool) error {
 	// no validation rules for Status
 
 	if err := m._validateUuid(m.GetIdPartner()); err != nil {
-		err = PartnersCategoriesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdPartner",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -225,7 +221,7 @@ func (m *PartnersCategoriesResponse) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdCategory()); err != nil {
-		err = PartnersCategoriesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdCategory",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -237,13 +233,13 @@ func (m *PartnersCategoriesResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PartnersCategoriesResponseMultiError(errors)
+		return ResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *PartnersCategoriesResponse) _validateUuid(uuid string) error {
+func (m *Response) _validateUuid(uuid string) error {
 	if matched := _partners_categories_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -251,13 +247,12 @@ func (m *PartnersCategoriesResponse) _validateUuid(uuid string) error {
 	return nil
 }
 
-// PartnersCategoriesResponseMultiError is an error wrapping multiple
-// validation errors returned by PartnersCategoriesResponse.ValidateAll() if
-// the designated constraints aren't met.
-type PartnersCategoriesResponseMultiError []error
+// ResponseMultiError is an error wrapping multiple validation errors returned
+// by Response.ValidateAll() if the designated constraints aren't met.
+type ResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PartnersCategoriesResponseMultiError) Error() string {
+func (m ResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -266,11 +261,11 @@ func (m PartnersCategoriesResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PartnersCategoriesResponseMultiError) AllErrors() []error { return m }
+func (m ResponseMultiError) AllErrors() []error { return m }
 
-// PartnersCategoriesResponseValidationError is the validation error returned
-// by PartnersCategoriesResponse.Validate if the designated constraints aren't met.
-type PartnersCategoriesResponseValidationError struct {
+// ResponseValidationError is the validation error returned by
+// Response.Validate if the designated constraints aren't met.
+type ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -278,24 +273,22 @@ type PartnersCategoriesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e PartnersCategoriesResponseValidationError) Field() string { return e.field }
+func (e ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PartnersCategoriesResponseValidationError) Reason() string { return e.reason }
+func (e ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PartnersCategoriesResponseValidationError) Cause() error { return e.cause }
+func (e ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PartnersCategoriesResponseValidationError) Key() bool { return e.key }
+func (e ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PartnersCategoriesResponseValidationError) ErrorName() string {
-	return "PartnersCategoriesResponseValidationError"
-}
+func (e ResponseValidationError) ErrorName() string { return "ResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e PartnersCategoriesResponseValidationError) Error() string {
+func (e ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -307,14 +300,14 @@ func (e PartnersCategoriesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPartnersCategoriesResponse.%s: %s%s",
+		"invalid %sResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PartnersCategoriesResponseValidationError{}
+var _ error = ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -322,4 +315,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PartnersCategoriesResponseValidationError{}
+} = ResponseValidationError{}

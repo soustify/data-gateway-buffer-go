@@ -46,30 +46,29 @@ var (
 // define the regex for a UUID once up-front
 var _services_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on ServicesRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *ServicesRequest) Validate() error {
+// Validate checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Request) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ServicesRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ServicesRequestMultiError, or nil if none found.
-func (m *ServicesRequest) ValidateAll() error {
+// ValidateAll checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in RequestMultiError, or nil if none found.
+func (m *Request) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ServicesRequest) validate(all bool) error {
+func (m *Request) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
 
 	var errors []error
 
-	if _, ok := _ServicesRequest_EnStatus_InLookup[m.GetEnStatus()]; !ok {
-		err := ServicesRequestValidationError{
+	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
+		err := RequestValidationError{
 			field:  "EnStatus",
 			reason: "value must be in list [ENABLED DISABLED]",
 		}
@@ -80,7 +79,7 @@ func (m *ServicesRequest) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 200 {
-		err := ServicesRequestValidationError{
+		err := RequestValidationError{
 			field:  "Name",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -91,7 +90,7 @@ func (m *ServicesRequest) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetDescription()); l < 1 || l > 200 {
-		err := ServicesRequestValidationError{
+		err := RequestValidationError{
 			field:  "Description",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -102,19 +101,18 @@ func (m *ServicesRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return ServicesRequestMultiError(errors)
+		return RequestMultiError(errors)
 	}
 
 	return nil
 }
 
-// ServicesRequestMultiError is an error wrapping multiple validation errors
-// returned by ServicesRequest.ValidateAll() if the designated constraints
-// aren't met.
-type ServicesRequestMultiError []error
+// RequestMultiError is an error wrapping multiple validation errors returned
+// by Request.ValidateAll() if the designated constraints aren't met.
+type RequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ServicesRequestMultiError) Error() string {
+func (m RequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -123,11 +121,11 @@ func (m ServicesRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ServicesRequestMultiError) AllErrors() []error { return m }
+func (m RequestMultiError) AllErrors() []error { return m }
 
-// ServicesRequestValidationError is the validation error returned by
-// ServicesRequest.Validate if the designated constraints aren't met.
-type ServicesRequestValidationError struct {
+// RequestValidationError is the validation error returned by Request.Validate
+// if the designated constraints aren't met.
+type RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -135,22 +133,22 @@ type ServicesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ServicesRequestValidationError) Field() string { return e.field }
+func (e RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ServicesRequestValidationError) Reason() string { return e.reason }
+func (e RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ServicesRequestValidationError) Cause() error { return e.cause }
+func (e RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ServicesRequestValidationError) Key() bool { return e.key }
+func (e RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ServicesRequestValidationError) ErrorName() string { return "ServicesRequestValidationError" }
+func (e RequestValidationError) ErrorName() string { return "RequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ServicesRequestValidationError) Error() string {
+func (e RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -162,14 +160,14 @@ func (e ServicesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sServicesRequest.%s: %s%s",
+		"invalid %sRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ServicesRequestValidationError{}
+var _ error = RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -177,29 +175,29 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ServicesRequestValidationError{}
+} = RequestValidationError{}
 
-var _ServicesRequest_EnStatus_InLookup = map[input.StatusRequest]struct{}{
+var _Request_EnStatus_InLookup = map[input.StatusRequest]struct{}{
 	0: {},
 	1: {},
 }
 
-// Validate checks the field values on ServicesResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *ServicesResponse) Validate() error {
+// Validate checks the field values on Response with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Response) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ServicesResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ServicesResponseMultiError, or nil if none found.
-func (m *ServicesResponse) ValidateAll() error {
+// ValidateAll checks the field values on Response with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ResponseMultiError, or nil
+// if none found.
+func (m *Response) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ServicesResponse) validate(all bool) error {
+func (m *Response) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -207,7 +205,7 @@ func (m *ServicesResponse) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = ServicesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -219,7 +217,7 @@ func (m *ServicesResponse) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 200 {
-		err := ServicesResponseValidationError{
+		err := ResponseValidationError{
 			field:  "Name",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -230,7 +228,7 @@ func (m *ServicesResponse) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetDescription()); l < 1 || l > 200 {
-		err := ServicesResponseValidationError{
+		err := ResponseValidationError{
 			field:  "Description",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -241,7 +239,7 @@ func (m *ServicesResponse) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdAuditable()); err != nil {
-		err = ServicesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdAuditable",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -255,13 +253,13 @@ func (m *ServicesResponse) validate(all bool) error {
 	// no validation rules for Status
 
 	if len(errors) > 0 {
-		return ServicesResponseMultiError(errors)
+		return ResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *ServicesResponse) _validateUuid(uuid string) error {
+func (m *Response) _validateUuid(uuid string) error {
 	if matched := _services_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -269,13 +267,12 @@ func (m *ServicesResponse) _validateUuid(uuid string) error {
 	return nil
 }
 
-// ServicesResponseMultiError is an error wrapping multiple validation errors
-// returned by ServicesResponse.ValidateAll() if the designated constraints
-// aren't met.
-type ServicesResponseMultiError []error
+// ResponseMultiError is an error wrapping multiple validation errors returned
+// by Response.ValidateAll() if the designated constraints aren't met.
+type ResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ServicesResponseMultiError) Error() string {
+func (m ResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -284,11 +281,11 @@ func (m ServicesResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ServicesResponseMultiError) AllErrors() []error { return m }
+func (m ResponseMultiError) AllErrors() []error { return m }
 
-// ServicesResponseValidationError is the validation error returned by
-// ServicesResponse.Validate if the designated constraints aren't met.
-type ServicesResponseValidationError struct {
+// ResponseValidationError is the validation error returned by
+// Response.Validate if the designated constraints aren't met.
+type ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -296,22 +293,22 @@ type ServicesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ServicesResponseValidationError) Field() string { return e.field }
+func (e ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ServicesResponseValidationError) Reason() string { return e.reason }
+func (e ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ServicesResponseValidationError) Cause() error { return e.cause }
+func (e ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ServicesResponseValidationError) Key() bool { return e.key }
+func (e ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ServicesResponseValidationError) ErrorName() string { return "ServicesResponseValidationError" }
+func (e ResponseValidationError) ErrorName() string { return "ResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ServicesResponseValidationError) Error() string {
+func (e ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -323,14 +320,14 @@ func (e ServicesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sServicesResponse.%s: %s%s",
+		"invalid %sResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ServicesResponseValidationError{}
+var _ error = ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -338,4 +335,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ServicesResponseValidationError{}
+} = ResponseValidationError{}

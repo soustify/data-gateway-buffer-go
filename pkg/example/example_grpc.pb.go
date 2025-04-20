@@ -21,44 +21,44 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	ExampleService_Paginate_FullMethodName = "/example.ExampleService/Paginate"
-	ExampleService_Count_FullMethodName    = "/example.ExampleService/Count"
-	ExampleService_Create_FullMethodName   = "/example.ExampleService/Create"
-	ExampleService_Update_FullMethodName   = "/example.ExampleService/Update"
-	ExampleService_Inactive_FullMethodName = "/example.ExampleService/Inactive"
-	ExampleService_Active_FullMethodName   = "/example.ExampleService/Active"
-	ExampleService_FindOne_FullMethodName  = "/example.ExampleService/FindOne"
-	ExampleService_Delete_FullMethodName   = "/example.ExampleService/Delete"
+	Service_Paginate_FullMethodName = "/example.Service/Paginate"
+	Service_Count_FullMethodName    = "/example.Service/Count"
+	Service_Create_FullMethodName   = "/example.Service/Create"
+	Service_Update_FullMethodName   = "/example.Service/Update"
+	Service_Inactive_FullMethodName = "/example.Service/Inactive"
+	Service_Active_FullMethodName   = "/example.Service/Active"
+	Service_FindOne_FullMethodName  = "/example.Service/FindOne"
+	Service_Delete_FullMethodName   = "/example.Service/Delete"
 )
 
-// ExampleServiceClient is the client API for ExampleService service.
+// ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type ExampleServiceClient interface {
-	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (ExampleService_PaginateClient, error)
+type ServiceClient interface {
+	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error)
 	Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error)
-	Create(ctx context.Context, opts ...grpc.CallOption) (ExampleService_CreateClient, error)
-	Update(ctx context.Context, opts ...grpc.CallOption) (ExampleService_UpdateClient, error)
-	Inactive(ctx context.Context, opts ...grpc.CallOption) (ExampleService_InactiveClient, error)
-	Active(ctx context.Context, opts ...grpc.CallOption) (ExampleService_ActiveClient, error)
-	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*ExampleResponse, error)
-	Delete(ctx context.Context, opts ...grpc.CallOption) (ExampleService_DeleteClient, error)
+	Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error)
+	Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error)
+	Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error)
+	Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error)
+	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error)
+	Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error)
 }
 
-type exampleServiceClient struct {
+type serviceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewExampleServiceClient(cc grpc.ClientConnInterface) ExampleServiceClient {
-	return &exampleServiceClient{cc}
+func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
+	return &serviceClient{cc}
 }
 
-func (c *exampleServiceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (ExampleService_PaginateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[0], ExampleService_Paginate_FullMethodName, opts...)
+func (c *serviceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_Paginate_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &exampleServicePaginateClient{stream}
+	x := &servicePaginateClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -68,56 +68,56 @@ func (c *exampleServiceClient) Paginate(ctx context.Context, in *input.Paginatio
 	return x, nil
 }
 
-type ExampleService_PaginateClient interface {
-	Recv() (*ExampleResponse, error)
+type Service_PaginateClient interface {
+	Recv() (*Response, error)
 	grpc.ClientStream
 }
 
-type exampleServicePaginateClient struct {
+type servicePaginateClient struct {
 	grpc.ClientStream
 }
 
-func (x *exampleServicePaginateClient) Recv() (*ExampleResponse, error) {
-	m := new(ExampleResponse)
+func (x *servicePaginateClient) Recv() (*Response, error) {
+	m := new(Response)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *exampleServiceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
+func (c *serviceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
 	out := new(output.CountResponse)
-	err := c.cc.Invoke(ctx, ExampleService_Count_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_Count_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *exampleServiceClient) Create(ctx context.Context, opts ...grpc.CallOption) (ExampleService_CreateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[1], ExampleService_Create_FullMethodName, opts...)
+func (c *serviceClient) Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[1], Service_Create_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &exampleServiceCreateClient{stream}
+	x := &serviceCreateClient{stream}
 	return x, nil
 }
 
-type ExampleService_CreateClient interface {
-	Send(*ExampleRequest) error
+type Service_CreateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type exampleServiceCreateClient struct {
+type serviceCreateClient struct {
 	grpc.ClientStream
 }
 
-func (x *exampleServiceCreateClient) Send(m *ExampleRequest) error {
+func (x *serviceCreateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *exampleServiceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -128,30 +128,30 @@ func (x *exampleServiceCreateClient) CloseAndRecv() (*output.PersistenceDataResp
 	return m, nil
 }
 
-func (c *exampleServiceClient) Update(ctx context.Context, opts ...grpc.CallOption) (ExampleService_UpdateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[2], ExampleService_Update_FullMethodName, opts...)
+func (c *serviceClient) Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[2], Service_Update_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &exampleServiceUpdateClient{stream}
+	x := &serviceUpdateClient{stream}
 	return x, nil
 }
 
-type ExampleService_UpdateClient interface {
-	Send(*ExampleRequest) error
+type Service_UpdateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type exampleServiceUpdateClient struct {
+type serviceUpdateClient struct {
 	grpc.ClientStream
 }
 
-func (x *exampleServiceUpdateClient) Send(m *ExampleRequest) error {
+func (x *serviceUpdateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *exampleServiceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -162,30 +162,30 @@ func (x *exampleServiceUpdateClient) CloseAndRecv() (*output.PersistenceDataResp
 	return m, nil
 }
 
-func (c *exampleServiceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (ExampleService_InactiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[3], ExampleService_Inactive_FullMethodName, opts...)
+func (c *serviceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[3], Service_Inactive_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &exampleServiceInactiveClient{stream}
+	x := &serviceInactiveClient{stream}
 	return x, nil
 }
 
-type ExampleService_InactiveClient interface {
+type Service_InactiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type exampleServiceInactiveClient struct {
+type serviceInactiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *exampleServiceInactiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceInactiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *exampleServiceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -196,30 +196,30 @@ func (x *exampleServiceInactiveClient) CloseAndRecv() (*output.StatusDataRespons
 	return m, nil
 }
 
-func (c *exampleServiceClient) Active(ctx context.Context, opts ...grpc.CallOption) (ExampleService_ActiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[4], ExampleService_Active_FullMethodName, opts...)
+func (c *serviceClient) Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[4], Service_Active_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &exampleServiceActiveClient{stream}
+	x := &serviceActiveClient{stream}
 	return x, nil
 }
 
-type ExampleService_ActiveClient interface {
+type Service_ActiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type exampleServiceActiveClient struct {
+type serviceActiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *exampleServiceActiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceActiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *exampleServiceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -230,39 +230,39 @@ func (x *exampleServiceActiveClient) CloseAndRecv() (*output.StatusDataResponse,
 	return m, nil
 }
 
-func (c *exampleServiceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*ExampleResponse, error) {
-	out := new(ExampleResponse)
-	err := c.cc.Invoke(ctx, ExampleService_FindOne_FullMethodName, in, out, opts...)
+func (c *serviceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, Service_FindOne_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *exampleServiceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (ExampleService_DeleteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &ExampleService_ServiceDesc.Streams[5], ExampleService_Delete_FullMethodName, opts...)
+func (c *serviceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[5], Service_Delete_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &exampleServiceDeleteClient{stream}
+	x := &serviceDeleteClient{stream}
 	return x, nil
 }
 
-type ExampleService_DeleteClient interface {
+type Service_DeleteClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type exampleServiceDeleteClient struct {
+type serviceDeleteClient struct {
 	grpc.ClientStream
 }
 
-func (x *exampleServiceDeleteClient) Send(m *input.UUIDRequest) error {
+func (x *serviceDeleteClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *exampleServiceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -273,172 +273,172 @@ func (x *exampleServiceDeleteClient) CloseAndRecv() (*output.PersistenceDataResp
 	return m, nil
 }
 
-// ExampleServiceServer is the server API for ExampleService service.
-// All implementations must embed UnimplementedExampleServiceServer
+// ServiceServer is the server API for Service service.
+// All implementations must embed UnimplementedServiceServer
 // for forward compatibility
-type ExampleServiceServer interface {
-	Paginate(*input.PaginationRequest, ExampleService_PaginateServer) error
+type ServiceServer interface {
+	Paginate(*input.PaginationRequest, Service_PaginateServer) error
 	Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error)
-	Create(ExampleService_CreateServer) error
-	Update(ExampleService_UpdateServer) error
-	Inactive(ExampleService_InactiveServer) error
-	Active(ExampleService_ActiveServer) error
-	FindOne(context.Context, *input.UUIDRequest) (*ExampleResponse, error)
-	Delete(ExampleService_DeleteServer) error
-	mustEmbedUnimplementedExampleServiceServer()
+	Create(Service_CreateServer) error
+	Update(Service_UpdateServer) error
+	Inactive(Service_InactiveServer) error
+	Active(Service_ActiveServer) error
+	FindOne(context.Context, *input.UUIDRequest) (*Response, error)
+	Delete(Service_DeleteServer) error
+	mustEmbedUnimplementedServiceServer()
 }
 
-// UnimplementedExampleServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedExampleServiceServer struct {
+// UnimplementedServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedExampleServiceServer) Paginate(*input.PaginationRequest, ExampleService_PaginateServer) error {
+func (UnimplementedServiceServer) Paginate(*input.PaginationRequest, Service_PaginateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Paginate not implemented")
 }
-func (UnimplementedExampleServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
+func (UnimplementedServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Count not implemented")
 }
-func (UnimplementedExampleServiceServer) Create(ExampleService_CreateServer) error {
+func (UnimplementedServiceServer) Create(Service_CreateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedExampleServiceServer) Update(ExampleService_UpdateServer) error {
+func (UnimplementedServiceServer) Update(Service_UpdateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedExampleServiceServer) Inactive(ExampleService_InactiveServer) error {
+func (UnimplementedServiceServer) Inactive(Service_InactiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Inactive not implemented")
 }
-func (UnimplementedExampleServiceServer) Active(ExampleService_ActiveServer) error {
+func (UnimplementedServiceServer) Active(Service_ActiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Active not implemented")
 }
-func (UnimplementedExampleServiceServer) FindOne(context.Context, *input.UUIDRequest) (*ExampleResponse, error) {
+func (UnimplementedServiceServer) FindOne(context.Context, *input.UUIDRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
-func (UnimplementedExampleServiceServer) Delete(ExampleService_DeleteServer) error {
+func (UnimplementedServiceServer) Delete(Service_DeleteServer) error {
 	return status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedExampleServiceServer) mustEmbedUnimplementedExampleServiceServer() {}
+func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
-// UnsafeExampleServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to ExampleServiceServer will
+// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServiceServer will
 // result in compilation errors.
-type UnsafeExampleServiceServer interface {
-	mustEmbedUnimplementedExampleServiceServer()
+type UnsafeServiceServer interface {
+	mustEmbedUnimplementedServiceServer()
 }
 
-func RegisterExampleServiceServer(s grpc.ServiceRegistrar, srv ExampleServiceServer) {
-	s.RegisterService(&ExampleService_ServiceDesc, srv)
+func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
+	s.RegisterService(&Service_ServiceDesc, srv)
 }
 
-func _ExampleService_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _Service_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(input.PaginationRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(ExampleServiceServer).Paginate(m, &exampleServicePaginateServer{stream})
+	return srv.(ServiceServer).Paginate(m, &servicePaginateServer{stream})
 }
 
-type ExampleService_PaginateServer interface {
-	Send(*ExampleResponse) error
+type Service_PaginateServer interface {
+	Send(*Response) error
 	grpc.ServerStream
 }
 
-type exampleServicePaginateServer struct {
+type servicePaginateServer struct {
 	grpc.ServerStream
 }
 
-func (x *exampleServicePaginateServer) Send(m *ExampleResponse) error {
+func (x *servicePaginateServer) Send(m *Response) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _ExampleService_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.FilteredRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExampleServiceServer).Count(ctx, in)
+		return srv.(ServiceServer).Count(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ExampleService_Count_FullMethodName,
+		FullMethod: Service_Count_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).Count(ctx, req.(*input.FilteredRequest))
+		return srv.(ServiceServer).Count(ctx, req.(*input.FilteredRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExampleService_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Create(&exampleServiceCreateServer{stream})
+func _Service_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Create(&serviceCreateServer{stream})
 }
 
-type ExampleService_CreateServer interface {
+type Service_CreateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*ExampleRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type exampleServiceCreateServer struct {
+type serviceCreateServer struct {
 	grpc.ServerStream
 }
 
-func (x *exampleServiceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *exampleServiceCreateServer) Recv() (*ExampleRequest, error) {
-	m := new(ExampleRequest)
+func (x *serviceCreateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _ExampleService_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Update(&exampleServiceUpdateServer{stream})
+func _Service_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Update(&serviceUpdateServer{stream})
 }
 
-type ExampleService_UpdateServer interface {
+type Service_UpdateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*ExampleRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type exampleServiceUpdateServer struct {
+type serviceUpdateServer struct {
 	grpc.ServerStream
 }
 
-func (x *exampleServiceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *exampleServiceUpdateServer) Recv() (*ExampleRequest, error) {
-	m := new(ExampleRequest)
+func (x *serviceUpdateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _ExampleService_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Inactive(&exampleServiceInactiveServer{stream})
+func _Service_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Inactive(&serviceInactiveServer{stream})
 }
 
-type ExampleService_InactiveServer interface {
+type Service_InactiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type exampleServiceInactiveServer struct {
+type serviceInactiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *exampleServiceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *exampleServiceInactiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceInactiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -446,25 +446,25 @@ func (x *exampleServiceInactiveServer) Recv() (*input.UUIDRequest, error) {
 	return m, nil
 }
 
-func _ExampleService_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Active(&exampleServiceActiveServer{stream})
+func _Service_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Active(&serviceActiveServer{stream})
 }
 
-type ExampleService_ActiveServer interface {
+type Service_ActiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type exampleServiceActiveServer struct {
+type serviceActiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *exampleServiceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *exampleServiceActiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceActiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -472,43 +472,43 @@ func (x *exampleServiceActiveServer) Recv() (*input.UUIDRequest, error) {
 	return m, nil
 }
 
-func _ExampleService_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.UUIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(ExampleServiceServer).FindOne(ctx, in)
+		return srv.(ServiceServer).FindOne(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: ExampleService_FindOne_FullMethodName,
+		FullMethod: Service_FindOne_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ExampleServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
+		return srv.(ServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _ExampleService_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(ExampleServiceServer).Delete(&exampleServiceDeleteServer{stream})
+func _Service_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Delete(&serviceDeleteServer{stream})
 }
 
-type ExampleService_DeleteServer interface {
+type Service_DeleteServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type exampleServiceDeleteServer struct {
+type serviceDeleteServer struct {
 	grpc.ServerStream
 }
 
-func (x *exampleServiceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *exampleServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceDeleteServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -516,51 +516,51 @@ func (x *exampleServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
 	return m, nil
 }
 
-// ExampleService_ServiceDesc is the grpc.ServiceDesc for ExampleService service.
+// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var ExampleService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "example.ExampleService",
-	HandlerType: (*ExampleServiceServer)(nil),
+var Service_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "example.Service",
+	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Count",
-			Handler:    _ExampleService_Count_Handler,
+			Handler:    _Service_Count_Handler,
 		},
 		{
 			MethodName: "FindOne",
-			Handler:    _ExampleService_FindOne_Handler,
+			Handler:    _Service_FindOne_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Paginate",
-			Handler:       _ExampleService_Paginate_Handler,
+			Handler:       _Service_Paginate_Handler,
 			ServerStreams: true,
 		},
 		{
 			StreamName:    "Create",
-			Handler:       _ExampleService_Create_Handler,
+			Handler:       _Service_Create_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Update",
-			Handler:       _ExampleService_Update_Handler,
+			Handler:       _Service_Update_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Inactive",
-			Handler:       _ExampleService_Inactive_Handler,
+			Handler:       _Service_Inactive_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Active",
-			Handler:       _ExampleService_Active_Handler,
+			Handler:       _Service_Active_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Delete",
-			Handler:       _ExampleService_Delete_Handler,
+			Handler:       _Service_Delete_Handler,
 			ClientStreams: true,
 		},
 	},

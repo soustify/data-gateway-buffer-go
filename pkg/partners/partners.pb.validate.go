@@ -46,22 +46,21 @@ var (
 // define the regex for a UUID once up-front
 var _partners_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on PartnersRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *PartnersRequest) Validate() error {
+// Validate checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Request) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PartnersRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// PartnersRequestMultiError, or nil if none found.
-func (m *PartnersRequest) ValidateAll() error {
+// ValidateAll checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in RequestMultiError, or nil if none found.
+func (m *Request) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PartnersRequest) validate(all bool) error {
+func (m *Request) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -69,7 +68,7 @@ func (m *PartnersRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = PartnersRequestValidationError{
+		err = RequestValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -80,8 +79,8 @@ func (m *PartnersRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := _PartnersRequest_EnStatus_InLookup[m.GetEnStatus()]; !ok {
-		err := PartnersRequestValidationError{
+	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
+		err := RequestValidationError{
 			field:  "EnStatus",
 			reason: "value must be in list [ENABLED DISABLED]",
 		}
@@ -92,7 +91,7 @@ func (m *PartnersRequest) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 200 {
-		err := PartnersRequestValidationError{
+		err := RequestValidationError{
 			field:  "Name",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -103,7 +102,7 @@ func (m *PartnersRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetDocument()) > 200 {
-		err := PartnersRequestValidationError{
+		err := RequestValidationError{
 			field:  "Document",
 			reason: "value length must be at most 200 runes",
 		}
@@ -114,7 +113,7 @@ func (m *PartnersRequest) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdDocumentType()); err != nil {
-		err = PartnersRequestValidationError{
+		err = RequestValidationError{
 			field:  "IdDocumentType",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -126,13 +125,13 @@ func (m *PartnersRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PartnersRequestMultiError(errors)
+		return RequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *PartnersRequest) _validateUuid(uuid string) error {
+func (m *Request) _validateUuid(uuid string) error {
 	if matched := _partners_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -140,13 +139,12 @@ func (m *PartnersRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// PartnersRequestMultiError is an error wrapping multiple validation errors
-// returned by PartnersRequest.ValidateAll() if the designated constraints
-// aren't met.
-type PartnersRequestMultiError []error
+// RequestMultiError is an error wrapping multiple validation errors returned
+// by Request.ValidateAll() if the designated constraints aren't met.
+type RequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PartnersRequestMultiError) Error() string {
+func (m RequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -155,11 +153,11 @@ func (m PartnersRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PartnersRequestMultiError) AllErrors() []error { return m }
+func (m RequestMultiError) AllErrors() []error { return m }
 
-// PartnersRequestValidationError is the validation error returned by
-// PartnersRequest.Validate if the designated constraints aren't met.
-type PartnersRequestValidationError struct {
+// RequestValidationError is the validation error returned by Request.Validate
+// if the designated constraints aren't met.
+type RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -167,22 +165,22 @@ type PartnersRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e PartnersRequestValidationError) Field() string { return e.field }
+func (e RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PartnersRequestValidationError) Reason() string { return e.reason }
+func (e RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PartnersRequestValidationError) Cause() error { return e.cause }
+func (e RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PartnersRequestValidationError) Key() bool { return e.key }
+func (e RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PartnersRequestValidationError) ErrorName() string { return "PartnersRequestValidationError" }
+func (e RequestValidationError) ErrorName() string { return "RequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e PartnersRequestValidationError) Error() string {
+func (e RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -194,14 +192,14 @@ func (e PartnersRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPartnersRequest.%s: %s%s",
+		"invalid %sRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PartnersRequestValidationError{}
+var _ error = RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -209,29 +207,29 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PartnersRequestValidationError{}
+} = RequestValidationError{}
 
-var _PartnersRequest_EnStatus_InLookup = map[input.StatusRequest]struct{}{
+var _Request_EnStatus_InLookup = map[input.StatusRequest]struct{}{
 	0: {},
 	1: {},
 }
 
-// Validate checks the field values on PartnersResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *PartnersResponse) Validate() error {
+// Validate checks the field values on Response with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Response) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on PartnersResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// PartnersResponseMultiError, or nil if none found.
-func (m *PartnersResponse) ValidateAll() error {
+// ValidateAll checks the field values on Response with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ResponseMultiError, or nil
+// if none found.
+func (m *Response) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *PartnersResponse) validate(all bool) error {
+func (m *Response) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -239,7 +237,7 @@ func (m *PartnersResponse) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = PartnersResponseValidationError{
+		err = ResponseValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -253,7 +251,7 @@ func (m *PartnersResponse) validate(all bool) error {
 	// no validation rules for Status
 
 	if err := m._validateUuid(m.GetIdAuditable()); err != nil {
-		err = PartnersResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdAuditable",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -265,7 +263,7 @@ func (m *PartnersResponse) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 200 {
-		err := PartnersResponseValidationError{
+		err := ResponseValidationError{
 			field:  "Name",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -276,7 +274,7 @@ func (m *PartnersResponse) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetDocument()) > 200 {
-		err := PartnersResponseValidationError{
+		err := ResponseValidationError{
 			field:  "Document",
 			reason: "value length must be at most 200 runes",
 		}
@@ -287,7 +285,7 @@ func (m *PartnersResponse) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdDocumentType()); err != nil {
-		err = PartnersResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdDocumentType",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -299,13 +297,13 @@ func (m *PartnersResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return PartnersResponseMultiError(errors)
+		return ResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *PartnersResponse) _validateUuid(uuid string) error {
+func (m *Response) _validateUuid(uuid string) error {
 	if matched := _partners_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -313,13 +311,12 @@ func (m *PartnersResponse) _validateUuid(uuid string) error {
 	return nil
 }
 
-// PartnersResponseMultiError is an error wrapping multiple validation errors
-// returned by PartnersResponse.ValidateAll() if the designated constraints
-// aren't met.
-type PartnersResponseMultiError []error
+// ResponseMultiError is an error wrapping multiple validation errors returned
+// by Response.ValidateAll() if the designated constraints aren't met.
+type ResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m PartnersResponseMultiError) Error() string {
+func (m ResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -328,11 +325,11 @@ func (m PartnersResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m PartnersResponseMultiError) AllErrors() []error { return m }
+func (m ResponseMultiError) AllErrors() []error { return m }
 
-// PartnersResponseValidationError is the validation error returned by
-// PartnersResponse.Validate if the designated constraints aren't met.
-type PartnersResponseValidationError struct {
+// ResponseValidationError is the validation error returned by
+// Response.Validate if the designated constraints aren't met.
+type ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -340,22 +337,22 @@ type PartnersResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e PartnersResponseValidationError) Field() string { return e.field }
+func (e ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e PartnersResponseValidationError) Reason() string { return e.reason }
+func (e ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e PartnersResponseValidationError) Cause() error { return e.cause }
+func (e ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e PartnersResponseValidationError) Key() bool { return e.key }
+func (e ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e PartnersResponseValidationError) ErrorName() string { return "PartnersResponseValidationError" }
+func (e ResponseValidationError) ErrorName() string { return "ResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e PartnersResponseValidationError) Error() string {
+func (e ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -367,14 +364,14 @@ func (e PartnersResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sPartnersResponse.%s: %s%s",
+		"invalid %sResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = PartnersResponseValidationError{}
+var _ error = ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -382,4 +379,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = PartnersResponseValidationError{}
+} = ResponseValidationError{}

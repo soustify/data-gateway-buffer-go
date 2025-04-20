@@ -46,22 +46,21 @@ var (
 // define the regex for a UUID once up-front
 var _example_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on ExampleRequest with the rules defined in
-// the proto definition for this message. If any rules are violated, the first
+// Validate checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
 // error encountered is returned, or nil if there are no violations.
-func (m *ExampleRequest) Validate() error {
+func (m *Request) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ExampleRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// result is a list of violation errors wrapped in ExampleRequestMultiError,
-// or nil if none found.
-func (m *ExampleRequest) ValidateAll() error {
+// ValidateAll checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in RequestMultiError, or nil if none found.
+func (m *Request) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ExampleRequest) validate(all bool) error {
+func (m *Request) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -69,7 +68,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = ExampleRequestValidationError{
+		err = RequestValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -81,7 +80,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetName()) < 1 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Name",
 			reason: "value length must be at least 1 runes",
 		}
@@ -92,7 +91,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetDescription()) < 3 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Description",
 			reason: "value length must be at least 3 runes",
 		}
@@ -103,7 +102,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if m.GetBornDate() == nil {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "BornDate",
 			reason: "value is required",
 		}
@@ -114,7 +113,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if m.GetPrice() <= 0 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Price",
 			reason: "value must be greater than 0",
 		}
@@ -125,7 +124,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if utf8.RuneCountInString(m.GetCategory()) < 5 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Category",
 			reason: "value length must be at least 5 runes",
 		}
@@ -136,7 +135,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if len(m.GetTags()) < 2 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Tags",
 			reason: "value must contain at least 2 item(s)",
 		}
@@ -147,7 +146,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if m.GetRating() <= 0 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Rating",
 			reason: "value must be greater than 0",
 		}
@@ -158,7 +157,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if m.GetQuantity() < 0 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Quantity",
 			reason: "value must be greater than or equal to 0",
 		}
@@ -169,7 +168,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if m.GetDiscount() < 0 {
-		err := ExampleRequestValidationError{
+		err := RequestValidationError{
 			field:  "Discount",
 			reason: "value must be greater than or equal to 0",
 		}
@@ -180,7 +179,7 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if err := m._validateEmail(m.GetEmail()); err != nil {
-		err = ExampleRequestValidationError{
+		err = RequestValidationError{
 			field:  "Email",
 			reason: "value must be a valid email address",
 			cause:  err,
@@ -191,8 +190,8 @@ func (m *ExampleRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if !_ExampleRequest_Phone_Pattern.MatchString(m.GetPhone()) {
-		err := ExampleRequestValidationError{
+	if !_Request_Phone_Pattern.MatchString(m.GetPhone()) {
+		err := RequestValidationError{
 			field:  "Phone",
 			reason: "value does not match regex pattern \"^[0-9\\\\-\\\\+]{9,20}$\"",
 		}
@@ -206,7 +205,7 @@ func (m *ExampleRequest) validate(all bool) error {
 		switch v := interface{}(m.GetMetadata()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleRequestValidationError{
+				errors = append(errors, RequestValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -214,7 +213,7 @@ func (m *ExampleRequest) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleRequestValidationError{
+				errors = append(errors, RequestValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -223,7 +222,7 @@ func (m *ExampleRequest) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleRequestValidationError{
+			return RequestValidationError{
 				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -233,8 +232,8 @@ func (m *ExampleRequest) validate(all bool) error {
 
 	// no validation rules for Public
 
-	if _, ok := _ExampleRequest_EnStatus_InLookup[m.GetEnStatus()]; !ok {
-		err := ExampleRequestValidationError{
+	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
+		err := RequestValidationError{
 			field:  "EnStatus",
 			reason: "value must be in list [ENABLED DISABLED ]",
 		}
@@ -245,13 +244,13 @@ func (m *ExampleRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return ExampleRequestMultiError(errors)
+		return RequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *ExampleRequest) _validateHostname(host string) error {
+func (m *Request) _validateHostname(host string) error {
 	s := strings.ToLower(strings.TrimSuffix(host, "."))
 
 	if len(host) > 253 {
@@ -281,7 +280,7 @@ func (m *ExampleRequest) _validateHostname(host string) error {
 	return nil
 }
 
-func (m *ExampleRequest) _validateEmail(addr string) error {
+func (m *Request) _validateEmail(addr string) error {
 	a, err := mail.ParseAddress(addr)
 	if err != nil {
 		return err
@@ -301,7 +300,7 @@ func (m *ExampleRequest) _validateEmail(addr string) error {
 	return m._validateHostname(parts[1])
 }
 
-func (m *ExampleRequest) _validateUuid(uuid string) error {
+func (m *Request) _validateUuid(uuid string) error {
 	if matched := _example_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -309,13 +308,12 @@ func (m *ExampleRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// ExampleRequestMultiError is an error wrapping multiple validation errors
-// returned by ExampleRequest.ValidateAll() if the designated constraints
-// aren't met.
-type ExampleRequestMultiError []error
+// RequestMultiError is an error wrapping multiple validation errors returned
+// by Request.ValidateAll() if the designated constraints aren't met.
+type RequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ExampleRequestMultiError) Error() string {
+func (m RequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -324,11 +322,11 @@ func (m ExampleRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ExampleRequestMultiError) AllErrors() []error { return m }
+func (m RequestMultiError) AllErrors() []error { return m }
 
-// ExampleRequestValidationError is the validation error returned by
-// ExampleRequest.Validate if the designated constraints aren't met.
-type ExampleRequestValidationError struct {
+// RequestValidationError is the validation error returned by Request.Validate
+// if the designated constraints aren't met.
+type RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -336,22 +334,22 @@ type ExampleRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e ExampleRequestValidationError) Field() string { return e.field }
+func (e RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ExampleRequestValidationError) Reason() string { return e.reason }
+func (e RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ExampleRequestValidationError) Cause() error { return e.cause }
+func (e RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ExampleRequestValidationError) Key() bool { return e.key }
+func (e RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ExampleRequestValidationError) ErrorName() string { return "ExampleRequestValidationError" }
+func (e RequestValidationError) ErrorName() string { return "RequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ExampleRequestValidationError) Error() string {
+func (e RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -363,14 +361,14 @@ func (e ExampleRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExampleRequest.%s: %s%s",
+		"invalid %sRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ExampleRequestValidationError{}
+var _ error = RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -378,32 +376,32 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ExampleRequestValidationError{}
+} = RequestValidationError{}
 
-var _ExampleRequest_Phone_Pattern = regexp.MustCompile("^[0-9\\-\\+]{9,20}$")
+var _Request_Phone_Pattern = regexp.MustCompile("^[0-9\\-\\+]{9,20}$")
 
-var _ExampleRequest_EnStatus_InLookup = map[input.StatusRequest]struct{}{
+var _Request_EnStatus_InLookup = map[input.StatusRequest]struct{}{
 	0: {},
 	1: {},
 	2: {},
 }
 
-// Validate checks the field values on ExampleResponse with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *ExampleResponse) Validate() error {
+// Validate checks the field values on Response with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Response) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on ExampleResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// ExampleResponseMultiError, or nil if none found.
-func (m *ExampleResponse) ValidateAll() error {
+// ValidateAll checks the field values on Response with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ResponseMultiError, or nil
+// if none found.
+func (m *Response) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *ExampleResponse) validate(all bool) error {
+func (m *Response) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -420,7 +418,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		switch v := interface{}(m.GetBornDate()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "BornDate",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -428,7 +426,7 @@ func (m *ExampleResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "BornDate",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -437,7 +435,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetBornDate()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleResponseValidationError{
+			return ResponseValidationError{
 				field:  "BornDate",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -453,7 +451,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		switch v := interface{}(m.GetCreatedAt()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "CreatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -461,7 +459,7 @@ func (m *ExampleResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "CreatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -470,7 +468,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleResponseValidationError{
+			return ResponseValidationError{
 				field:  "CreatedAt",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -482,7 +480,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		switch v := interface{}(m.GetUpdatedAt()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "UpdatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -490,7 +488,7 @@ func (m *ExampleResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "UpdatedAt",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -499,7 +497,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetUpdatedAt()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleResponseValidationError{
+			return ResponseValidationError{
 				field:  "UpdatedAt",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -523,7 +521,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		switch v := interface{}(m.GetMetadata()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -531,7 +529,7 @@ func (m *ExampleResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "Metadata",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -540,7 +538,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetMetadata()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleResponseValidationError{
+			return ResponseValidationError{
 				field:  "Metadata",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -552,7 +550,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		switch v := interface{}(m.GetLastLogin()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "LastLogin",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -560,7 +558,7 @@ func (m *ExampleResponse) validate(all bool) error {
 			}
 		case interface{ Validate() error }:
 			if err := v.Validate(); err != nil {
-				errors = append(errors, ExampleResponseValidationError{
+				errors = append(errors, ResponseValidationError{
 					field:  "LastLogin",
 					reason: "embedded message failed validation",
 					cause:  err,
@@ -569,7 +567,7 @@ func (m *ExampleResponse) validate(all bool) error {
 		}
 	} else if v, ok := interface{}(m.GetLastLogin()).(interface{ Validate() error }); ok {
 		if err := v.Validate(); err != nil {
-			return ExampleResponseValidationError{
+			return ResponseValidationError{
 				field:  "LastLogin",
 				reason: "embedded message failed validation",
 				cause:  err,
@@ -580,19 +578,18 @@ func (m *ExampleResponse) validate(all bool) error {
 	// no validation rules for Status
 
 	if len(errors) > 0 {
-		return ExampleResponseMultiError(errors)
+		return ResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-// ExampleResponseMultiError is an error wrapping multiple validation errors
-// returned by ExampleResponse.ValidateAll() if the designated constraints
-// aren't met.
-type ExampleResponseMultiError []error
+// ResponseMultiError is an error wrapping multiple validation errors returned
+// by Response.ValidateAll() if the designated constraints aren't met.
+type ResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m ExampleResponseMultiError) Error() string {
+func (m ResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -601,11 +598,11 @@ func (m ExampleResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m ExampleResponseMultiError) AllErrors() []error { return m }
+func (m ResponseMultiError) AllErrors() []error { return m }
 
-// ExampleResponseValidationError is the validation error returned by
-// ExampleResponse.Validate if the designated constraints aren't met.
-type ExampleResponseValidationError struct {
+// ResponseValidationError is the validation error returned by
+// Response.Validate if the designated constraints aren't met.
+type ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -613,22 +610,22 @@ type ExampleResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e ExampleResponseValidationError) Field() string { return e.field }
+func (e ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ExampleResponseValidationError) Reason() string { return e.reason }
+func (e ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ExampleResponseValidationError) Cause() error { return e.cause }
+func (e ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ExampleResponseValidationError) Key() bool { return e.key }
+func (e ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ExampleResponseValidationError) ErrorName() string { return "ExampleResponseValidationError" }
+func (e ResponseValidationError) ErrorName() string { return "ResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e ExampleResponseValidationError) Error() string {
+func (e ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -640,14 +637,14 @@ func (e ExampleResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExampleResponse.%s: %s%s",
+		"invalid %sResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ExampleResponseValidationError{}
+var _ error = ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -655,4 +652,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ExampleResponseValidationError{}
+} = ResponseValidationError{}

@@ -21,44 +21,44 @@ import (
 const _ = grpc.SupportPackageIsVersion7
 
 const (
-	PartnersCategoriesService_Paginate_FullMethodName = "/partners_categories.PartnersCategoriesService/Paginate"
-	PartnersCategoriesService_Count_FullMethodName    = "/partners_categories.PartnersCategoriesService/Count"
-	PartnersCategoriesService_Create_FullMethodName   = "/partners_categories.PartnersCategoriesService/Create"
-	PartnersCategoriesService_Update_FullMethodName   = "/partners_categories.PartnersCategoriesService/Update"
-	PartnersCategoriesService_Inactive_FullMethodName = "/partners_categories.PartnersCategoriesService/Inactive"
-	PartnersCategoriesService_Active_FullMethodName   = "/partners_categories.PartnersCategoriesService/Active"
-	PartnersCategoriesService_FindOne_FullMethodName  = "/partners_categories.PartnersCategoriesService/FindOne"
-	PartnersCategoriesService_Delete_FullMethodName   = "/partners_categories.PartnersCategoriesService/Delete"
+	Service_Paginate_FullMethodName = "/partners_categories.Service/Paginate"
+	Service_Count_FullMethodName    = "/partners_categories.Service/Count"
+	Service_Create_FullMethodName   = "/partners_categories.Service/Create"
+	Service_Update_FullMethodName   = "/partners_categories.Service/Update"
+	Service_Inactive_FullMethodName = "/partners_categories.Service/Inactive"
+	Service_Active_FullMethodName   = "/partners_categories.Service/Active"
+	Service_FindOne_FullMethodName  = "/partners_categories.Service/FindOne"
+	Service_Delete_FullMethodName   = "/partners_categories.Service/Delete"
 )
 
-// PartnersCategoriesServiceClient is the client API for PartnersCategoriesService service.
+// ServiceClient is the client API for Service service.
 //
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
-type PartnersCategoriesServiceClient interface {
-	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (PartnersCategoriesService_PaginateClient, error)
+type ServiceClient interface {
+	Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error)
 	Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error)
-	Create(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_CreateClient, error)
-	Update(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_UpdateClient, error)
-	Inactive(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_InactiveClient, error)
-	Active(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_ActiveClient, error)
-	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*PartnersCategoriesResponse, error)
-	Delete(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_DeleteClient, error)
+	Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error)
+	Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error)
+	Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error)
+	Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error)
+	FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error)
+	Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error)
 }
 
-type partnersCategoriesServiceClient struct {
+type serviceClient struct {
 	cc grpc.ClientConnInterface
 }
 
-func NewPartnersCategoriesServiceClient(cc grpc.ClientConnInterface) PartnersCategoriesServiceClient {
-	return &partnersCategoriesServiceClient{cc}
+func NewServiceClient(cc grpc.ClientConnInterface) ServiceClient {
+	return &serviceClient{cc}
 }
 
-func (c *partnersCategoriesServiceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (PartnersCategoriesService_PaginateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersCategoriesService_ServiceDesc.Streams[0], PartnersCategoriesService_Paginate_FullMethodName, opts...)
+func (c *serviceClient) Paginate(ctx context.Context, in *input.PaginationRequest, opts ...grpc.CallOption) (Service_PaginateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[0], Service_Paginate_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersCategoriesServicePaginateClient{stream}
+	x := &servicePaginateClient{stream}
 	if err := x.ClientStream.SendMsg(in); err != nil {
 		return nil, err
 	}
@@ -68,56 +68,56 @@ func (c *partnersCategoriesServiceClient) Paginate(ctx context.Context, in *inpu
 	return x, nil
 }
 
-type PartnersCategoriesService_PaginateClient interface {
-	Recv() (*PartnersCategoriesResponse, error)
+type Service_PaginateClient interface {
+	Recv() (*Response, error)
 	grpc.ClientStream
 }
 
-type partnersCategoriesServicePaginateClient struct {
+type servicePaginateClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersCategoriesServicePaginateClient) Recv() (*PartnersCategoriesResponse, error) {
-	m := new(PartnersCategoriesResponse)
+func (x *servicePaginateClient) Recv() (*Response, error) {
+	m := new(Response)
 	if err := x.ClientStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func (c *partnersCategoriesServiceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
+func (c *serviceClient) Count(ctx context.Context, in *input.FilteredRequest, opts ...grpc.CallOption) (*output.CountResponse, error) {
 	out := new(output.CountResponse)
-	err := c.cc.Invoke(ctx, PartnersCategoriesService_Count_FullMethodName, in, out, opts...)
+	err := c.cc.Invoke(ctx, Service_Count_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *partnersCategoriesServiceClient) Create(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_CreateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersCategoriesService_ServiceDesc.Streams[1], PartnersCategoriesService_Create_FullMethodName, opts...)
+func (c *serviceClient) Create(ctx context.Context, opts ...grpc.CallOption) (Service_CreateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[1], Service_Create_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersCategoriesServiceCreateClient{stream}
+	x := &serviceCreateClient{stream}
 	return x, nil
 }
 
-type PartnersCategoriesService_CreateClient interface {
-	Send(*PartnersCategoriesRequest) error
+type Service_CreateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersCategoriesServiceCreateClient struct {
+type serviceCreateClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersCategoriesServiceCreateClient) Send(m *PartnersCategoriesRequest) error {
+func (x *serviceCreateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceCreateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -128,30 +128,30 @@ func (x *partnersCategoriesServiceCreateClient) CloseAndRecv() (*output.Persiste
 	return m, nil
 }
 
-func (c *partnersCategoriesServiceClient) Update(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_UpdateClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersCategoriesService_ServiceDesc.Streams[2], PartnersCategoriesService_Update_FullMethodName, opts...)
+func (c *serviceClient) Update(ctx context.Context, opts ...grpc.CallOption) (Service_UpdateClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[2], Service_Update_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersCategoriesServiceUpdateClient{stream}
+	x := &serviceUpdateClient{stream}
 	return x, nil
 }
 
-type PartnersCategoriesService_UpdateClient interface {
-	Send(*PartnersCategoriesRequest) error
+type Service_UpdateClient interface {
+	Send(*Request) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersCategoriesServiceUpdateClient struct {
+type serviceUpdateClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersCategoriesServiceUpdateClient) Send(m *PartnersCategoriesRequest) error {
+func (x *serviceUpdateClient) Send(m *Request) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceUpdateClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -162,30 +162,30 @@ func (x *partnersCategoriesServiceUpdateClient) CloseAndRecv() (*output.Persiste
 	return m, nil
 }
 
-func (c *partnersCategoriesServiceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_InactiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersCategoriesService_ServiceDesc.Streams[3], PartnersCategoriesService_Inactive_FullMethodName, opts...)
+func (c *serviceClient) Inactive(ctx context.Context, opts ...grpc.CallOption) (Service_InactiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[3], Service_Inactive_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersCategoriesServiceInactiveClient{stream}
+	x := &serviceInactiveClient{stream}
 	return x, nil
 }
 
-type PartnersCategoriesService_InactiveClient interface {
+type Service_InactiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersCategoriesServiceInactiveClient struct {
+type serviceInactiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersCategoriesServiceInactiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceInactiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceInactiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -196,30 +196,30 @@ func (x *partnersCategoriesServiceInactiveClient) CloseAndRecv() (*output.Status
 	return m, nil
 }
 
-func (c *partnersCategoriesServiceClient) Active(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_ActiveClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersCategoriesService_ServiceDesc.Streams[4], PartnersCategoriesService_Active_FullMethodName, opts...)
+func (c *serviceClient) Active(ctx context.Context, opts ...grpc.CallOption) (Service_ActiveClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[4], Service_Active_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersCategoriesServiceActiveClient{stream}
+	x := &serviceActiveClient{stream}
 	return x, nil
 }
 
-type PartnersCategoriesService_ActiveClient interface {
+type Service_ActiveClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.StatusDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersCategoriesServiceActiveClient struct {
+type serviceActiveClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersCategoriesServiceActiveClient) Send(m *input.UUIDRequest) error {
+func (x *serviceActiveClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
+func (x *serviceActiveClient) CloseAndRecv() (*output.StatusDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -230,39 +230,39 @@ func (x *partnersCategoriesServiceActiveClient) CloseAndRecv() (*output.StatusDa
 	return m, nil
 }
 
-func (c *partnersCategoriesServiceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*PartnersCategoriesResponse, error) {
-	out := new(PartnersCategoriesResponse)
-	err := c.cc.Invoke(ctx, PartnersCategoriesService_FindOne_FullMethodName, in, out, opts...)
+func (c *serviceClient) FindOne(ctx context.Context, in *input.UUIDRequest, opts ...grpc.CallOption) (*Response, error) {
+	out := new(Response)
+	err := c.cc.Invoke(ctx, Service_FindOne_FullMethodName, in, out, opts...)
 	if err != nil {
 		return nil, err
 	}
 	return out, nil
 }
 
-func (c *partnersCategoriesServiceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (PartnersCategoriesService_DeleteClient, error) {
-	stream, err := c.cc.NewStream(ctx, &PartnersCategoriesService_ServiceDesc.Streams[5], PartnersCategoriesService_Delete_FullMethodName, opts...)
+func (c *serviceClient) Delete(ctx context.Context, opts ...grpc.CallOption) (Service_DeleteClient, error) {
+	stream, err := c.cc.NewStream(ctx, &Service_ServiceDesc.Streams[5], Service_Delete_FullMethodName, opts...)
 	if err != nil {
 		return nil, err
 	}
-	x := &partnersCategoriesServiceDeleteClient{stream}
+	x := &serviceDeleteClient{stream}
 	return x, nil
 }
 
-type PartnersCategoriesService_DeleteClient interface {
+type Service_DeleteClient interface {
 	Send(*input.UUIDRequest) error
 	CloseAndRecv() (*output.PersistenceDataResponse, error)
 	grpc.ClientStream
 }
 
-type partnersCategoriesServiceDeleteClient struct {
+type serviceDeleteClient struct {
 	grpc.ClientStream
 }
 
-func (x *partnersCategoriesServiceDeleteClient) Send(m *input.UUIDRequest) error {
+func (x *serviceDeleteClient) Send(m *input.UUIDRequest) error {
 	return x.ClientStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
+func (x *serviceDeleteClient) CloseAndRecv() (*output.PersistenceDataResponse, error) {
 	if err := x.ClientStream.CloseSend(); err != nil {
 		return nil, err
 	}
@@ -273,173 +273,172 @@ func (x *partnersCategoriesServiceDeleteClient) CloseAndRecv() (*output.Persiste
 	return m, nil
 }
 
-// PartnersCategoriesServiceServer is the server API for PartnersCategoriesService service.
-// All implementations must embed UnimplementedPartnersCategoriesServiceServer
+// ServiceServer is the server API for Service service.
+// All implementations must embed UnimplementedServiceServer
 // for forward compatibility
-type PartnersCategoriesServiceServer interface {
-	Paginate(*input.PaginationRequest, PartnersCategoriesService_PaginateServer) error
+type ServiceServer interface {
+	Paginate(*input.PaginationRequest, Service_PaginateServer) error
 	Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error)
-	Create(PartnersCategoriesService_CreateServer) error
-	Update(PartnersCategoriesService_UpdateServer) error
-	Inactive(PartnersCategoriesService_InactiveServer) error
-	Active(PartnersCategoriesService_ActiveServer) error
-	FindOne(context.Context, *input.UUIDRequest) (*PartnersCategoriesResponse, error)
-	Delete(PartnersCategoriesService_DeleteServer) error
-	mustEmbedUnimplementedPartnersCategoriesServiceServer()
+	Create(Service_CreateServer) error
+	Update(Service_UpdateServer) error
+	Inactive(Service_InactiveServer) error
+	Active(Service_ActiveServer) error
+	FindOne(context.Context, *input.UUIDRequest) (*Response, error)
+	Delete(Service_DeleteServer) error
+	mustEmbedUnimplementedServiceServer()
 }
 
-// UnimplementedPartnersCategoriesServiceServer must be embedded to have forward compatible implementations.
-type UnimplementedPartnersCategoriesServiceServer struct {
+// UnimplementedServiceServer must be embedded to have forward compatible implementations.
+type UnimplementedServiceServer struct {
 }
 
-func (UnimplementedPartnersCategoriesServiceServer) Paginate(*input.PaginationRequest, PartnersCategoriesService_PaginateServer) error {
+func (UnimplementedServiceServer) Paginate(*input.PaginationRequest, Service_PaginateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Paginate not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
+func (UnimplementedServiceServer) Count(context.Context, *input.FilteredRequest) (*output.CountResponse, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method Count not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) Create(PartnersCategoriesService_CreateServer) error {
+func (UnimplementedServiceServer) Create(Service_CreateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Create not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) Update(PartnersCategoriesService_UpdateServer) error {
+func (UnimplementedServiceServer) Update(Service_UpdateServer) error {
 	return status.Errorf(codes.Unimplemented, "method Update not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) Inactive(PartnersCategoriesService_InactiveServer) error {
+func (UnimplementedServiceServer) Inactive(Service_InactiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Inactive not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) Active(PartnersCategoriesService_ActiveServer) error {
+func (UnimplementedServiceServer) Active(Service_ActiveServer) error {
 	return status.Errorf(codes.Unimplemented, "method Active not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) FindOne(context.Context, *input.UUIDRequest) (*PartnersCategoriesResponse, error) {
+func (UnimplementedServiceServer) FindOne(context.Context, *input.UUIDRequest) (*Response, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method FindOne not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) Delete(PartnersCategoriesService_DeleteServer) error {
+func (UnimplementedServiceServer) Delete(Service_DeleteServer) error {
 	return status.Errorf(codes.Unimplemented, "method Delete not implemented")
 }
-func (UnimplementedPartnersCategoriesServiceServer) mustEmbedUnimplementedPartnersCategoriesServiceServer() {
-}
+func (UnimplementedServiceServer) mustEmbedUnimplementedServiceServer() {}
 
-// UnsafePartnersCategoriesServiceServer may be embedded to opt out of forward compatibility for this service.
-// Use of this interface is not recommended, as added methods to PartnersCategoriesServiceServer will
+// UnsafeServiceServer may be embedded to opt out of forward compatibility for this service.
+// Use of this interface is not recommended, as added methods to ServiceServer will
 // result in compilation errors.
-type UnsafePartnersCategoriesServiceServer interface {
-	mustEmbedUnimplementedPartnersCategoriesServiceServer()
+type UnsafeServiceServer interface {
+	mustEmbedUnimplementedServiceServer()
 }
 
-func RegisterPartnersCategoriesServiceServer(s grpc.ServiceRegistrar, srv PartnersCategoriesServiceServer) {
-	s.RegisterService(&PartnersCategoriesService_ServiceDesc, srv)
+func RegisterServiceServer(s grpc.ServiceRegistrar, srv ServiceServer) {
+	s.RegisterService(&Service_ServiceDesc, srv)
 }
 
-func _PartnersCategoriesService_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
+func _Service_Paginate_Handler(srv interface{}, stream grpc.ServerStream) error {
 	m := new(input.PaginationRequest)
 	if err := stream.RecvMsg(m); err != nil {
 		return err
 	}
-	return srv.(PartnersCategoriesServiceServer).Paginate(m, &partnersCategoriesServicePaginateServer{stream})
+	return srv.(ServiceServer).Paginate(m, &servicePaginateServer{stream})
 }
 
-type PartnersCategoriesService_PaginateServer interface {
-	Send(*PartnersCategoriesResponse) error
+type Service_PaginateServer interface {
+	Send(*Response) error
 	grpc.ServerStream
 }
 
-type partnersCategoriesServicePaginateServer struct {
+type servicePaginateServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersCategoriesServicePaginateServer) Send(m *PartnersCategoriesResponse) error {
+func (x *servicePaginateServer) Send(m *Response) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func _PartnersCategoriesService_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_Count_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.FilteredRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PartnersCategoriesServiceServer).Count(ctx, in)
+		return srv.(ServiceServer).Count(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PartnersCategoriesService_Count_FullMethodName,
+		FullMethod: Service_Count_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PartnersCategoriesServiceServer).Count(ctx, req.(*input.FilteredRequest))
+		return srv.(ServiceServer).Count(ctx, req.(*input.FilteredRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PartnersCategoriesService_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersCategoriesServiceServer).Create(&partnersCategoriesServiceCreateServer{stream})
+func _Service_Create_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Create(&serviceCreateServer{stream})
 }
 
-type PartnersCategoriesService_CreateServer interface {
+type Service_CreateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*PartnersCategoriesRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type partnersCategoriesServiceCreateServer struct {
+type serviceCreateServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersCategoriesServiceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceCreateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceCreateServer) Recv() (*PartnersCategoriesRequest, error) {
-	m := new(PartnersCategoriesRequest)
+func (x *serviceCreateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _PartnersCategoriesService_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersCategoriesServiceServer).Update(&partnersCategoriesServiceUpdateServer{stream})
+func _Service_Update_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Update(&serviceUpdateServer{stream})
 }
 
-type PartnersCategoriesService_UpdateServer interface {
+type Service_UpdateServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
-	Recv() (*PartnersCategoriesRequest, error)
+	Recv() (*Request, error)
 	grpc.ServerStream
 }
 
-type partnersCategoriesServiceUpdateServer struct {
+type serviceUpdateServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersCategoriesServiceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceUpdateServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceUpdateServer) Recv() (*PartnersCategoriesRequest, error) {
-	m := new(PartnersCategoriesRequest)
+func (x *serviceUpdateServer) Recv() (*Request, error) {
+	m := new(Request)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
 	}
 	return m, nil
 }
 
-func _PartnersCategoriesService_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersCategoriesServiceServer).Inactive(&partnersCategoriesServiceInactiveServer{stream})
+func _Service_Inactive_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Inactive(&serviceInactiveServer{stream})
 }
 
-type PartnersCategoriesService_InactiveServer interface {
+type Service_InactiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type partnersCategoriesServiceInactiveServer struct {
+type serviceInactiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersCategoriesServiceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceInactiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceInactiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceInactiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -447,25 +446,25 @@ func (x *partnersCategoriesServiceInactiveServer) Recv() (*input.UUIDRequest, er
 	return m, nil
 }
 
-func _PartnersCategoriesService_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersCategoriesServiceServer).Active(&partnersCategoriesServiceActiveServer{stream})
+func _Service_Active_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Active(&serviceActiveServer{stream})
 }
 
-type PartnersCategoriesService_ActiveServer interface {
+type Service_ActiveServer interface {
 	SendAndClose(*output.StatusDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type partnersCategoriesServiceActiveServer struct {
+type serviceActiveServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersCategoriesServiceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
+func (x *serviceActiveServer) SendAndClose(m *output.StatusDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceActiveServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceActiveServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -473,43 +472,43 @@ func (x *partnersCategoriesServiceActiveServer) Recv() (*input.UUIDRequest, erro
 	return m, nil
 }
 
-func _PartnersCategoriesService_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+func _Service_FindOne_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(input.UUIDRequest)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
 	if interceptor == nil {
-		return srv.(PartnersCategoriesServiceServer).FindOne(ctx, in)
+		return srv.(ServiceServer).FindOne(ctx, in)
 	}
 	info := &grpc.UnaryServerInfo{
 		Server:     srv,
-		FullMethod: PartnersCategoriesService_FindOne_FullMethodName,
+		FullMethod: Service_FindOne_FullMethodName,
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PartnersCategoriesServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
+		return srv.(ServiceServer).FindOne(ctx, req.(*input.UUIDRequest))
 	}
 	return interceptor(ctx, in, info, handler)
 }
 
-func _PartnersCategoriesService_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
-	return srv.(PartnersCategoriesServiceServer).Delete(&partnersCategoriesServiceDeleteServer{stream})
+func _Service_Delete_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(ServiceServer).Delete(&serviceDeleteServer{stream})
 }
 
-type PartnersCategoriesService_DeleteServer interface {
+type Service_DeleteServer interface {
 	SendAndClose(*output.PersistenceDataResponse) error
 	Recv() (*input.UUIDRequest, error)
 	grpc.ServerStream
 }
 
-type partnersCategoriesServiceDeleteServer struct {
+type serviceDeleteServer struct {
 	grpc.ServerStream
 }
 
-func (x *partnersCategoriesServiceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
+func (x *serviceDeleteServer) SendAndClose(m *output.PersistenceDataResponse) error {
 	return x.ServerStream.SendMsg(m)
 }
 
-func (x *partnersCategoriesServiceDeleteServer) Recv() (*input.UUIDRequest, error) {
+func (x *serviceDeleteServer) Recv() (*input.UUIDRequest, error) {
 	m := new(input.UUIDRequest)
 	if err := x.ServerStream.RecvMsg(m); err != nil {
 		return nil, err
@@ -517,51 +516,51 @@ func (x *partnersCategoriesServiceDeleteServer) Recv() (*input.UUIDRequest, erro
 	return m, nil
 }
 
-// PartnersCategoriesService_ServiceDesc is the grpc.ServiceDesc for PartnersCategoriesService service.
+// Service_ServiceDesc is the grpc.ServiceDesc for Service service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
-var PartnersCategoriesService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "partners_categories.PartnersCategoriesService",
-	HandlerType: (*PartnersCategoriesServiceServer)(nil),
+var Service_ServiceDesc = grpc.ServiceDesc{
+	ServiceName: "partners_categories.Service",
+	HandlerType: (*ServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
 			MethodName: "Count",
-			Handler:    _PartnersCategoriesService_Count_Handler,
+			Handler:    _Service_Count_Handler,
 		},
 		{
 			MethodName: "FindOne",
-			Handler:    _PartnersCategoriesService_FindOne_Handler,
+			Handler:    _Service_FindOne_Handler,
 		},
 	},
 	Streams: []grpc.StreamDesc{
 		{
 			StreamName:    "Paginate",
-			Handler:       _PartnersCategoriesService_Paginate_Handler,
+			Handler:       _Service_Paginate_Handler,
 			ServerStreams: true,
 		},
 		{
 			StreamName:    "Create",
-			Handler:       _PartnersCategoriesService_Create_Handler,
+			Handler:       _Service_Create_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Update",
-			Handler:       _PartnersCategoriesService_Update_Handler,
+			Handler:       _Service_Update_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Inactive",
-			Handler:       _PartnersCategoriesService_Inactive_Handler,
+			Handler:       _Service_Inactive_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Active",
-			Handler:       _PartnersCategoriesService_Active_Handler,
+			Handler:       _Service_Active_Handler,
 			ClientStreams: true,
 		},
 		{
 			StreamName:    "Delete",
-			Handler:       _PartnersCategoriesService_Delete_Handler,
+			Handler:       _Service_Delete_Handler,
 			ClientStreams: true,
 		},
 	},

@@ -46,22 +46,21 @@ var (
 // define the regex for a UUID once up-front
 var _admin_users_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on AdminUsersRequest with the rules defined
-// in the proto definition for this message. If any rules are violated, the
-// first error encountered is returned, or nil if there are no violations.
-func (m *AdminUsersRequest) Validate() error {
+// Validate checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Request) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AdminUsersRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// AdminUsersRequestMultiError, or nil if none found.
-func (m *AdminUsersRequest) ValidateAll() error {
+// ValidateAll checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in RequestMultiError, or nil if none found.
+func (m *Request) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AdminUsersRequest) validate(all bool) error {
+func (m *Request) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -69,7 +68,7 @@ func (m *AdminUsersRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = AdminUsersRequestValidationError{
+		err = RequestValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -80,8 +79,8 @@ func (m *AdminUsersRequest) validate(all bool) error {
 		errors = append(errors, err)
 	}
 
-	if _, ok := _AdminUsersRequest_EnStatus_InLookup[m.GetEnStatus()]; !ok {
-		err := AdminUsersRequestValidationError{
+	if _, ok := _Request_EnStatus_InLookup[m.GetEnStatus()]; !ok {
+		err := RequestValidationError{
 			field:  "EnStatus",
 			reason: "value must be in list [ENABLED DISABLED]",
 		}
@@ -92,7 +91,7 @@ func (m *AdminUsersRequest) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 200 {
-		err := AdminUsersRequestValidationError{
+		err := RequestValidationError{
 			field:  "Name",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -103,7 +102,7 @@ func (m *AdminUsersRequest) validate(all bool) error {
 	}
 
 	if err := m._validateEmail(m.GetEmail()); err != nil {
-		err = AdminUsersRequestValidationError{
+		err = RequestValidationError{
 			field:  "Email",
 			reason: "value must be a valid email address",
 			cause:  err,
@@ -115,7 +114,7 @@ func (m *AdminUsersRequest) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetIdCognito()); l < 1 || l > 200 {
-		err := AdminUsersRequestValidationError{
+		err := RequestValidationError{
 			field:  "IdCognito",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -126,7 +125,7 @@ func (m *AdminUsersRequest) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdRoleApplication()); err != nil {
-		err = AdminUsersRequestValidationError{
+		err = RequestValidationError{
 			field:  "IdRoleApplication",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -138,13 +137,13 @@ func (m *AdminUsersRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return AdminUsersRequestMultiError(errors)
+		return RequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *AdminUsersRequest) _validateHostname(host string) error {
+func (m *Request) _validateHostname(host string) error {
 	s := strings.ToLower(strings.TrimSuffix(host, "."))
 
 	if len(host) > 253 {
@@ -174,7 +173,7 @@ func (m *AdminUsersRequest) _validateHostname(host string) error {
 	return nil
 }
 
-func (m *AdminUsersRequest) _validateEmail(addr string) error {
+func (m *Request) _validateEmail(addr string) error {
 	a, err := mail.ParseAddress(addr)
 	if err != nil {
 		return err
@@ -194,7 +193,7 @@ func (m *AdminUsersRequest) _validateEmail(addr string) error {
 	return m._validateHostname(parts[1])
 }
 
-func (m *AdminUsersRequest) _validateUuid(uuid string) error {
+func (m *Request) _validateUuid(uuid string) error {
 	if matched := _admin_users_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -202,13 +201,12 @@ func (m *AdminUsersRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// AdminUsersRequestMultiError is an error wrapping multiple validation errors
-// returned by AdminUsersRequest.ValidateAll() if the designated constraints
-// aren't met.
-type AdminUsersRequestMultiError []error
+// RequestMultiError is an error wrapping multiple validation errors returned
+// by Request.ValidateAll() if the designated constraints aren't met.
+type RequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AdminUsersRequestMultiError) Error() string {
+func (m RequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -217,11 +215,11 @@ func (m AdminUsersRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AdminUsersRequestMultiError) AllErrors() []error { return m }
+func (m RequestMultiError) AllErrors() []error { return m }
 
-// AdminUsersRequestValidationError is the validation error returned by
-// AdminUsersRequest.Validate if the designated constraints aren't met.
-type AdminUsersRequestValidationError struct {
+// RequestValidationError is the validation error returned by Request.Validate
+// if the designated constraints aren't met.
+type RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -229,24 +227,22 @@ type AdminUsersRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e AdminUsersRequestValidationError) Field() string { return e.field }
+func (e RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AdminUsersRequestValidationError) Reason() string { return e.reason }
+func (e RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AdminUsersRequestValidationError) Cause() error { return e.cause }
+func (e RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AdminUsersRequestValidationError) Key() bool { return e.key }
+func (e RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AdminUsersRequestValidationError) ErrorName() string {
-	return "AdminUsersRequestValidationError"
-}
+func (e RequestValidationError) ErrorName() string { return "RequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e AdminUsersRequestValidationError) Error() string {
+func (e RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -258,14 +254,14 @@ func (e AdminUsersRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAdminUsersRequest.%s: %s%s",
+		"invalid %sRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AdminUsersRequestValidationError{}
+var _ error = RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -273,29 +269,29 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AdminUsersRequestValidationError{}
+} = RequestValidationError{}
 
-var _AdminUsersRequest_EnStatus_InLookup = map[input.StatusRequest]struct{}{
+var _Request_EnStatus_InLookup = map[input.StatusRequest]struct{}{
 	0: {},
 	1: {},
 }
 
-// Validate checks the field values on AdminUsersResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *AdminUsersResponse) Validate() error {
+// Validate checks the field values on Response with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Response) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on AdminUsersResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// AdminUsersResponseMultiError, or nil if none found.
-func (m *AdminUsersResponse) ValidateAll() error {
+// ValidateAll checks the field values on Response with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ResponseMultiError, or nil
+// if none found.
+func (m *Response) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *AdminUsersResponse) validate(all bool) error {
+func (m *Response) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -303,7 +299,7 @@ func (m *AdminUsersResponse) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = AdminUsersResponseValidationError{
+		err = ResponseValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -317,7 +313,7 @@ func (m *AdminUsersResponse) validate(all bool) error {
 	// no validation rules for Status
 
 	if err := m._validateUuid(m.GetIdAuditable()); err != nil {
-		err = AdminUsersResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdAuditable",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -329,7 +325,7 @@ func (m *AdminUsersResponse) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetName()); l < 1 || l > 200 {
-		err := AdminUsersResponseValidationError{
+		err := ResponseValidationError{
 			field:  "Name",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -340,7 +336,7 @@ func (m *AdminUsersResponse) validate(all bool) error {
 	}
 
 	if err := m._validateEmail(m.GetEmail()); err != nil {
-		err = AdminUsersResponseValidationError{
+		err = ResponseValidationError{
 			field:  "Email",
 			reason: "value must be a valid email address",
 			cause:  err,
@@ -352,7 +348,7 @@ func (m *AdminUsersResponse) validate(all bool) error {
 	}
 
 	if l := utf8.RuneCountInString(m.GetIdCognito()); l < 1 || l > 200 {
-		err := AdminUsersResponseValidationError{
+		err := ResponseValidationError{
 			field:  "IdCognito",
 			reason: "value length must be between 1 and 200 runes, inclusive",
 		}
@@ -363,7 +359,7 @@ func (m *AdminUsersResponse) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdRoleApplication()); err != nil {
-		err = AdminUsersResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdRoleApplication",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -375,13 +371,13 @@ func (m *AdminUsersResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return AdminUsersResponseMultiError(errors)
+		return ResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *AdminUsersResponse) _validateHostname(host string) error {
+func (m *Response) _validateHostname(host string) error {
 	s := strings.ToLower(strings.TrimSuffix(host, "."))
 
 	if len(host) > 253 {
@@ -411,7 +407,7 @@ func (m *AdminUsersResponse) _validateHostname(host string) error {
 	return nil
 }
 
-func (m *AdminUsersResponse) _validateEmail(addr string) error {
+func (m *Response) _validateEmail(addr string) error {
 	a, err := mail.ParseAddress(addr)
 	if err != nil {
 		return err
@@ -431,7 +427,7 @@ func (m *AdminUsersResponse) _validateEmail(addr string) error {
 	return m._validateHostname(parts[1])
 }
 
-func (m *AdminUsersResponse) _validateUuid(uuid string) error {
+func (m *Response) _validateUuid(uuid string) error {
 	if matched := _admin_users_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -439,13 +435,12 @@ func (m *AdminUsersResponse) _validateUuid(uuid string) error {
 	return nil
 }
 
-// AdminUsersResponseMultiError is an error wrapping multiple validation errors
-// returned by AdminUsersResponse.ValidateAll() if the designated constraints
-// aren't met.
-type AdminUsersResponseMultiError []error
+// ResponseMultiError is an error wrapping multiple validation errors returned
+// by Response.ValidateAll() if the designated constraints aren't met.
+type ResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m AdminUsersResponseMultiError) Error() string {
+func (m ResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -454,11 +449,11 @@ func (m AdminUsersResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m AdminUsersResponseMultiError) AllErrors() []error { return m }
+func (m ResponseMultiError) AllErrors() []error { return m }
 
-// AdminUsersResponseValidationError is the validation error returned by
-// AdminUsersResponse.Validate if the designated constraints aren't met.
-type AdminUsersResponseValidationError struct {
+// ResponseValidationError is the validation error returned by
+// Response.Validate if the designated constraints aren't met.
+type ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -466,24 +461,22 @@ type AdminUsersResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e AdminUsersResponseValidationError) Field() string { return e.field }
+func (e ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e AdminUsersResponseValidationError) Reason() string { return e.reason }
+func (e ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e AdminUsersResponseValidationError) Cause() error { return e.cause }
+func (e ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e AdminUsersResponseValidationError) Key() bool { return e.key }
+func (e ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e AdminUsersResponseValidationError) ErrorName() string {
-	return "AdminUsersResponseValidationError"
-}
+func (e ResponseValidationError) ErrorName() string { return "ResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e AdminUsersResponseValidationError) Error() string {
+func (e ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -495,14 +488,14 @@ func (e AdminUsersResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sAdminUsersResponse.%s: %s%s",
+		"invalid %sResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = AdminUsersResponseValidationError{}
+var _ error = ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -510,4 +503,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = AdminUsersResponseValidationError{}
+} = ResponseValidationError{}

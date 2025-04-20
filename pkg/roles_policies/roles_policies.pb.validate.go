@@ -42,22 +42,21 @@ var (
 // define the regex for a UUID once up-front
 var _roles_policies_uuidPattern = regexp.MustCompile("^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}$")
 
-// Validate checks the field values on RolesPoliciesRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *RolesPoliciesRequest) Validate() error {
+// Validate checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Request) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on RolesPoliciesRequest with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// RolesPoliciesRequestMultiError, or nil if none found.
-func (m *RolesPoliciesRequest) ValidateAll() error {
+// ValidateAll checks the field values on Request with the rules defined in the
+// proto definition for this message. If any rules are violated, the result is
+// a list of violation errors wrapped in RequestMultiError, or nil if none found.
+func (m *Request) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RolesPoliciesRequest) validate(all bool) error {
+func (m *Request) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -65,7 +64,7 @@ func (m *RolesPoliciesRequest) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetIdRole()); err != nil {
-		err = RolesPoliciesRequestValidationError{
+		err = RequestValidationError{
 			field:  "IdRole",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -77,7 +76,7 @@ func (m *RolesPoliciesRequest) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdPolicy()); err != nil {
-		err = RolesPoliciesRequestValidationError{
+		err = RequestValidationError{
 			field:  "IdPolicy",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -89,13 +88,13 @@ func (m *RolesPoliciesRequest) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return RolesPoliciesRequestMultiError(errors)
+		return RequestMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *RolesPoliciesRequest) _validateUuid(uuid string) error {
+func (m *Request) _validateUuid(uuid string) error {
 	if matched := _roles_policies_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -103,13 +102,12 @@ func (m *RolesPoliciesRequest) _validateUuid(uuid string) error {
 	return nil
 }
 
-// RolesPoliciesRequestMultiError is an error wrapping multiple validation
-// errors returned by RolesPoliciesRequest.ValidateAll() if the designated
-// constraints aren't met.
-type RolesPoliciesRequestMultiError []error
+// RequestMultiError is an error wrapping multiple validation errors returned
+// by Request.ValidateAll() if the designated constraints aren't met.
+type RequestMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RolesPoliciesRequestMultiError) Error() string {
+func (m RequestMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -118,11 +116,11 @@ func (m RolesPoliciesRequestMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RolesPoliciesRequestMultiError) AllErrors() []error { return m }
+func (m RequestMultiError) AllErrors() []error { return m }
 
-// RolesPoliciesRequestValidationError is the validation error returned by
-// RolesPoliciesRequest.Validate if the designated constraints aren't met.
-type RolesPoliciesRequestValidationError struct {
+// RequestValidationError is the validation error returned by Request.Validate
+// if the designated constraints aren't met.
+type RequestValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -130,24 +128,22 @@ type RolesPoliciesRequestValidationError struct {
 }
 
 // Field function returns field value.
-func (e RolesPoliciesRequestValidationError) Field() string { return e.field }
+func (e RequestValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RolesPoliciesRequestValidationError) Reason() string { return e.reason }
+func (e RequestValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RolesPoliciesRequestValidationError) Cause() error { return e.cause }
+func (e RequestValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RolesPoliciesRequestValidationError) Key() bool { return e.key }
+func (e RequestValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RolesPoliciesRequestValidationError) ErrorName() string {
-	return "RolesPoliciesRequestValidationError"
-}
+func (e RequestValidationError) ErrorName() string { return "RequestValidationError" }
 
 // Error satisfies the builtin error interface
-func (e RolesPoliciesRequestValidationError) Error() string {
+func (e RequestValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -159,14 +155,14 @@ func (e RolesPoliciesRequestValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRolesPoliciesRequest.%s: %s%s",
+		"invalid %sRequest.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RolesPoliciesRequestValidationError{}
+var _ error = RequestValidationError{}
 
 var _ interface {
 	Field() string
@@ -174,24 +170,24 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RolesPoliciesRequestValidationError{}
+} = RequestValidationError{}
 
-// Validate checks the field values on RolesPoliciesResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the first error encountered is returned, or nil if there are no violations.
-func (m *RolesPoliciesResponse) Validate() error {
+// Validate checks the field values on Response with the rules defined in the
+// proto definition for this message. If any rules are violated, the first
+// error encountered is returned, or nil if there are no violations.
+func (m *Response) Validate() error {
 	return m.validate(false)
 }
 
-// ValidateAll checks the field values on RolesPoliciesResponse with the rules
-// defined in the proto definition for this message. If any rules are
-// violated, the result is a list of violation errors wrapped in
-// RolesPoliciesResponseMultiError, or nil if none found.
-func (m *RolesPoliciesResponse) ValidateAll() error {
+// ValidateAll checks the field values on Response with the rules defined in
+// the proto definition for this message. If any rules are violated, the
+// result is a list of violation errors wrapped in ResponseMultiError, or nil
+// if none found.
+func (m *Response) ValidateAll() error {
 	return m.validate(true)
 }
 
-func (m *RolesPoliciesResponse) validate(all bool) error {
+func (m *Response) validate(all bool) error {
 	if m == nil {
 		return nil
 	}
@@ -199,7 +195,7 @@ func (m *RolesPoliciesResponse) validate(all bool) error {
 	var errors []error
 
 	if err := m._validateUuid(m.GetIdRole()); err != nil {
-		err = RolesPoliciesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdRole",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -211,7 +207,7 @@ func (m *RolesPoliciesResponse) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdPolicy()); err != nil {
-		err = RolesPoliciesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdPolicy",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -223,7 +219,7 @@ func (m *RolesPoliciesResponse) validate(all bool) error {
 	}
 
 	if err := m._validateUuid(m.GetIdAuditable()); err != nil {
-		err = RolesPoliciesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "IdAuditable",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -237,7 +233,7 @@ func (m *RolesPoliciesResponse) validate(all bool) error {
 	// no validation rules for Status
 
 	if err := m._validateUuid(m.GetId()); err != nil {
-		err = RolesPoliciesResponseValidationError{
+		err = ResponseValidationError{
 			field:  "Id",
 			reason: "value must be a valid UUID",
 			cause:  err,
@@ -249,13 +245,13 @@ func (m *RolesPoliciesResponse) validate(all bool) error {
 	}
 
 	if len(errors) > 0 {
-		return RolesPoliciesResponseMultiError(errors)
+		return ResponseMultiError(errors)
 	}
 
 	return nil
 }
 
-func (m *RolesPoliciesResponse) _validateUuid(uuid string) error {
+func (m *Response) _validateUuid(uuid string) error {
 	if matched := _roles_policies_uuidPattern.MatchString(uuid); !matched {
 		return errors.New("invalid uuid format")
 	}
@@ -263,13 +259,12 @@ func (m *RolesPoliciesResponse) _validateUuid(uuid string) error {
 	return nil
 }
 
-// RolesPoliciesResponseMultiError is an error wrapping multiple validation
-// errors returned by RolesPoliciesResponse.ValidateAll() if the designated
-// constraints aren't met.
-type RolesPoliciesResponseMultiError []error
+// ResponseMultiError is an error wrapping multiple validation errors returned
+// by Response.ValidateAll() if the designated constraints aren't met.
+type ResponseMultiError []error
 
 // Error returns a concatenation of all the error messages it wraps.
-func (m RolesPoliciesResponseMultiError) Error() string {
+func (m ResponseMultiError) Error() string {
 	msgs := make([]string, 0, len(m))
 	for _, err := range m {
 		msgs = append(msgs, err.Error())
@@ -278,11 +273,11 @@ func (m RolesPoliciesResponseMultiError) Error() string {
 }
 
 // AllErrors returns a list of validation violation errors.
-func (m RolesPoliciesResponseMultiError) AllErrors() []error { return m }
+func (m ResponseMultiError) AllErrors() []error { return m }
 
-// RolesPoliciesResponseValidationError is the validation error returned by
-// RolesPoliciesResponse.Validate if the designated constraints aren't met.
-type RolesPoliciesResponseValidationError struct {
+// ResponseValidationError is the validation error returned by
+// Response.Validate if the designated constraints aren't met.
+type ResponseValidationError struct {
 	field  string
 	reason string
 	cause  error
@@ -290,24 +285,22 @@ type RolesPoliciesResponseValidationError struct {
 }
 
 // Field function returns field value.
-func (e RolesPoliciesResponseValidationError) Field() string { return e.field }
+func (e ResponseValidationError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RolesPoliciesResponseValidationError) Reason() string { return e.reason }
+func (e ResponseValidationError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RolesPoliciesResponseValidationError) Cause() error { return e.cause }
+func (e ResponseValidationError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RolesPoliciesResponseValidationError) Key() bool { return e.key }
+func (e ResponseValidationError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RolesPoliciesResponseValidationError) ErrorName() string {
-	return "RolesPoliciesResponseValidationError"
-}
+func (e ResponseValidationError) ErrorName() string { return "ResponseValidationError" }
 
 // Error satisfies the builtin error interface
-func (e RolesPoliciesResponseValidationError) Error() string {
+func (e ResponseValidationError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -319,14 +312,14 @@ func (e RolesPoliciesResponseValidationError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRolesPoliciesResponse.%s: %s%s",
+		"invalid %sResponse.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RolesPoliciesResponseValidationError{}
+var _ error = ResponseValidationError{}
 
 var _ interface {
 	Field() string
@@ -334,4 +327,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RolesPoliciesResponseValidationError{}
+} = ResponseValidationError{}
