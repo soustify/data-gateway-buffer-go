@@ -448,76 +448,6 @@ func (m *Response) validate(all bool) error {
 	// no validation rules for Price
 
 	if all {
-		switch v := interface{}(m.GetCreatedAt()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ResponseValidationError{
-					field:  "CreatedAt",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ResponseValidationError{
-					field:  "CreatedAt",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetCreatedAt()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ResponseValidationError{
-				field:  "CreatedAt",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	if all {
-		switch v := interface{}(m.GetUpdatedAt()).(type) {
-		case interface{ ValidateAll() error }:
-			if err := v.ValidateAll(); err != nil {
-				errors = append(errors, ResponseValidationError{
-					field:  "UpdatedAt",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		case interface{ Validate() error }:
-			if err := v.Validate(); err != nil {
-				errors = append(errors, ResponseValidationError{
-					field:  "UpdatedAt",
-					reason: "embedded message failed validation",
-					cause:  err,
-				})
-			}
-		}
-	} else if v, ok := interface{}(m.GetUpdatedAt()).(interface{ Validate() error }); ok {
-		if err := v.Validate(); err != nil {
-			return ResponseValidationError{
-				field:  "UpdatedAt",
-				reason: "embedded message failed validation",
-				cause:  err,
-			}
-		}
-	}
-
-	// no validation rules for Category
-
-	// no validation rules for Rating
-
-	// no validation rules for Quantity
-
-	// no validation rules for Discount
-
-	// no validation rules for Email
-
-	// no validation rules for Phone
-
-	if all {
 		switch v := interface{}(m.GetMetadata()).(type) {
 		case interface{ ValidateAll() error }:
 			if err := v.ValidateAll(); err != nil {
@@ -575,7 +505,21 @@ func (m *Response) validate(all bool) error {
 		}
 	}
 
+	// no validation rules for Category
+
+	// no validation rules for Rating
+
+	// no validation rules for Quantity
+
+	// no validation rules for Discount
+
+	// no validation rules for Email
+
+	// no validation rules for Phone
+
 	// no validation rules for Status
+
+	// no validation rules for IdAuditable
 
 	if len(errors) > 0 {
 		return ResponseMultiError(errors)
